@@ -3,6 +3,9 @@ import { NavController } from 'ionic-angular';
 
 //import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthProvider } from '../../providers/auth/auth';
+
+import { SignupPage } from '../signup/signup';
 
 @Component({
   selector: 'page-home',
@@ -15,7 +18,7 @@ export class HomePage {
 displayName;
 photoURL;
 
-constructor(public navCtrl: NavController, private afAuth: AngularFireAuth) {
+constructor(public navCtrl: NavController, private authData: AuthProvider, private afAuth: AngularFireAuth) {
 
      afAuth.authState.subscribe(user => {
       if (!user) {
@@ -28,7 +31,7 @@ constructor(public navCtrl: NavController, private afAuth: AngularFireAuth) {
   }
 
   signOut() {
-    this.afAuth.auth.signOut();
-    this.navCtrl.pop();
+    this.authData.logoutUser();
+    this.navCtrl.push(SignupPage);
   }
 }

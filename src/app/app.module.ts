@@ -7,11 +7,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SignupPage } from '../pages/signup/signup';
+import { LoginPage } from '../pages/login/login';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+
 
 import { AngularFireModule } from 'angularfire2';
 //import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthProvider } from '../providers/auth/auth';
 
 export const firebaseConfig = {
 
@@ -28,7 +32,9 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    SignupPage
+    SignupPage,
+    LoginPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -41,12 +47,15 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    SignupPage
+    SignupPage,
+    LoginPage,
+    ResetPasswordPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider
   ]
 })
 export class AppModule {}
