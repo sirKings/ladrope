@@ -1,6 +1,7 @@
-﻿
-<ion-content padding>
-    <h1>Hello {{displayName}} </h1> 
-    <img src = {{photoURL}}>
-    <button ion-button outline (click)="signOut()">Logout</button>
-</ion-content>
+﻿<ion-tabs tabsPlacement="top">
+   <ion-tab tabIcon="home" [root]="homeTab"></ion-tab>
+   <ion-tab tabIcon="albums" [root]="labels"></ion-tab>
+   <ion-tab tabIcon="search" [root]="search"></ion-tab>
+   <ion-tab tabIcon="person" [root]="userTab"></ion-tab>
+   <ion-tab tabIcon="book" [root]="order"></ion-tab>
+</ion-tabs>

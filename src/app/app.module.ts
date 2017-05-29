@@ -16,6 +16,11 @@ import { AngularFireModule } from 'angularfire2';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
+import { UserComponent } from '../components/user/user';
+import { SearchComponent } from '../components/search/search';
+import { HomeComponent } from '../components/home/home';
+import { OrderComponent } from '../components/order/order';
+import { LabelsComponent } from '../components/labels/labels';
 
 export const firebaseConfig = {
 
@@ -34,7 +39,12 @@ export const firebaseConfig = {
     HomePage,
     SignupPage,
     LoginPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    UserComponent,
+    SearchComponent,
+    HomeComponent,
+    OrderComponent,
+    LabelsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +59,12 @@ export const firebaseConfig = {
     HomePage,
     SignupPage,
     LoginPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    UserComponent,
+    SearchComponent,
+    HomeComponent,
+    OrderComponent,
+    LabelsComponent
   ],
   providers: [
     StatusBar,
