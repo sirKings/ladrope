@@ -9,9 +9,8 @@
     "\\src\\pages\\reset-password",
     "\\src\\pages\\signup",
     "\\src\\providers",
-    "\\src\\providers\\auth",
-    "\\src\\validators"
+    "\\src\\providers\\auth"
   ],
-  "SelectedNode": "\\src\\providers\\auth\\auth.ts",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }
