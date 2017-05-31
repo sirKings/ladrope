@@ -3,15 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\components",
+    "\\src\\components\\home",
+    "\\src\\components\\labels",
+    "\\src\\components\\user",
     "\\src\\pages",
     "\\src\\pages\\home",
-    "\\src\\pages\\login",
-    "\\src\\pages\\reset-password",
-    "\\src\\pages\\signup",
-    "\\src\\providers",
-    "\\src\\providers\\auth",
-    "\\src\\validators"
+    "\\src\\pages\\login"
   ],
-  "SelectedNode": "\\src\\providers\\auth\\auth.ts",
+  "SelectedNode": "\\src\\components\\home\\home.html",
   "PreviewInSolutionExplorer": false
 }
