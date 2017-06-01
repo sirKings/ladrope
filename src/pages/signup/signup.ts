@@ -93,6 +93,12 @@ export class SignupPage {
      this.navCtrl.push(HomePage);
   }
 
+  signInWithTwitter() {
+    this.authData.signinTwitter()
+      .then(res => this.user = res);
+      //console.log(this.user)
+     this.navCtrl.push(HomePage);
+  }
 
 
   login() {

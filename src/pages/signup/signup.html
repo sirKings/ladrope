@@ -1,14 +1,5 @@
 ﻿
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>
-      Create an Account
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-
-<ion-content padding>
+<ion-content>
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>
@@ -42,6 +33,10 @@
 
   <button ion-button block (click)="signInWithFacebook()">
       Login fb
+  </button>
+
+  <button ion-button block (click)="signInWithTwitter()">
+      Login Tw
   </button>
 
   <button ion-button block (click)="signInWithGoogle()">
