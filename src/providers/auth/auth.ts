@@ -43,7 +43,6 @@ export class AuthProvider {
       return this.twitter.login().then(res => {
         console.log(res);
         const credential = firebase.auth.TwitterAuthProvider.credential(res.token, res.secret);
-        //const secret = firebase.auth.TwitterAuthProvider.credential(res.credential.secret);
         return firebase.auth().signInWithCredential(credential);
       })
     }
