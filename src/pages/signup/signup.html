@@ -29,6 +29,12 @@
       <p>Your password needs more than 6 characters.</p>
     </ion-item>
 
+    <ion-item>
+      <ion-label stacked>Retype Password</ion-label>
+      <ion-input formControlName="passwordRetyped" type="password"  placeholder="Retype password"
+        [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty"></ion-input>
+    </ion-item>
+
     <button ion-button block type="submit">
       Create an Account
     </button>

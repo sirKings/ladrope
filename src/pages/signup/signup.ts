@@ -28,7 +28,8 @@ export class SignupPage {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+      passwordRetyped: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
   }
 
@@ -39,12 +40,22 @@ export class SignupPage {
    * If the form is invalid it will just log the form value, feel free to handle that as you like.
    */
   signupUser(){
+    if(this.signupForm.value.password !== this.signupForm.value.passwordRetyped) {
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message: 'Your password and your re-entered password does not match each other.',
+        buttons: ['OK']
+      });
+      alert.present();
+      return;
+    }
+
     if (!this.signupForm.valid){
       console.log(this.signupForm.value);
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.push(HomePage);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -72,14 +83,14 @@ export class SignupPage {
     this.authData.signinFb()
       .then(res => this.user = res);
       //console.log(this.user)
-     this.navCtrl.setRoot(HomePage);
+     this.navCtrl.push(HomePage);
   }
 
   signInWithGoogle() {
     this.authData.signinGoogle()
       .then(res => this.user = res);
       //console.log(this.user)
-     this.navCtrl.setRoot(HomePage);
+     this.navCtrl.push(HomePage);
   }
 
 
