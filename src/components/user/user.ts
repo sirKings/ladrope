@@ -30,7 +30,7 @@ export class UserComponent {
 
   signOut() {
     this.authData.logoutUser();
-    this.navCtrl.setRoot(SignupPage);
+    this.navCtrl.parent.parent.setRoot(SignupPage);
   }
 
 }

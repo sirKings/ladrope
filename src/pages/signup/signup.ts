@@ -52,10 +52,20 @@ export class SignupPage {
 
     if (!this.signupForm.valid){
       console.log(this.signupForm.value);
+        let alert = this.alertCtrl.create({
+              message: 'Enter Signup details',
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+          alert.present();
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
-        this.navCtrl.push(HomePage);
+        this.navCtrl.setRoot(HomePage);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -83,21 +93,21 @@ export class SignupPage {
     this.authData.signinFb()
       .then(res => this.user = res);
       //console.log(this.user)
-     this.navCtrl.push(HomePage);
+    this.navCtrl.setRoot(HomePage);
   }
 
   signInWithGoogle() {
     this.authData.signinGoogle()
       .then(res => this.user = res);
       //console.log(this.user)
-     this.navCtrl.push(HomePage);
+     this.navCtrl.setRoot(HomePage);
   }
 
   signInWithTwitter() {
     this.authData.signinTwitter()
       .then(res => this.user = res);
       //console.log(this.user)
-     this.navCtrl.push(HomePage);
+     this.navCtrl.setRoot(HomePage);
   }
 
 
