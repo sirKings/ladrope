@@ -14,7 +14,7 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 
 import { AngularFireModule } from 'angularfire2';
-//import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
@@ -52,7 +52,7 @@ export const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    //AngularFireDatabaseModule,
+    AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
   bootstrap: [IonicApp],

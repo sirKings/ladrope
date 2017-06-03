@@ -1,1 +1,40 @@
-﻿<ion-content>Tab 1</ion-content>
+﻿ <ion-content>
+  <ion-item *ngFor='let cloth of cloths | async'>
+    {{cloth.name}}
+    <ion-slides pager>
+      <ion-slide>
+         <img class='slide-image' [src]='cloth.image1'/>
+       </ion-slide>
+       <ion-slide>
+          <img class='slide-image' [src]='cloth.image2'/>
+       </ion-slide>
+       <ion-slide>
+          <img class='slide-image' [src]='cloth.image3'/>
+        </ion-slide>
+         <ion-slide>
+          <img class='slide-image' [src]='cloth.image4'/>
+        </ion-slide>
+         <ion-slide>
+          <img class='slide-image' [src]='cloth.image5'/>
+        </ion-slide>
+     </ion-slides>
+     <ion-grid>
+        <ion-row>
+          <ion-col col-sm-2>
+            <ion-icon name="heart"></ion-icon>
+          </ion-col>
+          <ion-col col-sm-2>
+             <ion-icon name="text"></ion-icon>
+          </ion-col>
+          <ion-col col-sm-2>
+            <ion-icon name="share"></ion-icon>
+           </ion-col>
+          <ion-col col-sm-3></ion-col>
+
+          <ion-col col-sm-3>
+            <ion-icon name="cart" side="right"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-item>
+  </ion-content>

@@ -33,4 +33,5 @@ export class UserComponent {
     this.navCtrl.parent.parent.setRoot(SignupPage);
   }
 
+
 }

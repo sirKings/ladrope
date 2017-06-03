@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 
 
@@ -7,12 +8,13 @@
   templateUrl: 'home.html'
 })
 export class HomeComponent {
+  
 
-  text: string;
+  cloths: FirebaseListObservable<any[]>;
 
-  constructor() {
-    console.log('Hello UserComponent Component');
-    this.text = 'Hello World';
+  constructor(private db: AngularFireDatabase) {
+    this.cloths = db.list('/cloths');
+    console.log(this.cloths)
   }
 
 }
