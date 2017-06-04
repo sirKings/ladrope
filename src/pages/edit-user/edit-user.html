@@ -1,8 +1,12 @@
 ﻿<ion-content padding>
 <ion-card>
+  <form [formGroup]="userForm" (submit)="saveUser()" novalidate>
   <img class='userimage' src={{photoURL}}/>
-    <button ion-button clear item-right (click)="editUser()">
-      Edit
+    <button ion-button clear item-right type="submit">
+      Save
+    </button>
+    <button ion-button clear item-right type="button" (click)="cancel()">
+      Cancel
     </button>
   <ion-card-content>
     <ion-card-title>
@@ -12,19 +16,19 @@
     <ion-list>
       <button ion-item>
         <ion-icon name="mail" item-left></ion-icon>
-        {{email || 'Email'}}
+        {{email}}
        </button>
        <button ion-item>
         <ion-icon name="call" item-left></ion-icon>
-        Phone number
+        <ion-input formControlName='phone' placeholder="Enter mobile number"></ion-input>
        </button>
        <button ion-item>
         <ion-icon name="home" item-left></ion-icon>
-        Address
+          <ion-input formControlName='address' placeholder="Enter delivery address"></ion-input>
        </button>
        <button ion-item>
         <ion-icon name="man" item-left></ion-icon>
-        Hieght
+      <ion-input formControlName='height' placeholder="Your height in Inches"></ion-input>
        </button>
        <button ion-item>
         <ion-icon name="videocam" item-left></ion-icon>
@@ -32,9 +36,10 @@
        </button>
     </ion-list>
   </ion-card-content>
+  </form>
 </ion-card>
 
-<button ion-button clear (click)="signOut()">
+<button ion-button clear>
     Logout
 </button>
 

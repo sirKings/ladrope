@@ -32,7 +32,7 @@ export class LoginPage {
         EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), 
       Validators.required])]
-});
+    });
   }
 
   loginUser(){

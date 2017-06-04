@@ -23,6 +23,7 @@ import { SearchComponent } from '../components/search/search';
 import { HomeComponent } from '../components/home/home';
 import { OrderComponent } from '../components/order/order';
 import { LabelsComponent } from '../components/labels/labels';
+import { EditUserPage } from '../pages/edit-user/edit-user';
 
 export const firebaseConfig = {
 
@@ -46,7 +47,8 @@ export const firebaseConfig = {
     SearchComponent,
     HomeComponent,
     OrderComponent,
-    LabelsComponent
+    LabelsComponent,
+    EditUserPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ export const firebaseConfig = {
     SearchComponent,
     HomeComponent,
     OrderComponent,
-    LabelsComponent
+    LabelsComponent,
+    EditUserPage
   ],
   providers: [
     StatusBar,
