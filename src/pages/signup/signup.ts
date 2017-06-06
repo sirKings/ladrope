@@ -91,23 +91,62 @@ export class SignupPage {
 
   signInWithFacebook() {
     this.authData.signinFb()
-      .then(res => this.user = res);
-      //console.log(this.user)
-    this.navCtrl.setRoot(HomePage);
+      .then(res => { 
+      this.user = res;
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
   }
 
   signInWithGoogle() {
     this.authData.signinGoogle()
-      .then(res => this.user = res);
-      //console.log(this.user)
-     this.navCtrl.setRoot(HomePage);
+     .then(res => { 
+      this.user = res;
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
   }
 
   signInWithTwitter() {
     this.authData.signinTwitter()
-      .then(res => this.user = res);
-      //console.log(this.user)
-     this.navCtrl.setRoot(HomePage);
+      .then(res => { 
+      this.user = res;
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
   }
 
 

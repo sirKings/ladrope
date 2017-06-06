@@ -1,9 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AuthProvider } from '../../providers/auth/auth';
 
-import { SignupPage } from '../signup/signup';
 
 import { UserComponent } from '../../components/user/user';
 import { HomeComponent } from '../../components/home/home';
@@ -19,9 +16,6 @@ import { SearchComponent } from '../../components/search/search';
 
 export class HomePage {
 
-displayName;
-photoURL;
-
 //tabs components variables
 userTab;
 homeTab;
@@ -30,16 +24,7 @@ labels;
 search;
 
 
-constructor(public navCtrl: NavController, private authData: AuthProvider, private afAuth: AngularFireAuth) {
-
-     afAuth.authState.subscribe(user => {
-      if (!user) {
-        this.displayName = null;        
-        return;
-      }
-      this.displayName = user.displayName;
-      this.photoURL = user.photoURL;
-    });
+constructor(public navCtrl: NavController) {
 
     this.userTab = UserComponent;
     this.homeTab = HomeComponent;
@@ -47,10 +32,5 @@ constructor(public navCtrl: NavController, private authData: AuthProvider, priva
     this.labels = LabelsComponent;
     this.search = SearchComponent;
 
-  }
-
-  signOut() {
-    this.authData.logoutUser();
-    this.navCtrl.push(SignupPage);
   }
 }
