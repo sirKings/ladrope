@@ -1,0 +1,61 @@
+﻿<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>More Information</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="userDetailsForm" (submit)="writeUser()" novalidate>
+
+    <ion-item *ngIf='!email'>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder="Your email address"
+        [class.invalid]="!userDetailsForm.controls.email.valid &&
+          userDetailsForm.controls.email.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!userDetailsForm.controls.email.valid  &&
+      userDetailsForm.controls.email.dirty">
+      <p>Please enter a valid email.</p>
+    </ion-item>
+
+    <ion-item *ngIf='!name'>
+      <ion-label stacked> Full Name</ion-label>
+      <ion-input formControlName="name" type="text" placeholder="Your name"
+       required></ion-input>
+    </ion-item>
+
+    <ion-item>
+    <ion-label>Gender</ion-label>
+      <ion-select formControlName="gender" [class.invalid]="userDetailsForm.controls.gender.dirty">
+       <ion-option value="male">Male</ion-option>
+       <ion-option value="female">Female</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Phone</ion-label>
+      <ion-input  formControlName="phone" type="text" placeholder="Enter your mobile number"
+       required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Address</ion-label>
+      <ion-input  formControlName="address" type="text" placeholder="Enter your delivery address"
+       required></ion-input>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Next
+    </button>
+
+  </form>
+</ion-content>
