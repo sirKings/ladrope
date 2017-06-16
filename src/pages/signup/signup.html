@@ -1,5 +1,12 @@
-﻿
-<ion-content>
+﻿<ion-header>
+
+  <ion-navbar>
+    <ion-title>Welcome</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>
@@ -31,19 +38,27 @@
     </button>
   </form>
 
-  <button ion-button block (click)="signInWithFacebook()">
-      Login fb
-  </button>
-
-  <button ion-button block (click)="signInWithTwitter()">
-      Login Tw
-  </button>
-
-  <button ion-button block (click)="signInWithGoogle()">
-      Login G+
-  </button>
+  <ion-grid>
+    <ion-row>
+       <ion-col col-4>
+          <button ion-button (click)="signInWithFacebook()" class='loginbutton'>
+            <ion-icon name="logo-facebook"></ion-icon>
+          </button>
+        </ion-col>
+       <ion-col col-4>
+          <button ion-button (click)="signInWithTwitter()" class='loginbutton'>
+            <ion-icon name="logo-twitter"></ion-icon>
+          </button>
+        </ion-col>
+       <ion-col col-4>
+          <button ion-button (click)="signInWithGoogle()" class='loginbutton'>
+            <ion-icon name="logo-googleplus"></ion-icon>
+          </button>
+        </ion-col>
+     </ion-row>
+  </ion-grid>
     
-  <h4>Have an account?</h4>
+  <h6 ion-text>Have an account?</h6>
   <button ion-button block (click)="login()">
      Login
   </button>

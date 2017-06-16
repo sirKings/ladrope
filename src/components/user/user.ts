@@ -1,9 +1,9 @@
 ﻿import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
+
 
 import { SignupPage } from '../../pages/signup/signup';
 import { EditUserPage } from '../../pages/edit-user/edit-user';
@@ -13,23 +13,12 @@ import { EditUserPage } from '../../pages/edit-user/edit-user';
   templateUrl: 'user.html'
 })
 export class UserComponent {
+  user;
+  uid;
 
-  
-  displayName;
-  photoURL;
-  email;
-
-  constructor(private authData: AuthProvider, private afAuth: AngularFireAuth, public navCtrl: NavController) {
-    afAuth.authState.subscribe(user => {
-      if (!user) {
-        this.displayName = null;        
-        return;
-      }
-      this.displayName = user.displayName;
-      this.photoURL = user.photoURL;
-      this.email = user.email;
-      console.log(user)
-    });
+  constructor(private authData: AuthProvider, public navCtrl: NavController, private navParams: NavParams) {
+    this.user = navParams.get('user');
+    console.log(this.user)
   }
 
   signOut() {
@@ -39,9 +28,9 @@ export class UserComponent {
 
   editUser(){
       this.navCtrl.push(EditUserPage, {
-            displayName: this.displayName,
-            photoURL: this.photoURL,
-            email: this.email
+            displayName: this.user.displayName,
+            photoURL: this.user.photoURL,
+            email: this.user.email
       });
   }
 

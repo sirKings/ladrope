@@ -17,4 +17,8 @@ export class HomeComponent {
     console.log(this.cloths)
   }
 
+  like(){
+  
+  }
+
 }

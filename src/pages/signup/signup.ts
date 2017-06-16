@@ -8,8 +8,8 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
-import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
+import { DetailsPage } from '../details/details';
 import { EmailValidator } from '../../validators/email';
 
 @IonicPage()
@@ -20,7 +20,8 @@ import { EmailValidator } from '../../validators/email';
 export class SignupPage {
   public signupForm:FormGroup;
   public loading:Loading;
-  user
+  user;
+  
 
   constructor(public navCtrl: NavController, public authData: AuthProvider, 
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
@@ -64,8 +65,8 @@ export class SignupPage {
           alert.present();
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
-      .then(() => {
-        this.navCtrl.setRoot(HomePage);
+      .then(res => {
+       this.navCtrl.push(DetailsPage);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -91,9 +92,8 @@ export class SignupPage {
 
   signInWithFacebook() {
     this.authData.signinFb()
-      .then(res => { 
-      this.user = res;
-      this.navCtrl.setRoot(HomePage);
+      .then(res => {
+      this.navCtrl.push(DetailsPage);
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -112,8 +112,7 @@ export class SignupPage {
   signInWithGoogle() {
     this.authData.signinGoogle()
      .then(res => { 
-      this.user = res;
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.push(DetailsPage);
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -132,8 +131,7 @@ export class SignupPage {
   signInWithTwitter() {
     this.authData.signinTwitter()
       .then(res => { 
-      this.user = res;
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.push(DetailsPage);
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -153,4 +151,5 @@ export class SignupPage {
   login() {
       this.navCtrl.push(LoginPage)
   }
+
 }

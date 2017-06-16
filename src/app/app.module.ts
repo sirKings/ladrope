@@ -8,6 +8,7 @@ import { TwitterConnect } from '@ionic-native/twitter-connect';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LandingPage } from '../pages/landing/landing';
 import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
@@ -24,6 +25,7 @@ import { HomeComponent } from '../components/home/home';
 import { OrderComponent } from '../components/order/order';
 import { LabelsComponent } from '../components/labels/labels';
 import { EditUserPage } from '../pages/edit-user/edit-user';
+import { DetailsPage } from '../pages/details/details';
 
 export const firebaseConfig = {
 
@@ -48,7 +50,9 @@ export const firebaseConfig = {
     HomeComponent,
     OrderComponent,
     LabelsComponent,
-    EditUserPage
+    EditUserPage,
+    LandingPage,
+    DetailsPage
   ],
   imports: [
     BrowserModule,
@@ -69,7 +73,9 @@ export const firebaseConfig = {
     HomeComponent,
     OrderComponent,
     LabelsComponent,
-    EditUserPage
+    EditUserPage,
+    LandingPage,
+    DetailsPage
   ],
   providers: [
     StatusBar,

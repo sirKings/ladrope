@@ -4,11 +4,16 @@ import firebase from 'firebase/app';
 import { Platform } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class AuthProvider {
+  
+  userDb;
 
-  constructor(public afAuth: AngularFireAuth, private fb: Facebook, private platform: Platform, private twitter: TwitterConnect) {}
+  constructor(public afAuth: AngularFireAuth, private fb: Facebook, private platform: Platform, private twitter: TwitterConnect, private db: AngularFireDatabase) {
+      
+  }
 
   loginUser(newEmail: string, newPassword: string): firebase.Promise<any> {
     return this.afAuth.auth.signInWithEmailAndPassword(newEmail, newPassword);
@@ -55,4 +60,25 @@ export class AuthProvider {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
+   writeUserData(uid, displayName, email, imageUrl, address, gender, phone){
+      const user = this.db.object(`users/${uid}` , { preserveSnapshot: true });
+      user.subscribe(data => {
+        if(data.val() !== null) {
+           console.log('User does not exist');
+           this.userDb = this.db.list('/users'); 
+              this.userDb.push({
+              uid: uid,
+              displayName: displayName,
+              email: email,
+              photoURL: imageUrl,
+              address: address,
+              phone: phone,
+              gender: gender
+            })
+        } else {
+          console.log('User does exist');
+        }
+      });
+      
+  }
 }

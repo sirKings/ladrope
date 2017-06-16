@@ -38,6 +38,16 @@ export class LoginPage {
   loginUser(){
     if (!this.loginForm.valid){
       console.log(this.loginForm.value);
+      let alert = this.alertCtrl.create({
+              message: 'Enter Signin details',
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+          alert.present();
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
       .then( authData => {

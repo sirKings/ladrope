@@ -1,8 +1,12 @@
-﻿
-<ion-content padding>
+﻿<ion-header>
 
-  <h1>LadRope</h1>
-  <h3>Login</h3>
+  <ion-navbar>
+    <ion-title>Welcome back</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
   <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
 
     <ion-item>
