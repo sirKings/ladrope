@@ -15,7 +15,6 @@ import { EmailValidator } from '../../validators/email';
   templateUrl: 'details.html',
 })
 export class DetailsPage {
-  user;
   uid;
   email;
   name;
@@ -61,15 +60,6 @@ export class DetailsPage {
 
       if (this.name) {
           this.userDetailsForm.value.name = this.name;
-      }
-
-      this.user = {
-        name: this.userDetailsForm.value.name,
-        email: this.userDetailsForm.value.email,
-        photoURL: this.photoURL,
-        address: this.userDetailsForm.value.address,
-        gender: this.userDetailsForm.value.gender,
-        phone: this.userDetailsForm.value.phone,
       }
 
       this.authData.writeUserData(this.uid, this.userDetailsForm.value.name, this.userDetailsForm.value.email, this.photoURL, this.userDetailsForm.value.address,  this.userDetailsForm.value.gender, this.userDetailsForm.value.phone);

@@ -1,6 +1,15 @@
 ﻿ <ion-content>
   <ion-item *ngFor='let cloth of cloths | async'>
-    {{cloth.name}}
+    <div class='right'>
+      <ion-badge>{{cloth.price | currency}}</ion-badge> <br>
+        <div class='star'>
+         <ion-icon name="star"></ion-icon>
+         <ion-icon name="star"></ion-icon>
+         <ion-icon name="star-half"></ion-icon>
+        </div>
+      </div>
+    {{cloth.name}} from <br> {{cloth.label}}
+    <div class='clear'></div>
     <ion-slides pager>
       <ion-slide>
          <img class='slide-image' [src]='cloth.image1'/>
@@ -20,18 +29,18 @@
      </ion-slides>
      <ion-grid>
         <ion-row>
-          <ion-col col-sm-2>
-            <ion-icon name="heart" (click)='like()'></ion-icon>
+          <ion-col col-sm-2 (click)='like()'>
+            <ion-icon name="heart"></ion-icon>
           </ion-col>
-          <ion-col col-sm-2>
+          <ion-col col-sm-2 (click)='comment()'>
              <ion-icon name="text"></ion-icon>
           </ion-col>
-          <ion-col col-sm-2>
+          <ion-col col-sm-2 (click)='share()'>
             <ion-icon name="share"></ion-icon>
            </ion-col>
           <ion-col col-sm-3></ion-col>
 
-          <ion-col col-sm-3>
+          <ion-col col-sm-3 (click)='addToCart()'>
             <ion-icon name="cart" side="right"></ion-icon>
           </ion-col>
         </ion-row>

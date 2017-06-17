@@ -72,7 +72,64 @@ export class LoginPage {
       });
       this.loading.present();
     }
-}
+  }
+
+  signInWithFacebook() {
+    this.authData.signinFb()
+      .then(res => {
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
+  }
+
+  signInWithGoogle() {
+    this.authData.signinGoogle()
+     .then(res => { 
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
+  }
+
+  signInWithTwitter() {
+    this.authData.signinTwitter()
+      .then(res => { 
+      this.navCtrl.setRoot(HomePage);
+      }, error => {
+        var errorMessage: string = error.message;
+        let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+        alert.present();
+      });
+  }
 
   goToResetPassword(){
   this.navCtrl.push(ResetPasswordPage);

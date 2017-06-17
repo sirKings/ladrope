@@ -63,11 +63,10 @@ export class AuthProvider {
    writeUserData(uid, displayName, email, imageUrl, address, gender, phone){
       const user = this.db.object(`users/${uid}` , { preserveSnapshot: true });
       user.subscribe(data => {
-        if(data.val() !== null) {
+        if(data.val() === null) {
            console.log('User does not exist');
-           this.userDb = this.db.list('/users'); 
+           this.userDb = this.db.list('/users/'+uid); 
               this.userDb.push({
-              uid: uid,
               displayName: displayName,
               email: email,
               photoURL: imageUrl,
@@ -75,6 +74,7 @@ export class AuthProvider {
               phone: phone,
               gender: gender
             })
+            return;
         } else {
           console.log('User does exist');
         }
