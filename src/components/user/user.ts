@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -13,27 +13,37 @@ import { EditUserPage } from '../../pages/edit-user/edit-user';
   selector: 'user',
   templateUrl: 'user.html'
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
+  
   userDetails: FirebaseObjectObservable<any>;
   uid;
   user;
 
   constructor(private authData: AuthProvider, public afAuth: AngularFireAuth, public navCtrl: NavController, private db: AngularFireDatabase) {
-    const authObserver = afAuth.authState.subscribe( user => {
-      if (user) {
-        this.uid = user.uid;
-        console.log(this.uid)
-        authObserver.unsubscribe();
-      } 
-      });
-
-      this.userDetails = db.object(`users/${this.uid}`, { preserveSnapshot: true })
-      this.userDetails.subscribe(d => {
-        this.userDetails = d;
-        console.log(this.userDetails);
-      })
+      const authObserver = this.afAuth.authState.subscribe( user => {
+          if (user) {
+            this.uid = user.uid;
+              console.log(this.uid)
+              authObserver.unsubscribe();
+          } 
+        });
   }
 
+   ngOnInit() {
+       
+        
+        this.db.object( '/users/' + this.uid )
+            .subscribe( snapshot => {
+                        this.userDetails = snapshot;
+                        console.log(this.userDetails);
+                        for (var property in this.userDetails) {
+                          if (this.userDetails.hasOwnProperty(property)) {
+                          this.userDetails = this.userDetails[property];
+                          console.log(this.userDetails)
+                        }
+}
+            });
+    }
   
   signOut() {
     this.authData.logoutUser();
@@ -41,10 +51,9 @@ export class UserComponent {
   }
 
   editUser(){
-      this.navCtrl.push(EditUserPage, {
-            displayName: this.user.displayName,
-            photoURL: this.user.photoURL,
-            email: this.user.email
+     //this.userDetails.uid = this.uid
+     this.navCtrl.push(EditUserPage, {
+          user: this.userDetails
       });
   }
 

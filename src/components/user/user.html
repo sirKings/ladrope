@@ -1,26 +1,26 @@
 ﻿<ion-content padding>
-<ion-card>
-  <img class='userimage' src={{photoURL}}/>
+<ion-card *ngIf="userDetails">
+  <img class='userimage' src="{{ userDetails?.photoURL }}"/>
     <button ion-button clear item-right (click)="editUser()">
       Edit
     </button>
   <ion-card-content>
-    <ion-card-title *ngIf='displayName'>
-      {{displayName}}
+    <ion-card-title >
+      {{userDetails?.displayName}}
     </ion-card-title>
     
     <ion-list>
       <button ion-item>
         <ion-icon name="mail" item-left></ion-icon>
-        {{email}}
+        {{userDetails?.email}}
        </button>
        <button ion-item>
         <ion-icon name="call" item-left></ion-icon>
-        {{phone}}
+        {{userDetails?.phone}}
        </button>
        <button ion-item>
         <ion-icon name="home" item-left></ion-icon>
-        {{address}}
+        {{userDetails?.address}}
        </button>
        <button ion-item>
         <ion-icon name="man" item-left></ion-icon>

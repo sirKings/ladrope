@@ -26,6 +26,8 @@ import { OrderComponent } from '../components/order/order';
 import { LabelsComponent } from '../components/labels/labels';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { DetailsPage } from '../pages/details/details';
+import { FilterComponent } from '../components/filter/filter';
+import { CommentsPage } from '../pages/comments/comments'
 
 export const firebaseConfig = {
 
@@ -52,7 +54,9 @@ export const firebaseConfig = {
     LabelsComponent,
     EditUserPage,
     LandingPage,
-    DetailsPage
+    DetailsPage,
+    FilterComponent,
+    CommentsPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,9 @@ export const firebaseConfig = {
     LabelsComponent,
     EditUserPage,
     LandingPage,
-    DetailsPage
+    DetailsPage,
+    FilterComponent,
+    CommentsPage
   ],
   providers: [
     StatusBar,

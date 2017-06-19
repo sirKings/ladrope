@@ -2,13 +2,13 @@
 import { IonicPage, 
          NavController,
          NavParams,
-         LoadingController, 
-         Loading, 
-         AlertController } from 'ionic-angular';
+         } from 'ionic-angular';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { UserComponent } from '../../components/user/user'
+import { AuthProvider } from '../../providers/auth/auth';
+
+import { UserComponent } from '../../components/user/user';
 
 
 @IonicPage()
@@ -19,16 +19,10 @@ import { UserComponent } from '../../components/user/user'
 export class EditUserPage {
   
   user;
-  email;
-  photoURL;
-  displayName;
   userForm:FormGroup;
-  loading:Loading;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-    this.email = navParams.get('email');
-    this.photoURL = navParams.get('photoURL');
-    this.displayName = navParams.get('displayName');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider) {
+    this.user = navParams.get('user');
 
     this.userForm = formBuilder.group({
         phone: "",
@@ -39,7 +33,7 @@ export class EditUserPage {
   }
 
   saveUser(){
-      console.log(this.userForm.value);
+      this.authData.writeUserData(this.user.uid, this.userForm.value.name, this.userForm.value.email, this.user.photoURL, this.userForm.value.address,  this.user.gender, this.userForm.value.phone);
       this.navCtrl.push(UserComponent)
   }
 

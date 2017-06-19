@@ -73,7 +73,7 @@ export class AuthProvider {
               address: address,
               phone: phone,
               gender: gender
-            })
+           })
             return;
         } else {
           console.log('User does exist');

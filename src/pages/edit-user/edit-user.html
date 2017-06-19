@@ -1,7 +1,7 @@
 ﻿<ion-content padding>
 <ion-card>
   <form [formGroup]="userForm" (submit)="saveUser()" novalidate>
-  <img class='userimage' src={{photoURL}}/>
+  <img class='userimage' src={{user.photoURL}}/>
     <button ion-button clear item-right type="submit">
       Save
     </button>
@@ -10,13 +10,13 @@
     </button>
   <ion-card-content>
     <ion-card-title>
-      {{displayName}}
+      {{user.displayName}}
     </ion-card-title>
     
     <ion-list>
       <ion-item>
         <ion-icon name="mail" item-left></ion-icon>
-        {{email}}
+        {{user.email}}
        </ion-item>
        <ion-item>
         <ion-icon name="call" item-left></ion-icon>

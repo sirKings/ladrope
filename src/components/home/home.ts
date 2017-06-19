@@ -1,6 +1,10 @@
 ﻿import { Component } from '@angular/core';
+import { ModalController, NavController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+
+import { FilterComponent } from '../filter/filter';
+import { CommentsPage } from '../../pages/comments/comments';
 
 
 
@@ -10,44 +14,69 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class HomeComponent {
   uid;
-
+  options;
   cloths: FirebaseListObservable<any[]>;
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
-    this.cloths = db.list('/cloths');
-    console.log(this.cloths);
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController) {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
         this.uid = user.uid;
         console.log(this.uid)
+        db.object('/users/' + this.uid)
+          .subscribe( snapshot => {
+                        let userDetails = snapshot;
+                        console.log(userDetails);
+                        for (var property in userDetails) {
+                          if (userDetails.hasOwnProperty(property)) {
+                          userDetails = userDetails[property];
+                          this.options = userDetails.gender
+                          console.log(this.options)
+                          this.initialise(this.options)
+                          }
+                        }
+           });
         authObserver.unsubscribe();
       } 
       });
     }
 
-  like () {
-    this.cloths.$ref
-    .ref.transaction(function(cloth) {
-        console.log(cloth.Foofoo)
-        if (cloth.Foofoo.likes && cloth.Foofoo.likes[this.uid]) {
-          cloth.Foofoo.likesCount--;
-          cloth.Foofoo.likes[this.uid] = null;
-        } else {
-          cloth.Foofoo.likesCount++;
-          if (!cloth.Foofoo.likes) {
-            cloth.Foofoo.likes = {};
-          }
-          cloth.Foofoo.likes[this.uid] = true;
-        }
-    });
+  initialise(options){
+     this.cloths = this.db.list('/cloths');
+     console.log(this.cloths)
+     console.log(options)
   }
 
-  share () {
+  filter() {
+    let modal = this.modalCtrl.create(FilterComponent);
+    modal.onDidDismiss(data => {
+       this.initialise(data)
+    });
+
+    modal.present();
+  }
+
+  like (cloth, uid) {
+      this.db.object('/cloths/'+cloth.$key+'/likes').$ref
+      .ref.transaction(likes => {
+           cloth.likes++;
+           
+      })
+
+    console.log(uid)
+  }
+
+  share (cloth) {
   
   }
 
-  comment() {}
+  comment(cloth) {
+    this.navCtrl.parent.parent.push(CommentsPage, {
+        cloth: cloth
+    })
+  }
 
-  addToCart() {}
+  addToCart(cloth) {}
+
+  
 }

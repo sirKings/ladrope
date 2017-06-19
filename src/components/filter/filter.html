@@ -1,0 +1,43 @@
+﻿<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Filter feeds
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="filterOptions" novalidate>
+    <ion-item>
+      <ion-label>Class</ion-label>
+      <ion-select formControlName="class">
+       <ion-option value="casuals">Casual Wears</ion-option>
+       <ion-option value="corporate">Corporate Wears</ion-option>
+       <ion-option value="native">Traditional Wears</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Price</ion-label>
+      <ion-select formControlName="price">
+       <ion-option value="10000">N10000 or less</ion-option>
+       <ion-option value="20000">20000 or less</ion-option>
+       <ion-option value="50000">50000 or less</ion-option>
+       <ion-option value="100000">100000 or less</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-grid>
+    <ion-row>
+       <ion-col col-6>
+          <button ion-button (click)="cancel()" type='button'>
+           cancel
+          </button>
+        </ion-col>
+       <ion-col col-6>
+          <button ion-button (click)="dismiss()">
+            ok
+          </button>
+        </ion-col>
+     </ion-row>
+  </ion-grid>
+  </form>
+</ion-content>
