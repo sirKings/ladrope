@@ -1,5 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { ModalController, NavController } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -16,8 +18,11 @@ export class HomeComponent {
   uid;
   options;
   cloths: FirebaseListObservable<any[]>;
+  message = 'LadRope... Bespoke designs made just for you!';
+  url = 'www.ladrope.com';
+  image;
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController) {
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing) {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
@@ -66,8 +71,32 @@ export class HomeComponent {
     console.log(uid)
   }
 
-  share (cloth) {
-  
+  shareViaTwitter(cloth){
+    this.image = cloth.image1;
+    this.socialSharing.shareViaTwitter(this.message, this.image, this.url).then(() => {
+          console.log('successfully shared on twitter')
+    }).catch(() => {
+          console.log('failed')
+    })
+    
+  }
+
+  shareViaFacebook(cloth){
+    this.image = cloth.image1;
+    this.socialSharing.shareViaFacebook(this.message, this.image, this.url).then(() => {
+          console.log('successfully shared on twitter')
+    }).catch(() => {
+          console.log('failed')
+    })
+  }
+
+  shareViaWhatsApp(cloth){
+    this.image = cloth.image1;
+    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url).then(() => {
+          console.log('successfully shared on twitter')
+    }).catch(() => {
+          console.log('failed')
+    })
   }
 
   comment(cloth) {

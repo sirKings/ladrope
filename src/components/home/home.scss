@@ -20,8 +20,10 @@
       padding: 3px;
       margin-top: 12%;
       z-index: 1000;
-      
-      
+    }
+
+    ion-fab[top][edge] {
+    top: -14px;
     }
 
 }
