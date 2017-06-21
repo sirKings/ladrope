@@ -22,11 +22,11 @@
         <ion-icon name="home" item-left></ion-icon>
         {{userDetails?.address}}
        </button>
-       <button ion-item>
+       <button ion-item (click)='height()'>
         <ion-icon name="man" item-left></ion-icon>
         Hieght
        </button>
-       <button ion-item>
+       <button (click)='measure()' ion-item>
         <ion-icon name="videocam" item-left></ion-icon>
         Measurement
        </button>

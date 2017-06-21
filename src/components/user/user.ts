@@ -8,6 +8,8 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 
 import { SignupPage } from '../../pages/signup/signup';
 import { EditUserPage } from '../../pages/edit-user/edit-user';
+import { MeasurementPage } from '../../pages/measurement/measurement';
+import { HeightPage } from '../../pages/height/height';
 
 @Component({
   selector: 'user',
@@ -51,10 +53,17 @@ export class UserComponent implements OnInit {
   }
 
   editUser(){
-     //this.userDetails.uid = this.uid
      this.navCtrl.push(EditUserPage, {
           user: this.userDetails
       });
+  }
+
+  measure(){
+      this.navCtrl.parent.parent.push(MeasurementPage)
+  }
+
+  height(){
+      this.navCtrl.parent.parent.push(HeightPage)
   }
 
 

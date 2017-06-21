@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Facebook } from '@ionic-native/facebook';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { DeviceMotion } from '@ionic-native/device-motion';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -28,7 +30,11 @@ import { LabelsComponent } from '../components/labels/labels';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { DetailsPage } from '../pages/details/details';
 import { FilterComponent } from '../components/filter/filter';
-import { CommentsPage } from '../pages/comments/comments'
+import { CommentsPage } from '../pages/comments/comments';
+import { MeasurementPage } from '../pages/measurement/measurement';
+import { HeightPage } from '../pages/height/height';
+import { TimeModalComponent } from '../components/time-modal/time-modal';
+import { VideoPage } from '../pages/video/video';
 
 export const firebaseConfig = {
 
@@ -57,7 +63,11 @@ export const firebaseConfig = {
     LandingPage,
     DetailsPage,
     FilterComponent,
-    CommentsPage
+    CommentsPage,
+    MeasurementPage,
+    HeightPage,
+    TimeModalComponent,
+    VideoPage
   ],
   imports: [
     BrowserModule,
@@ -82,7 +92,11 @@ export const firebaseConfig = {
     LandingPage,
     DetailsPage,
     FilterComponent,
-    CommentsPage
+    CommentsPage,
+    MeasurementPage,
+    HeightPage,
+    TimeModalComponent,
+    VideoPage
   ],
   providers: [
     StatusBar,
@@ -91,7 +105,9 @@ export const firebaseConfig = {
     AuthProvider,
     Facebook,
     TwitterConnect,
-    SocialSharing
+    SocialSharing,
+    LocalNotifications,
+    DeviceMotion
   ]
 })
 export class AppModule {}

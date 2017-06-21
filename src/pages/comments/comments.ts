@@ -21,10 +21,19 @@ export class CommentsPage {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        this.title = user.displayName;
-        }
-        authObserver.unsubscribe();
-      })
+        let uid = user.uid
+        db.object('/users/'+uid)
+          .subscribe(snapshot => {
+              this.title = snapshot;
+                        for (var property in this.title) {
+                          if (this.title.hasOwnProperty(property)) {
+                          this.title = this.title[property].displayName;
+                           }
+                         }
+            authObserver.unsubscribe();
+          })
+      }
+    })
 
     this.cloth = navParam.get('cloth');
     this.comments = db.list('/cloths/'+this.cloth.$key+'/comment');

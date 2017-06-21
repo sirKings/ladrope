@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { ModalController, NavController } from 'ionic-angular';
+import { ModalController, NavController, AlertController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -22,7 +22,7 @@ export class HomeComponent {
   url = 'www.ladrope.com';
   image;
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing) {
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
@@ -74,9 +74,18 @@ export class HomeComponent {
   shareViaTwitter(cloth){
     this.image = cloth.image1;
     this.socialSharing.shareViaTwitter(this.message, this.image, this.url).then(() => {
-          console.log('successfully shared on twitter')
+            let alert = this.alertCtrl.create({
+            title: 'Thanks for sharing',
+            buttons: ['ok']
+            });
+          alert.present();
     }).catch(() => {
-          console.log('failed')
+            let alert = this.alertCtrl.create({
+            title: 'Couldnt share',
+            subTitle: 'Are you sure Twitter is installed',
+            buttons: ['Dismiss']
+            });
+          alert.present();
     })
     
   }
@@ -84,18 +93,36 @@ export class HomeComponent {
   shareViaFacebook(cloth){
     this.image = cloth.image1;
     this.socialSharing.shareViaFacebook(this.message, this.image, this.url).then(() => {
-          console.log('successfully shared on twitter')
+            let alert = this.alertCtrl.create({
+            title: 'Thanks for sharing',
+            buttons: ['ok']
+            });
+          alert.present();
     }).catch(() => {
-          console.log('failed')
+            let alert = this.alertCtrl.create({
+            title: 'Couldnt share',
+            subTitle: 'Are you sure Facebook is installed',
+            buttons: ['Dismiss']
+            });
+          alert.present();
     })
   }
 
   shareViaWhatsApp(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url).then(() => {
-          console.log('successfully shared on twitter')
+    this.socialSharing.shareViaWhatsApp(this.message, this.url, this.image).then(() => {
+            let alert = this.alertCtrl.create({
+            title: 'Thanks for sharing',
+            buttons: ['ok']
+            });
+          alert.present();
     }).catch(() => {
-          console.log('failed')
+            let alert = this.alertCtrl.create({
+            title: 'Couldnt share',
+            subTitle: 'Are you sure Whatsapp is installed',
+            buttons: ['Dismiss']
+            });
+          alert.present();
     })
   }
 
