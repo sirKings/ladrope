@@ -1,0 +1,24 @@
+﻿
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>measurement</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+   <video autoplay="true" controls class='video'>
+     <source src="assets/videos/test.mp4" type="video/mp4">
+   </video>
+
+   <ion-grid>
+     <ion-row>
+        <ion-col col-5><button ion-button (click)='startMeasure()'>Measure Now</button></ion-col>
+        <ion-col col-6><button ion-button outline (click)='remindLater()'>Remind me Later
+        </button></ion-col>
+     </ion-row>
+   </ion-grid>
+</ion-content>
+
