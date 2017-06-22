@@ -1,3 +1,19 @@
-page-height {
+﻿page-height {
+  video {  
+        width:100%; 
+        max-width:300px; 
+        height:auto; 
+      }
 
+    video::-internal-media-controls-download-button {
+        display:none;
+    }
+
+    video::-webkit-media-controls-enclosure {
+        overflow:hidden;
+    }
+
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 35px); /* Adjust as needed */
+    }
 }

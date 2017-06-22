@@ -65,7 +65,7 @@ export class AuthProvider {
       user.subscribe(data => {
         if(data.val() === null) {
            console.log('User does not exist');
-           this.userDb = this.db.list('/users/'+uid); 
+           this.userDb = this.db.list('/users/'+ uid); 
               this.userDb.push({
               displayName: displayName,
               email: email,
@@ -79,6 +79,25 @@ export class AuthProvider {
           console.log('User does exist');
         }
       });
-      
-  }
+   }
+
+   updateUser(uid, displayName, email, imageUrl, address, gender, phone, key){
+       this.userDb = this.db.object('/users/'+ uid +'/'+key);
+       this.userDb.update({
+              displayName: displayName,
+              email: email,
+              photoURL: imageUrl,
+              address: address,
+              phone: phone,
+              gender: gender
+           })
+   }
+
+   updateHeight(height, key, uid){
+   this.userDb = this.db.object('/users/'+ uid +'/'+key);
+   this.userDb.update({
+              height: height
+           })
+   }
+
 }

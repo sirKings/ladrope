@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   userDetails: FirebaseObjectObservable<any>;
   uid;
   user;
+  userKey;
 
   constructor(private authData: AuthProvider, public afAuth: AngularFireAuth, public navCtrl: NavController, private db: AngularFireDatabase) {
       const authObserver = this.afAuth.authState.subscribe( user => {
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit {
                         console.log(this.userDetails);
                         for (var property in this.userDetails) {
                           if (this.userDetails.hasOwnProperty(property)) {
+                          this.userKey = property;
                           this.userDetails = this.userDetails[property];
                           console.log(this.userDetails)
                         }
@@ -54,7 +56,9 @@ export class UserComponent implements OnInit {
 
   editUser(){
      this.navCtrl.push(EditUserPage, {
-          user: this.userDetails
+          user: this.userDetails,
+          userKey: this.userKey,
+          uid: this.uid
       });
   }
 
@@ -63,7 +67,11 @@ export class UserComponent implements OnInit {
   }
 
   height(){
-      this.navCtrl.parent.parent.push(HeightPage)
+      this.navCtrl.parent.parent.push(HeightPage, {
+        user: this.userDetails,
+        userKey: this.userKey,
+        uid: this.uid
+      })
   }
 
 

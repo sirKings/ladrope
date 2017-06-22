@@ -17,12 +17,16 @@ import { UserComponent } from '../../components/user/user';
   templateUrl: 'edit-user.html',
 })
 export class EditUserPage {
-  
+  uid;
   user;
+  userKey;
   userForm:FormGroup;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider) {
     this.user = navParams.get('user');
+    this.userKey = navParams.get('userKey');
+    this.uid = navParams.get('uid');
+
 
     this.userForm = formBuilder.group({
         phone: "",
@@ -33,7 +37,8 @@ export class EditUserPage {
   }
 
   saveUser(){
-      this.authData.writeUserData(this.user.uid, this.userForm.value.name, this.userForm.value.email, this.user.photoURL, this.userForm.value.address,  this.user.gender, this.userForm.value.phone);
+      
+      this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address,  this.user.gender, this.userForm.value.phone, this.userKey);
       this.navCtrl.push(UserComponent)
   }
 

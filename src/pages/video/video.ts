@@ -10,13 +10,13 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 })
 export class VideoPage {
 
-  @ViewChild('space') canvasRef;
+  @ViewChild('pointer') pointerRef
   
   
 
   subscription;
   user;
-  image = 'assets/images/pointer.png'
+  z;
 
 
 
@@ -29,45 +29,31 @@ export class VideoPage {
         },
         (error: any) => console.log(error)
         );
-
-      
-     
-
   } 
 
   amplify(q){
       q = q * 15;
-      return q;
+      return Math.round(q);
   }
 
   ngAfterViewInit() {
-        
-        let source = new Image()
-        let canvas = this.canvasRef.nativeElement;
-        let ctx = canvas.getContext('2d');
-        canvas.height = '700';
-        canvas.width = '300';
+    let pointer = this.pointerRef.nativeElement;
 
-        ctx.beginPath();
-        ctx.fillStyle = "blue";
-        ctx.rect(130, 45, 30, 600);  
-        ctx.fill();
-        ctx.save();
-
-        // Watch device acceleration
-        this.subscription = this.dm.watchAcceleration({frequency: 500})
-          .subscribe((acceleration: DeviceMotionAccelerationData) => {
-            ctx.restore();
-            let y = this.amplify(acceleration.y)
-            source.src = this.image;
-            ctx.drawImage(source, 100, y);
-            console.log(acceleration)
-          });
-       
+    this.subscription = this.dm.watchAcceleration({frequency: 50})
+      .subscribe((acceleration: DeviceMotionAccelerationData) => {
+ 
+          this.z = this.amplify(acceleration.z);
+          if(this.z < 31){
+              pointer.style.color = '#468a01';
+              pointer.style.paddingTop = this.z + 'px';
+          }else {
+              pointer.style.color = '#c30d09';
+              pointer.style.paddingTop = this.z + 'px';
+             
+          }
+          
+      })
   }
-
-  
-
 
   ionViewDidLeave() {
        // Stop watch

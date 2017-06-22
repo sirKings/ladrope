@@ -1,3 +1,21 @@
-page-video {
+﻿page-video {
+    .pointer{
+      padding-top: 20px;
+      padding: 0;
+      color: red;
+      font-size: 5rem;
+      transition: padding-top 500ms;
+      position: absolute;
+      margin-left: -30px;
+    }
 
+    .container{
+      height: 100%;
+      width: 100%;
+      padding-left: 50%;
+    }
+
+    .pointer:hover {
+      padding-top: 100px;
+    }
 }

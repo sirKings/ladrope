@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   Generated template for the HeightPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
@@ -14,5 +14,31 @@
 
 
 <ion-content padding>
+   <video autoplay="true" controls class='video'>
+     <source src="assets/videos/test.mp4" type="video/mp4">
+   </video>
 
+   <form [formGroup]="height" (submit)="save()" novalidate>
+    
+    <ion-item>
+      <ion-label stacked>Height</ion-label>
+      <ion-input formControlName="height" type="text" placeholder="Enter your height"
+       required></ion-input>
+    </ion-item>
+
+    <ion-item>
+    <ion-label>Unit</ion-label>
+      <ion-select formControlName="unit">
+       <ion-option value="inc">Inches</ion-option>
+       <ion-option value="meters">Meters</ion-option>
+       <ion-option value="cm">Centimeters (cm)</ion-option>
+       <ion-option value="ft">Feet</ion-option>
+      </ion-select>
+    </ion-item>
+
+    
+    <button ion-button block type="submit">
+     Save
+    </button>
+  </form>
 </ion-content>

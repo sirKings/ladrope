@@ -23,6 +23,6 @@ export class FilterComponent {
   }
 
   cancel() {
-      this.viewCtrl.dismiss()
+      this.viewCtrl.dismiss(null)
   }
 }

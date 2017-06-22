@@ -55,7 +55,10 @@ export class HomeComponent {
   filter() {
     let modal = this.modalCtrl.create(FilterComponent);
     modal.onDidDismiss(data => {
-       this.initialise(data)
+       if(data !== null){
+        this.initialise(data)
+       } else {}
+       
     });
 
     modal.present();
@@ -110,7 +113,7 @@ export class HomeComponent {
 
   shareViaWhatsApp(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaWhatsApp(this.message, this.url, this.image).then(() => {
+    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']

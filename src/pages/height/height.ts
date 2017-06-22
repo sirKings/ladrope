@@ -1,20 +1,34 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthProvider } from '../../providers/auth/auth';
 
-/**
- * Generated class for the HeightPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-height',
   templateUrl: 'height.html',
 })
 export class HeightPage {
+  
+  uid;
+  user;
+  userKey;
+  height: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private formBuilder: FormBuilder, private authData: AuthProvider) {
+    this.height = formBuilder.group({
+      height: '',
+      unit: ''
+    })
+
+    this.user = navParams.get('user');
+    this.userKey = navParams.get('userKey');
+    this.uid = navParams.get('uid')
+  }
+
+  save(){
+    this.authData.updateHeight(this.height.value, this.userKey, this.uid);
+      this.navCtrl.pop()
   }
 
   ionViewDidLoad() {
