@@ -26,7 +26,7 @@ export class MeasurementPage {
        let time = Number(data)
        this.ln.schedule({
           text: 'Time to take your measurement!',
-          at: new Date(new Date().getTime() + time),
+          at: new Date(new Date().getTime() + (time * 216000)),
           data: { message : 'Remember you are just 30 seconds away from living your style ' }
           });
     });
