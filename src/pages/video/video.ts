@@ -1,6 +1,7 @@
 ﻿import { ViewChild, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-capture-plus';
 
 
 @IonicPage()
@@ -12,7 +13,11 @@ export class VideoPage {
 
   @ViewChild('pointer') pointerRef
   
-  
+  options: VideoCapturePlusOptions = {
+      limit: 1,
+      duration: 15,
+      frontcamera: true
+   }
 
   subscription;
   user;
@@ -20,7 +25,7 @@ export class VideoPage {
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
     this.user = null;
     
     dm.getCurrentAcceleration().then(
@@ -52,6 +57,15 @@ export class VideoPage {
              
           }
           
+      })
+  }
+
+  startVideo(){
+      this.videoCapturePlus.captureVideo(this.options)
+      .then(res => {
+        console.log(res)
+      }, error => {
+        console.log('Something aint right')      
       })
   }
 

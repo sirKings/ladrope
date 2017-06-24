@@ -33,9 +33,10 @@
      </ion-slides>
      <ion-grid>
         <ion-row>
-          <ion-col col-sm-2 (click)='like(cloth, uid)'>
+          <ion-col col-sm-2 (click)='like(cloth, uid)' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
             {{cloth.likes}}
-            <ion-icon name="heart"></ion-icon>
+            <ion-icon *ngIf='!cloth.likers[uid]' name="heart-outline"></ion-icon>
+            <ion-icon *ngIf='cloth.likers[uid]' name="heart"></ion-icon>
           </ion-col>
           <ion-col col-sm-2 (click)='comment(cloth)'>
              {{cloth.numComment}}

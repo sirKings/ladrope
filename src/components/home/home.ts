@@ -7,6 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { FilterComponent } from '../filter/filter';
 import { CommentsPage } from '../../pages/comments/comments';
+import { OptionsPage } from '../../pages/options/options';
 
 
 
@@ -21,6 +22,7 @@ export class HomeComponent {
   message = 'LadRope... Bespoke designs made just for you!';
   url = 'www.ladrope.com';
   image;
+  user;
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
 
@@ -34,8 +36,8 @@ export class HomeComponent {
                         console.log(userDetails);
                         for (var property in userDetails) {
                           if (userDetails.hasOwnProperty(property)) {
-                          userDetails = userDetails[property];
-                          this.options = userDetails.gender
+                          this.user = userDetails[property];
+                          this.options = this.user.gender
                           console.log(this.options)
                           this.initialise(this.options)
                           }
@@ -65,12 +67,20 @@ export class HomeComponent {
   }
 
   like (cloth, uid) {
+      console.log(cloth.likers)
+      if(cloth.likers[uid] == true){
+        this.db.object('/cloths/'+cloth.$key+'/likes').$ref
+      .ref.transaction(likes => {
+           cloth.likes--;
+        })
+        cloth.likers[uid] = null;
+      } else {   
       this.db.object('/cloths/'+cloth.$key+'/likes').$ref
       .ref.transaction(likes => {
            cloth.likes++;
-           
-      })
-
+           })
+       cloth.likers[uid] = true;
+      }
     console.log(uid)
   }
 
@@ -135,7 +145,21 @@ export class HomeComponent {
     })
   }
 
-  addToCart(cloth) {}
+  addToCart(cloth) {
+
+    this.navCtrl.parent.parent.push(OptionsPage, {
+        cloth: cloth
+    })
+
+    /*let options = {
+      customer_email: this.user.email,
+      txref: 1232354,
+    }
+    
+    this.initRavePay(options)*/
+
+
+  }
 
   
 }

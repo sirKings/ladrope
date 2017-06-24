@@ -12,7 +12,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class CommentsPage {
 
- cloth
+ cloth;
+ numComment;
  comments: FirebaseListObservable<any[]>;
  comment: FormGroup;
  title;
@@ -37,12 +38,13 @@ export class CommentsPage {
 
     this.cloth = navParam.get('cloth');
     this.comments = db.list('/cloths/'+this.cloth.$key+'/comment');
+    this.numComment = db.object('cloths/'+this.cloth.$key+'/numComment');
     this.comment = formBuilder.group({
       message: ['', Validators.compose([Validators.required])]
     })
   }
 
-  sendComment(){
+  sendComment(cloth){
       if (!this.comment.valid){
       
       } else {
@@ -51,6 +53,10 @@ export class CommentsPage {
          message: this.comment.value.message
           })
          this.comment.reset()
+         this.numComment.$ref
+              .ref.transaction(numComment => {
+           numComment++;
+           })
       }
      
   }

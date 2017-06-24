@@ -8,6 +8,7 @@ import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DeviceMotion } from '@ionic-native/device-motion';
+import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -35,6 +36,7 @@ import { MeasurementPage } from '../pages/measurement/measurement';
 import { HeightPage } from '../pages/height/height';
 import { TimeModalComponent } from '../components/time-modal/time-modal';
 import { VideoPage } from '../pages/video/video';
+import { OptionsPage } from '../pages/options/options';
 
 export const firebaseConfig = {
 
@@ -67,7 +69,8 @@ export const firebaseConfig = {
     MeasurementPage,
     HeightPage,
     TimeModalComponent,
-    VideoPage
+    VideoPage,
+    OptionsPage
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,8 @@ export const firebaseConfig = {
     MeasurementPage,
     HeightPage,
     TimeModalComponent,
-    VideoPage
+    VideoPage,
+    OptionsPage
   ],
   providers: [
     StatusBar,
@@ -107,7 +111,8 @@ export const firebaseConfig = {
     TwitterConnect,
     SocialSharing,
     LocalNotifications,
-    DeviceMotion
+    DeviceMotion,
+    VideoCapturePlus
   ]
 })
 export class AppModule {}

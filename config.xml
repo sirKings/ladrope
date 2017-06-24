@@ -97,6 +97,7 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.1.8" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.5" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="nl.x-services.plugins.videocaptureplus" spec="~1.0.0" />
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="224fde44bb3ac664be1ef90034eaca8a36667669" />
     </plugin>
