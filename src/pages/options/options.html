@@ -15,9 +15,35 @@
 
 <ion-content padding>
     <div *ngIf='showOptions' >
-      <div *ngFor='let option of clothOptions'>
-        <div *ngFor='let subOptions of option'>
-        </div>
-      </div>
+      <ion-card>
+        <ion-card-header>
+          Explore Available Options
+        </ion-card-header>
+        <ion-list>
+          <div *ngFor='let option of clothOptions'>
+            <div *ngFor='let subOption of option'>
+            
+              <ion-item (click)='select(subOption)'>
+                <ion-thumbnail item-start>
+                  <img src="{{subOption.image}}">
+                </ion-thumbnail>
+                <h2>{{subOption.name}}</h2>
+                <button  *ngIf='!checkOptions(subOption)' ion-button clear item-end><ion-icon name="checkbox"></ion-icon>Selected</button>
+                <button  *ngIf='checkOptions(subOption)' ion-button clear item-end>Select</button>
+              </ion-item>
+            </div>
+          </div>
+        </ion-list>
+      </ion-card>
+    </div>
+
+    <div *ngIf='!showOptions'>
+      <h5>There are no options for this product</h5>
+    </div>
+
+    <div>
+      <button ion-button block (click)='pay()'>
+      Place your Order
+      </button>
     </div>
 </ion-content>

@@ -2,6 +2,7 @@
 import { ModalController, NavController, AlertController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
+
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -150,15 +151,7 @@ export class HomeComponent {
     this.navCtrl.parent.parent.push(OptionsPage, {
         cloth: cloth
     })
-
-    /*let options = {
-      customer_email: this.user.email,
-      txref: 1232354,
-    }
     
-    this.initRavePay(options)*/
-
-
   }
 
   

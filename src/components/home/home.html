@@ -6,11 +6,14 @@
   <ion-item *ngFor='let cloth of cloths | async'>
     <div float-right>
       <ion-badge>{{cloth.price | currency}}</ion-badge> <br>
-        <div class='star'>
-         <ion-icon name="star"></ion-icon>
-         <ion-icon name="star"></ion-icon>
-         <ion-icon name="star-half"></ion-icon>
-        </div>
+        <rating [(ngModel)]="cloth.rating"
+          class='star'
+          readOnly="true" 
+          max="5" 
+          emptyStarIconName="star-outline" 
+          halfStarIconName="star-half"
+          starIconName="star"
+          ></rating>
       </div>
     {{cloth.name}} from <br> {{cloth.label}}
     <div class='clear'></div>
