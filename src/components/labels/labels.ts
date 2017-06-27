@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+
+import { HomePage } from '../../pages/home/home'
 
 /**
  * Generated class for the LabelsComponent component.
@@ -12,11 +15,10 @@ import { Component } from '@angular/core';
 })
 export class LabelsComponent {
 
-  text: string;
-
-  constructor() {
-    console.log('Hello LabelsComponent Component');
-    this.text = 'Hello World';
+  constructor(private navCtrl: NavController) {
   }
 
+  goHome(){
+      this.navCtrl.parent.parent.push(HomePage)
+  }
 }

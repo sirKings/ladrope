@@ -28,7 +28,6 @@ export class DetailsPage {
         this.email = user.email;
         this.name = user.displayName;
         this.photoURL = user.photoURL;
-        console.log(this.email + this.name + this.photoURL)
         authObserver.unsubscribe();
       } else {
         this.navCtrl.pop();
@@ -41,8 +40,6 @@ export class DetailsPage {
         EmailValidator.isValid])],
       name: ['', Validators.compose([Validators.minLength(2), Validators.required])],
       phone: ['', Validators.compose([Validators.required])],
-      gender: ['', Validators.compose([Validators.required])],
-      //height: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])]
     });
   }
@@ -62,7 +59,7 @@ export class DetailsPage {
           this.userDetailsForm.value.name = this.name;
       }
 
-      this.authData.writeUserData(this.uid, this.userDetailsForm.value.name, this.userDetailsForm.value.email, this.photoURL, this.userDetailsForm.value.address,  this.userDetailsForm.value.gender, this.userDetailsForm.value.phone);
+      this.authData.writeUserData(this.uid, this.userDetailsForm.value.name, this.userDetailsForm.value.email, this.photoURL, this.userDetailsForm.value.address, this.userDetailsForm.value.phone);
       this.navCtrl.setRoot(HomePage);
   };
 

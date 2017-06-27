@@ -36,12 +36,12 @@
      </ion-slides>
      <ion-grid>
         <ion-row>
-          <ion-col col-sm-2 (click)='like(cloth, uid)' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
+          <ion-col col-sm-2 (click)='like(cloth, uid)' class='action-button' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
             {{cloth.likes}}
             <ion-icon *ngIf='!cloth.likers[uid]' name="heart-outline"></ion-icon>
             <ion-icon *ngIf='cloth.likers[uid]' name="heart"></ion-icon>
           </ion-col>
-          <ion-col col-sm-2 (click)='comment(cloth)'>
+          <ion-col col-sm-2 (click)='comment(cloth)' class='action-button'>
              {{cloth.numComment}}
              <ion-icon name="text"></ion-icon>
           </ion-col>
@@ -55,10 +55,9 @@
               </ion-fab-list>
           </ion-fab>
            </ion-col>
-          <ion-col col-sm-3></ion-col>
 
-          <ion-col col-sm-3 (click)='addToCart(cloth)'>
-            <ion-icon name="cart" side="right"></ion-icon>
+          <ion-col col-sm-3 (click)='addToCart(cloth)' class='buy-button'>
+            Order<ion-icon name="cart" side="right"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>

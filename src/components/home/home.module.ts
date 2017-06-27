@@ -2,6 +2,7 @@
 import { IonicPageModule } from 'ionic-angular';
 import { HomeComponent } from './home';
 import { Ionic2RatingModule } from 'ionic2-rating';
+//import { HttpModule } from '@angular/http'; 
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { Ionic2RatingModule } from 'ionic2-rating';
   imports: [
     IonicPageModule.forChild(HomeComponent),
     Ionic2RatingModule
+    //HttpModule
   ],
   exports: [
     HomeComponent

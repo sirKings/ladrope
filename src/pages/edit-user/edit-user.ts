@@ -38,7 +38,7 @@ export class EditUserPage {
 
   saveUser(){
       
-      this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address,  this.user.gender, this.userForm.value.phone, this.userKey);
+      this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address, this.userForm.value.phone, this.userKey);
       this.navCtrl.push(UserComponent)
   }
 

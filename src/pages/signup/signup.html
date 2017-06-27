@@ -18,6 +18,20 @@
       <p>Please enter a valid email.</p>
     </ion-item>
 
+     <ion-item>
+      <ion-label stacked>Full Name</ion-label>
+      <ion-input formControlName="name" type="text"  placeholder="Your name"
+        [class.invalid]= "signupForm.controls.name.dirty"></ion-input>
+    </ion-item>
+
+    <ion-item>
+    <ion-label>Gender</ion-label>
+      <ion-select formControlName="gender" [class.invalid]="signupForm.controls.gender.dirty">
+       <ion-option value="male">Male</ion-option>
+       <ion-option value="female">Female</ion-option>
+      </ion-select>
+    </ion-item>
+
     <ion-item>
       <ion-label stacked>Password</ion-label>
       <ion-input formControlName="password" type="password"  placeholder="Your password"

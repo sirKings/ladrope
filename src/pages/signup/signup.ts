@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
-import { DetailsPage } from '../details/details';
+import { HomePage } from '../home/home';
 import { EmailValidator } from '../../validators/email';
 
 @IonicPage()
@@ -21,6 +21,7 @@ export class SignupPage {
   public signupForm:FormGroup;
   public loading:Loading;
   user;
+  photoURL = 'assets/images/Male-Placeholder.jpg';
   
 
   constructor(public navCtrl: NavController, public authData: AuthProvider, 
@@ -29,6 +30,8 @@ export class SignupPage {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
+      gender: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
       passwordRetyped: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
@@ -66,7 +69,9 @@ export class SignupPage {
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(res => {
-       this.navCtrl.push(DetailsPage);
+       this.authData.createUser(res.uid, this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.gender, this.photoURL);
+       this.navCtrl.setRoot(HomePage)
+       console.log(res)
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -93,7 +98,9 @@ export class SignupPage {
   signInWithFacebook() {
     this.authData.signinFb()
       .then(res => {
-      this.navCtrl.push(DetailsPage);
+        this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
+        this.navCtrl.setRoot(HomePage);
+      console.log(res)
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -111,8 +118,10 @@ export class SignupPage {
 
   signInWithGoogle() {
     this.authData.signinGoogle()
-     .then(res => { 
-      this.navCtrl.push(DetailsPage);
+     .then(res => {
+      this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
+      this.navCtrl.setRoot(HomePage);
+      console.log(res)
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -130,8 +139,10 @@ export class SignupPage {
 
   signInWithTwitter() {
     this.authData.signinTwitter()
-      .then(res => { 
-      this.navCtrl.push(DetailsPage);
+      .then(res => {
+      this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
+      this.navCtrl.setRoot(HomePage);
+      console.log(res)
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({

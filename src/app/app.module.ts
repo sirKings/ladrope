@@ -21,6 +21,7 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Ionic2RatingModule } from 'ionic2-rating';
+//import { HttpModule } from '@angular/http'; 
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
@@ -53,7 +54,25 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage/*,
+    SignupPage,
+    LoginPage,
+    ResetPasswordPage,
+    UserComponent,
+    SearchComponent,
+    HomeComponent,
+    OrderComponent,
+    LabelsComponent,
+    EditUserPage,
+    LandingPage,
+    DetailsPage,
+    FilterComponent,
+    CommentsPage,
+    MeasurementPage,
+    HeightPage,
+    TimeModalComponent,
+    VideoPage,
+    OptionsPage*/
   ],
   imports: [
     BrowserModule,
@@ -61,7 +80,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    Ionic2RatingModule 
+    Ionic2RatingModule,
+    //HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

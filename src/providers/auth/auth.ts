@@ -60,7 +60,7 @@ export class AuthProvider {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
-   writeUserData(uid, displayName, email, imageUrl, address, gender, phone){
+   writeUserData(uid, displayName, email, imageUrl, address, phone){
       const user = this.db.object(`users/${uid}` , { preserveSnapshot: true });
       user.subscribe(data => {
         if(data.val() === null) {
@@ -72,7 +72,6 @@ export class AuthProvider {
               photoURL: imageUrl,
               address: address,
               phone: phone,
-              gender: gender
            })
             return;
         } else {
@@ -81,7 +80,7 @@ export class AuthProvider {
       });
    }
 
-   updateUser(uid, displayName, email, imageUrl, address, gender, phone, key){
+   updateUser(uid, displayName, email, imageUrl, address, phone, key){
        this.userDb = this.db.object('/users/'+ uid +'/'+key);
        this.userDb.update({
               displayName: displayName,
@@ -89,7 +88,6 @@ export class AuthProvider {
               photoURL: imageUrl,
               address: address,
               phone: phone,
-              gender: gender
            })
    }
 
@@ -98,6 +96,26 @@ export class AuthProvider {
    this.userDb.update({
               height: height
            })
+   }
+
+   createUser(uid, name, email, gender, photoURL) {
+    this.userDb = this.db.list('/users/'+ uid);
+    if(email=== null){
+        email = 'Enter email'
+    }
+
+    if(gender){
+        gender = gender;
+    }else {
+        gender = 'Edit'
+    }
+
+    this.userDb.push({
+        displayName: name,
+        email: email,
+        gender: gender,
+        photoURL: photoURL
+    })
    }
 
 }
