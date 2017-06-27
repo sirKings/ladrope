@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomeComponent } from './home';
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { HomeComponent } from './home';
   ],
   imports: [
     IonicPageModule.forChild(HomeComponent),
+    Ionic2RatingModule
   ],
   exports: [
     HomeComponent
