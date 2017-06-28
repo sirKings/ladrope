@@ -4,7 +4,7 @@ import { IonicPage,
          NavParams,
          } from 'ionic-angular';
 
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -29,17 +29,22 @@ export class EditUserPage {
 
 
     this.userForm = formBuilder.group({
-        phone: "",
-        address: "",
-        height: "",
+        phone: ['', Validators.compose([Validators.required])],
+        address:['', Validators.compose([Validators.required])]
     })
 
+    this.userForm.get("address").setValue(this.user.address);
+    this.userForm.get("phone").setValue(this.user.phone);
   }
 
   saveUser(){
+      if(!this.userForm.valid){
       
-      this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address, this.userForm.value.phone, this.userKey);
-      this.navCtrl.push(UserComponent)
+      }else {
+        this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address, this.userForm.value.phone, this.userKey);
+        this.navCtrl.push(UserComponent)
+      }
+      
   }
 
   cancel(){

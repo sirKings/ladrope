@@ -17,6 +17,7 @@ export class CommentsPage {
  comments: FirebaseListObservable<any[]>;
  comment: FormGroup;
  title;
+ key;
 
   constructor(private navParam: NavParams, private navCtrl: NavController, private afAuth: AngularFireAuth, private db: AngularFireDatabase, private formBuilder: FormBuilder) {
 
@@ -37,14 +38,24 @@ export class CommentsPage {
     })
 
     this.cloth = navParam.get('cloth');
-    this.comments = db.list('/cloths/'+this.cloth.$key+'/comment');
-    this.numComment = db.object('cloths/'+this.cloth.$key+'/numComment');
+    this.key = navParam.get('key');
+    this.comments = db.list('/cloths/'+this.key +'/comment', {
+        query: {
+            orderByKey: true,
+            }
+    });
+    
     this.comment = formBuilder.group({
       message: ['', Validators.compose([Validators.required])]
     })
+
+
+
   }
 
+
   sendComment(cloth){
+       
       if (!this.comment.valid){
       
       } else {
@@ -52,14 +63,15 @@ export class CommentsPage {
          title: this.title,
          message: this.comment.value.message
           })
-         this.comment.reset()
-         this.numComment.$ref
-              .ref.transaction(numComment => {
-           numComment++;
-           })
+          this.cloth.numComment++;
+          this.comment.reset()
       }
      
   }
 
+  ionViewDidLeave() {
+      let num = this.cloth.numComment;
+      this.db.object('cloths/'+this.key).update({numComment: num});
+  }
 }
 

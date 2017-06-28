@@ -8,11 +8,11 @@
 
 
 <ion-list>
-  <ion-item *ngFor='let cloth of clothList'>
+  <ion-item *ngFor='let cloth of clothList' (tap)='goToCloth(cloth, uid)'>
     <ion-thumbnail item-left>
-      <img [src]="cloth.image1">
+      <img [src]="cloth.val().image1">
     </ion-thumbnail>
-    <h2>{{cloth.name}}</h2>
+    <h2>{{cloth.val().name}}</h2>
     <p>Ugh. As if.</p>
     <button ion-button clear item-right>View</button>
   </ion-item>

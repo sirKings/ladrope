@@ -11,6 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { FilterComponent } from '../filter/filter';
 import { CommentsPage } from '../../pages/comments/comments';
 import { OptionsPage } from '../../pages/options/options';
+import { ClothPage } from '../../pages/cloth/cloth';
 
 
 
@@ -162,8 +163,10 @@ export class HomeComponent {
   }
 
   comment(cloth) {
+    let clothkey = cloth.$key;
     this.navCtrl.parent.parent.push(CommentsPage, {
-        cloth: cloth
+        cloth: cloth,
+        key: clothkey
     })
   }
 
@@ -173,6 +176,15 @@ export class HomeComponent {
         cloth: cloth
     })
     
+  }
+
+  goToCloth(cloth, uid){
+      this.navCtrl.parent.parent.push(ClothPage, {
+       
+          cloth: cloth,
+          uid: uid,
+          key: cloth.$key
+      })
   }
 
   /*getId(){

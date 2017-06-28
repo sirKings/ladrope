@@ -2,6 +2,7 @@
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-capture-plus';
+import { VideoReviewPage } from '../video-review/video-review';
 
 
 @IonicPage()
@@ -22,18 +23,20 @@ export class VideoPage {
   subscription;
   user;
   z;
+  videoTaken = false;
+  video;
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
-    this.user = null;
+    //this.user = null;
     
-    dm.getCurrentAcceleration().then(
+    /*dm.getCurrentAcceleration().then(
         (acceleration: DeviceMotionAccelerationData) => {
             console.log(acceleration);
         },
         (error: any) => console.log(error)
-        );
+        );*/
   } 
 
   amplify(q){
@@ -44,7 +47,7 @@ export class VideoPage {
   ngAfterViewInit() {
     let pointer = this.pointerRef.nativeElement;
 
-    this.subscription = this.dm.watchAcceleration({frequency: 50})
+    /*this.subscription = this.dm.watchAcceleration({frequency: 50})
       .subscribe((acceleration: DeviceMotionAccelerationData) => {
  
           this.z = this.amplify(acceleration.z);
@@ -57,22 +60,30 @@ export class VideoPage {
              
           }
           
-      })
+      })*/
   }
 
   startVideo(){
-      this.videoCapturePlus.captureVideo(this.options)
-      .then(res => {
-        console.log(res)
-      }, error => {
-        console.log('Something aint right')      
+      //this.videoCapturePlus.captureVideo(this.options)
+      //.then(res => {
+        this.videoTaken = true;
+        this.video = 'Hello world';
+        //console.log(res)
+      //}, error => {
+        //console.log('Something aint right')      
+      //})
+  }
+
+  reviewVideo(){
+      this.navCtrl.push(VideoReviewPage, {
+          video: this.video
       })
   }
 
-  ionViewDidLeave() {
+  /*ionViewDidLeave() {
        // Stop watch
     this.subscription.unsubscribe();
-  }
+  }*/
 
 }
 

@@ -39,6 +39,8 @@ import { HeightPage } from '../pages/height/height';
 import { TimeModalComponent } from '../components/time-modal/time-modal';
 import { VideoPage } from '../pages/video/video';
 import { OptionsPage } from '../pages/options/options';
+import { VideoReviewPage } from '../pages/video-review/video-review';
+import { ClothPage } from '../pages/cloth/cloth';
 
 export const firebaseConfig = {
 
@@ -54,7 +56,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage/*,
+    HomePage,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -72,7 +74,9 @@ export const firebaseConfig = {
     HeightPage,
     TimeModalComponent,
     VideoPage,
-    OptionsPage*/
+    OptionsPage,
+    VideoReviewPage,
+    ClothPage
   ],
   imports: [
     BrowserModule,
@@ -104,7 +108,9 @@ export const firebaseConfig = {
     HeightPage,
     TimeModalComponent,
     VideoPage,
-    OptionsPage
+    OptionsPage,
+    VideoReviewPage,
+    ClothPage
   ],
   providers: [
     StatusBar,

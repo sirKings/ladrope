@@ -99,23 +99,30 @@ export class AuthProvider {
    }
 
    createUser(uid, name, email, gender, photoURL) {
-    this.userDb = this.db.list('/users/'+ uid);
-    if(email=== null){
-        email = 'Enter email'
-    }
+      const user = this.db.object(`users/${uid}` , { preserveSnapshot: true });
+      user.subscribe(data => {
+        if(data.val() === null) {
+           console.log('User does not exist');
+           this.userDb = this.db.list('/users/'+ uid);
+           if(email=== null){
+               email = 'Enter email'
+           }
 
-    if(gender){
-        gender = gender;
-    }else {
-        gender = 'Edit'
-    }
+           if(gender){
+              gender = gender;
+              }else {
+              gender = 'Edit'
+           }
 
-    this.userDb.push({
-        displayName: name,
-        email: email,
-        gender: gender,
-        photoURL: photoURL
-    })
+           this.userDb.push({
+              displayName: name,
+              email: email,
+              gender: gender,
+              photoURL: photoURL
+           })
+        }else {
+        }
+      })
    }
 
 }

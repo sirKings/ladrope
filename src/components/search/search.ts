@@ -1,5 +1,9 @@
 ﻿import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
+
+import { ClothPage } from '../../pages/cloth/cloth';
 
 
 @Component({
@@ -11,14 +15,24 @@ export class SearchComponent {
   public clothList:Array<any>;
   public loadedClothList:Array<any>;
   public clothRef:firebase.database.Reference;
+  cloth;
+  uid;
 
-  constructor() {
+  constructor( private afAuth: AngularFireAuth, private navCtrl: NavController) {
+    const authObserver = afAuth.authState.subscribe( user => {
+      if (user) {
+        console.log(user)
+        this.uid = user.uid;
+         authObserver.unsubscribe();
+      } 
+    });
+
     this.clothRef = firebase.database().ref('/cloths');
 
     this.clothRef.on('value', clothList => {
       let cloths = [];
       clothList.forEach( cloth => {
-        cloths.push(cloth.val());
+        cloths.push(cloth);
         return false;
       });
 
@@ -43,9 +57,20 @@ export class SearchComponent {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.clothList = this.clothList.filter((item) => {
-        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.val().name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
+  }
+
+  goToCloth(cloth, uid){
+      let clothKey = cloth.key;
+      let clothval = cloth.val();
+      this.navCtrl.parent.parent.push(ClothPage, {
+          cloth: clothval,
+          uid: uid,
+          key: clothKey
+      })
+      console.log(cloth)
   }
 
 }

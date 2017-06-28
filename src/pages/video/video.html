@@ -19,5 +19,8 @@
     <button ion-button (click)='startVideo()'>
       Start
     </button>
+    <button ion-button *ngIf='videoTaken' (click)='reviewVideo()'>
+      Review
+    </button>
   </div>
 </ion-content>

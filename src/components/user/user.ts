@@ -32,10 +32,8 @@ export class UserComponent implements OnInit {
         });
   }
 
-   ngOnInit() {
-       
-        
-        this.db.object( '/users/' + this.uid )
+  ngOnInit() {
+       this.db.object( '/users/' + this.uid )
             .subscribe( snapshot => {
                         this.userDetails = snapshot;
                         console.log(this.userDetails);
