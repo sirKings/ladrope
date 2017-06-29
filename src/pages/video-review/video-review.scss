@@ -1,3 +1,45 @@
-page-video-review {
+﻿page-video-review {
+  .progress-bar {
+    background-color: #eee;
+    height: 20px;
+    width: 80%;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+    border-radius: 5px;
 
+    span {
+        text-align: center;
+        display: inline-block;
+        height: 100%;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+        background-color: color($colors, primary);
+        transition: width .2s ease-in-out;    
+    }
+  }
+
+   video {  
+        width:100%; 
+        max-width:300px; 
+        height:auto; 
+      }
+
+    video::-internal-media-controls-download-button {
+        display:none;
+    }
+
+    video::-webkit-media-controls-enclosure {
+        overflow:hidden;
+    }
+
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 35px); /* Adjust as needed */
+    }
 }

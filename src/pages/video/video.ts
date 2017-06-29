@@ -31,12 +31,12 @@ export class VideoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
     //this.user = null;
     
-    /*dm.getCurrentAcceleration().then(
+    dm.getCurrentAcceleration().then(
         (acceleration: DeviceMotionAccelerationData) => {
             console.log(acceleration);
         },
         (error: any) => console.log(error)
-        );*/
+        );
   } 
 
   amplify(q){
@@ -47,7 +47,7 @@ export class VideoPage {
   ngAfterViewInit() {
     let pointer = this.pointerRef.nativeElement;
 
-    /*this.subscription = this.dm.watchAcceleration({frequency: 50})
+    this.subscription = this.dm.watchAcceleration({frequency: 50})
       .subscribe((acceleration: DeviceMotionAccelerationData) => {
  
           this.z = this.amplify(acceleration.z);
@@ -60,30 +60,30 @@ export class VideoPage {
              
           }
           
-      })*/
+      })
   }
 
   startVideo(){
-      //this.videoCapturePlus.captureVideo(this.options)
-      //.then(res => {
+      this.videoCapturePlus.captureVideo(this.options)
+      .then(res => {
         this.videoTaken = true;
-        this.video = 'Hello world';
-        //console.log(res)
-      //}, error => {
-        //console.log('Something aint right')      
-      //})
+        this.video = res;
+        console.log(res)
+      }, error => {
+        console.log('Something aint right')      
+      })
   }
 
   reviewVideo(){
       this.navCtrl.push(VideoReviewPage, {
-          video: this.video
+          video: this.video[0]
       })
   }
 
-  /*ionViewDidLeave() {
+  ionViewDidLeave() {
        // Stop watch
     this.subscription.unsubscribe();
-  }*/
+  }
 
 }
 

@@ -9,6 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
+import { File } from '@ionic-native/file';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -56,7 +57,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    HomePage/*,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -76,7 +77,7 @@ export const firebaseConfig = {
     VideoPage,
     OptionsPage,
     VideoReviewPage,
-    ClothPage
+    ClothPage*/
   ],
   imports: [
     BrowserModule,
@@ -122,6 +123,7 @@ export const firebaseConfig = {
     SocialSharing,
     LocalNotifications,
     DeviceMotion,
+    File,
     VideoCapturePlus
   ]
 })

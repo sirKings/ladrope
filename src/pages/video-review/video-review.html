@@ -17,7 +17,9 @@
       <input name="bodyCheck" ng-control="bodyCheck" type="radio" [value]="1"  [(ngModel)]="bodyCheck"> Yes<br/>
       <input name="bodyCheck" ng-control="bodyCheck" type="radio" [value]="2" [(ngModel)]="bodyCheck"> No<br/>
    </div>
-
+   <div class="progress-bar">
+      <span [style.width]="progressbar + '%'">{{progressbar}}</span>
+   </div>
    <ion-grid>
      <ion-row>
         <ion-col col-6 *ngIf = 'bodyChecked()'><button ion-button (click)='submitVideo()'>Submit</button></ion-col>
