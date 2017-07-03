@@ -22,7 +22,7 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Ionic2RatingModule } from 'ionic2-rating';
-//import { HttpModule } from '@angular/http'; 
+import { HTTP } from '@ionic-native/http';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
@@ -86,7 +86,6 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     Ionic2RatingModule,
-    //HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -124,7 +123,8 @@ export const firebaseConfig = {
     LocalNotifications,
     DeviceMotion,
     File,
-    VideoCapturePlus
+    VideoCapturePlus,
+    HTTP
   ]
 })
 export class AppModule {}

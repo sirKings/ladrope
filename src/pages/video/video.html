@@ -16,10 +16,10 @@
   </div>
 
   <div>
-    <button ion-button (click)='startVideo()'>
+    <button *ngIf = 'z < 31' ion-button (click)='startVideo()'>
       Start
     </button>
-    <button ion-button  (click)='reviewVideo()'>
+    <button *ngIf='videoTaken' ion-button  (click)='reviewVideo()'>
       Review
     </button>
   </div>

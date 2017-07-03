@@ -29,7 +29,7 @@ export class VideoPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
-    //this.user = null;
+    this.user = navParams.get('user')
     
     dm.getCurrentAcceleration().then(
         (acceleration: DeviceMotionAccelerationData) => {
@@ -76,7 +76,8 @@ export class VideoPage {
 
   reviewVideo(){
       this.navCtrl.push(VideoReviewPage, {
-          video: this.video[0]
+          video: this.video[0],
+          user: this.user
       })
   }
 

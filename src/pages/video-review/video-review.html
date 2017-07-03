@@ -17,8 +17,11 @@
       <input name="bodyCheck" ng-control="bodyCheck" type="radio" [value]="1"  [(ngModel)]="bodyCheck"> Yes<br/>
       <input name="bodyCheck" ng-control="bodyCheck" type="radio" [value]="2" [(ngModel)]="bodyCheck"> No<br/>
    </div>
+   <div>
+   <p #progress></p>
+   </div>
    <div class="progress-bar">
-      <span [style.width]="progressbar + '%'">{{progressbar}}</span>
+      <span #progressbar></span>
    </div>
    <ion-grid>
      <ion-row>

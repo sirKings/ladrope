@@ -36,6 +36,10 @@
     top: -14px;
     }
 
+    ion-fab[top] {
+    top: 0px;
+    }
+
     .liked {
       color: rgb(0, 74, 0);
     }

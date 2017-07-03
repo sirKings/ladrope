@@ -5,7 +5,7 @@
  <ion-content>
   <ion-item *ngFor='let cloth of cloths | async'>
     <div float-right>
-      <ion-badge>{{cloth.price | currency}}</ion-badge> <br>
+      <ion-badge>NGN{{cloth.price}}.00</ion-badge> <br>
         <rating [(ngModel)]="cloth.rating"
           class='star'
           readOnly="true" 
@@ -46,7 +46,7 @@
              <ion-icon name="text"></ion-icon>
           </ion-col>
           <ion-col col-sm-2 col-md-3>
-          <ion-fab top right edge>
+          <ion-fab top edge>
             <button ion-fab mini><ion-icon name="share"></ion-icon></button>
               <ion-fab-list side="top">
                 <button ion-fab (click)='shareViaFacebook(cloth)'><ion-icon name="logo-facebook"></ion-icon></button>

@@ -12,12 +12,16 @@ import { TimeModalComponent } from '../../components/time-modal/time-modal';
   templateUrl: 'measurement.html',
 })
 export class MeasurementPage {
+  user;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ln: LocalNotifications, private modalCtrl: ModalController) {
+    this.user = navParams.get('user');
   }
 
   startMeasure(){
-      this.navCtrl.push(VideoPage)
+      this.navCtrl.push(VideoPage, {
+        user: this.user
+      })
   }
 
    remindLater() {

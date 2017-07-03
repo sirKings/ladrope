@@ -61,7 +61,9 @@ export class UserComponent implements OnInit {
   }
 
   measure(){
-      this.navCtrl.parent.parent.push(MeasurementPage)
+      this.navCtrl.parent.parent.push(MeasurementPage, {
+        user: this.uid
+      })
   }
 
   height(){
