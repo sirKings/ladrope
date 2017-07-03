@@ -21,6 +21,7 @@ export class VideoReviewPage {
   cloudinaryPreset = 'kfmwfbua';
   form;
   user;
+  filePath;
   headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
   };
@@ -32,6 +33,7 @@ export class VideoReviewPage {
      console.log(this.video);
      //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
+     this.filePath = this.getPath(this.video.fullPath, this.video.name);
   }
 
   ionViewDidLoad() {
@@ -42,13 +44,13 @@ export class VideoReviewPage {
       let progress = this.progressRef.nativeElement;
       let info = this.progress.nativeElement;
 
-      let filePath = this.getPath(this.video.fullPath, this.video.name);
+      
       // Create the file metadata
       var metadata = {
               contentType: 'video/mp4'
       };
 
-      this.file.readAsDataURL(filePath, this.video.name)
+      this.file.readAsDataURL(this.filePath, this.video.name)
         .then((sucess) => {
             //console.log(sucess);
 
@@ -92,13 +94,7 @@ export class VideoReviewPage {
                         console.log("Failed to read video file from directory, error.code");
 
             }
-      this.file.removeFile(filePath, this.video.name)
-          .then((res) => {
-              console.log('removed file')
-          })
-          .catch((err) => {
-              console.log('failed to remove')
-          })
+    
   }
 
   retakeVideo(){
@@ -117,6 +113,17 @@ export class VideoReviewPage {
     let x = name.length + 1
     let path = fullpath.slice(0, -x);
     return path;
+  }
+
+  ionViewDidLeave() {
+       // Stop watch
+    this.file.removeFile(this.filePath, this.video.name)
+          .then((res) => {
+              console.log('removed file')
+          })
+          .catch((err) => {
+              console.log('failed to remove')
+          })
   }
 
 }

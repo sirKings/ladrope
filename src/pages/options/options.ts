@@ -17,6 +17,7 @@ export class OptionsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.cloth = navParams.get('cloth');
+    
     if(this.cloth.options){
       this.showOptions = true;
       
@@ -65,7 +66,7 @@ export class OptionsPage {
       let options = {
         customer_email: "se@r.c",
         txref: "s23qw3e5rqeasg",
-        amount: 1500
+        amount: this.cloth.price,
       }
       window.initRavePay(options)
   }
