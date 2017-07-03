@@ -79,26 +79,12 @@ export class VideoReviewPage {
 
             }, function(error) {
                 console.log('there was an error uploading file');
-                info.innerHTML = 'Upload failed, please try agiain'
-                this.file.removeFile(this.filePath, this.video.name)
-                  .then((res) => {
-                    console.log('removed file')
-                  })
-                  .catch((err) => {
-                    console.log('failed to remove')
-                  })
+                info.innerHTML = 'Upload failed, please try agiain';
             }, function() {
               //    Upload completed successfully, now we can get the download URL
                   var downloadURL = uploadTask.snapshot.downloadURL;
                   console.log(downloadURL)
-                  info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order'
-                  this.file.removeFile(this.filePath, this.video.name)
-                      .then((res) => {
-                        console.log('removed file')
-                      })
-                      .catch((err) => {
-                        console.log('failed to remove')
-                      })
+                  info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';  
           });
 
         }), function (error) {
@@ -106,6 +92,13 @@ export class VideoReviewPage {
                         console.log("Failed to read video file from directory, error.code");
 
             }
+      this.file.removeFile(filePath, this.video.name)
+          .then((res) => {
+              console.log('removed file')
+          })
+          .catch((err) => {
+              console.log('failed to remove')
+          })
   }
 
   retakeVideo(){
