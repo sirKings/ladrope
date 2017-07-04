@@ -111,7 +111,9 @@ export class ClothPage {
   addToCart(cloth) {
 
     this.navCtrl.push(OptionsPage, {
-        cloth: cloth
+        cloth: cloth,
+        key: this.key,
+        uid: this.uid
     })
     
   }

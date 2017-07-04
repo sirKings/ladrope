@@ -1,5 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -9,14 +10,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class OptionsPage {
   
   cloth;
+  uid;
+  key;
   options;
   showOptions = false;
   clothOptions;
   selectedOptions = [];
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase) {
     this.cloth = navParams.get('cloth');
+    this.uid = navParams.get('uid');
+    this.key = navParams.get('key');
     
     if(this.cloth.options){
       this.showOptions = true;
@@ -63,16 +68,32 @@ export class OptionsPage {
   }
 
   pay(){
-      let options = {
+    this.createOrder(this.cloth, this.selectedOptions);
+    this.navCtrl.pop;
+     /* let options = {
         customer_email: "se@r.c",
         txref: "s23qw3e5rqeasg",
         amount: this.cloth.price,
+        callback: function(d){
+          this.createOrder(this.cloth, this.selectedOptions)
+        }
       }
-      window.initRavePay(options)
+      window.initRavePay(options)*/
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OptionsPage');
+  }
+
+  createOrder(cloth, options){
+    let order = {
+      clothId: this.key,
+      options: options,
+      user: this.uid,
+      label: cloth.label
+    }
+    this.db.list('/orders')
+      .push(order);
   }
 
 }

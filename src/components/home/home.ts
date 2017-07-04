@@ -173,7 +173,10 @@ export class HomeComponent {
   addToCart(cloth) {
 
     this.navCtrl.parent.parent.push(OptionsPage, {
-        cloth: cloth
+        cloth: cloth,
+        key: cloth.$key,
+        uid: this.uid
+
     })
     
   }

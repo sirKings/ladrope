@@ -1,4 +1,4 @@
-﻿import { ViewChild, Component } from '@angular/core';
+﻿import { ViewChild, Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { File } from '@ionic-native/file';
@@ -10,9 +10,11 @@ import { HTTP } from '@ionic-native/http';
   selector: 'page-video-review',
   templateUrl: 'video-review.html',
 })
-export class VideoReviewPage {
+export class VideoReviewPage implements OnInit {
   @ViewChild('progressbar') progressRef;
   @ViewChild('progress') progress;
+  @ViewChild('player') playerRef;
+
   video;
   bodyCheck = 2;
   public videoRef:firebase.storage.Reference;
@@ -21,6 +23,7 @@ export class VideoReviewPage {
   cloudinaryPreset = 'kfmwfbua';
   form;
   user;
+  videoPath;
   filePath;
   headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -34,6 +37,8 @@ export class VideoReviewPage {
      //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
      this.filePath = this.getPath(this.video.fullPath, this.video.name);
+
+    
   }
 
   ionViewDidLoad() {
@@ -43,6 +48,7 @@ export class VideoReviewPage {
   submitVideo(){
       let progress = this.progressRef.nativeElement;
       let info = this.progress.nativeElement;
+
 
       
       // Create the file metadata
@@ -124,6 +130,17 @@ export class VideoReviewPage {
           .catch((err) => {
               console.log('failed to remove')
           })
+  }
+
+  ngOnInit(){
+     let player = this.playerRef.nativeElement;
+     this.videoPath = this.file.readAsDataURL(this.filePath, this.video.name)
+         .then((res) => {
+            player.src = res;
+            player.load();
+         }).catch((err) => {
+           console.log(err)
+         })
   }
 
 }
