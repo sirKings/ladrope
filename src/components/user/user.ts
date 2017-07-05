@@ -23,17 +23,16 @@ export class UserComponent implements OnInit {
   userKey;
 
   constructor(private authData: AuthProvider, public afAuth: AngularFireAuth, public navCtrl: NavController, private db: AngularFireDatabase) {
+      
+  }
+
+  ngOnInit() {
       const authObserver = this.afAuth.authState.subscribe( user => {
           if (user) {
             this.uid = user.uid;
               console.log(this.uid)
-              authObserver.unsubscribe();
-          } 
-        });
-  }
-
-  ngOnInit() {
-       this.db.object( '/users/' + this.uid )
+         
+           this.db.object( '/users/' + this.uid )
             .subscribe( snapshot => {
                         this.userDetails = snapshot;
                         console.log(this.userDetails);
@@ -43,8 +42,11 @@ export class UserComponent implements OnInit {
                           this.userDetails = this.userDetails[property];
                           console.log(this.userDetails)
                         }
-}
+                  }
             });
+              authObserver.unsubscribe();
+          } 
+        });
     }
   
   signOut() {

@@ -27,6 +27,7 @@ export class HomeComponent {
   url = 'www.ladrope.com';
   image;
   user;
+  userKey;
   /*token;
   graphUrl = 'https://graph.facebook.com/';
   idPath = 'me'+`?access_token=${this.token}`;
@@ -50,31 +51,32 @@ export class HomeComponent {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        console.log(user)
         this.uid = user.uid;
-        console.log(this.uid)
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
                         let userDetails = snapshot;
-                        console.log(userDetails);
+                        //console.log(userDetails);
+
                         for (var property in userDetails) {
                           if (userDetails.hasOwnProperty(property)) {
                           this.user = userDetails[property];
                           //this.gender = this.user.gender
                           this.initialise()
+                          this.userKey = property;
+                           console.log(this.userKey)
                           }
                         }
            });
         authObserver.unsubscribe();
       } 
     });
+   
     //}
   }
 
   initialise(){
      this.cloths = this.db.list('/cloths');
-     console.log(this.cloths)
-     console.log()
+     //console.log(this.cloths)
   }
 
   filter() {
@@ -90,21 +92,18 @@ export class HomeComponent {
   }
 
   like (cloth, uid) {
-      console.log(cloth.likers)
+      //console.log(cloth.likers)
+      let num = cloth.likes
       if(cloth.likers[uid] == true){
-        this.db.object('/cloths/'+cloth.$key+'/likes').$ref
-      .ref.transaction(likes => {
-           cloth.likes--;
-        })
+        num++;
+        this.db.object('/cloths/'+cloth.$key).update({likes: num});
         cloth.likers[uid] = null;
-      } else {   
-      this.db.object('/cloths/'+cloth.$key+'/likes').$ref
-      .ref.transaction(likes => {
-           cloth.likes++;
-           })
+      } else {
+       num-- 
+      this.db.object('/cloths/'+cloth.$key).update({likes: num});
        cloth.likers[uid] = true;
       }
-    console.log(uid)
+     this.db.object('/cloths/'+cloth.$key).update({likers: cloth.likers})
   }
 
   shareViaTwitter(cloth){
@@ -171,22 +170,25 @@ export class HomeComponent {
   }
 
   addToCart(cloth) {
-
+    console.log(this.userKey)
     this.navCtrl.parent.parent.push(OptionsPage, {
         cloth: cloth,
         key: cloth.$key,
-        uid: this.uid
+        uid: this.uid,
+        userKey: this.userKey
 
     })
     
   }
 
   goToCloth(cloth, uid){
+      console.log(this.userKey)
       this.navCtrl.parent.parent.push(ClothPage, {
        
           cloth: cloth,
           uid: uid,
-          key: cloth.$key
+          key: cloth.$key,
+          userKey: this.userKey
       })
   }
 

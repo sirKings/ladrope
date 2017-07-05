@@ -1,8 +1,26 @@
-﻿<ion-content padding>
-  <div>
-  You have no orders yet. Go to the home tab, pick a product you like and place your  orders
+﻿<ion-content>
+  <div *ngIf = 'isOrders'>
+	<ion-list *ngFor = 'let order of orders'>
+  		<ion-item (tap) = "goToOrder(order)">
+    		<ion-thumbnail item-start>
+      			<img src="{{order.image1}}">
+    		</ion-thumbnail>
+    		<h2>{{order.name}}</h2>
+    		<p>{{order.label}}</p>
+    		<p>Status: <span class='danger'>{{order.status}}</span></p>
+        <p>{{order.date}}</p>
+  		</ion-item>
+	</ion-list>
   </div>
-  <button ion-button (click)='goHome()'>
+
+
+
+  <div *ngIf = '!isOrders'>
+  	<div>
+  		You have no orders yet. Go to the home tab, pick a product you like and place your  orders
+  	</div>
+  	<button ion-button (click)='goHome()'>
       Go Home
-  </button>
+ 	</button>
+  </div>
 </ion-content>

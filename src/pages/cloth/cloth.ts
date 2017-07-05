@@ -20,30 +20,29 @@ export class ClothPage {
   url = 'www.ladrope.com';
   image;
   key;
+  userKey;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
+    this.userKey = navParams.get('userKey')
   }
 
-  like(cloth, uid) {
-      console.log(cloth.likers)
+  like (cloth, uid) {
+      //console.log(cloth.likers)
+      let num = cloth.likes
       if(cloth.likers[uid] == true){
-        this.db.object('/cloths/'+cloth.$key+'/likes').$ref
-      .ref.transaction(likes => {
-           cloth.likes--;
-        })
+        num++;
+        this.db.object('/cloths/'+cloth.$key).update({likes: num});
         cloth.likers[uid] = null;
-      } else {   
-      this.db.object('/cloths/'+cloth.$key+'/likes').$ref
-      .ref.transaction(likes => {
-           cloth.likes++;
-           })
+      } else {
+       num-- 
+      this.db.object('/cloths/'+cloth.$key).update({likes: num});
        cloth.likers[uid] = true;
       }
-    console.log(uid)
+     this.db.object('/cloths/'+cloth.$key).update({likers: cloth.likers})
   }
 
   shareViaTwitter(cloth){
@@ -113,7 +112,8 @@ export class ClothPage {
     this.navCtrl.push(OptionsPage, {
         cloth: cloth,
         key: this.key,
-        uid: this.uid
+        uid: this.uid,
+        userKey: this.userKey
     })
     
   }

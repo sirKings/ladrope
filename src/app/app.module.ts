@@ -42,6 +42,8 @@ import { VideoPage } from '../pages/video/video';
 import { OptionsPage } from '../pages/options/options';
 import { VideoReviewPage } from '../pages/video-review/video-review';
 import { ClothPage } from '../pages/cloth/cloth';
+import { OrderPage } from '../pages/order/order'
+import { CompletedComponent } from '../components/completed/completed';
 
 export const firebaseConfig = {
 
@@ -57,7 +59,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage/*s,
+    HomePage,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -77,7 +79,9 @@ export const firebaseConfig = {
     VideoPage,
     OptionsPage,
     VideoReviewPage,
-    ClothPage*/
+    ClothPage,
+    OrderPage,
+    CompletedComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,9 @@ export const firebaseConfig = {
     VideoPage,
     OptionsPage,
     VideoReviewPage,
-    ClothPage
+    ClothPage,
+    OrderPage,
+    CompletedComponent
   ],
   providers: [
     StatusBar,

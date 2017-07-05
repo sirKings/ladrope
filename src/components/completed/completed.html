@@ -1,0 +1,15 @@
+<ion-content padding>
+	<h3>Thanks for Your Patronage</h3>
+	<p>Please rate the cloth</p>
+	<rating [(ngModel)]="rate" 
+        readOnly="false" 
+        max="5" 
+        emptyStarIconName="star-outline" 
+        halfStarIconName="star-half" 
+        starIconName="star" 
+        nullable="false" 
+        (ngModelChange)="onModelChange($event)"></rating>
+
+    <button ion-button outline (click)= "close()">Ok</button>
+</ion-content>
+

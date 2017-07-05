@@ -12,6 +12,7 @@ export class OptionsPage {
   cloth;
   uid;
   key;
+  userKey;
   options;
   showOptions = false;
   clothOptions;
@@ -22,6 +23,8 @@ export class OptionsPage {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
+    this.userKey = navParams.get('userKey');
+    console.log(this.userKey);
     
     if(this.cloth.options){
       this.showOptions = true;
@@ -69,7 +72,8 @@ export class OptionsPage {
 
   pay(){
     this.createOrder(this.cloth, this.selectedOptions);
-    this.navCtrl.pop;
+    console.log(this.userKey)
+    this.navCtrl.pop();
      /* let options = {
         customer_email: "se@r.c",
         txref: "s23qw3e5rqeasg",
@@ -90,10 +94,24 @@ export class OptionsPage {
       clothId: this.key,
       options: options,
       user: this.uid,
-      label: cloth.label
+      label: cloth.label,
+      name: cloth.name,
+      price: cloth.price,
+      image1: cloth.image1,
+      date: new Date(+new Date + 12096e5),
+      status: 'pending',
+      userKey: this.userKey
     }
-    this.db.list('/orders')
-      .push(order);
+    let ordersKey = this.db.list('/orders')
+      .push(order).key;
+    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+ this.userKey+ '/orders')
+      .push(order).key;
+   let tailorOrderKey = this.db.list('/tailors/' + cloth.label +'/orders')
+      .push(order).key;
+
+     this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.db.object('/users/'+this.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.db.object('/tailors/' + cloth.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
   }
 
 }
