@@ -21,9 +21,8 @@
 		<h2>Design Name: {{order.name}}</h2>
     	<p>Label Name: {{order.label}}</p>
     	<p>Status: <span class='danger'>{{order.status}}</span></p>
-        <p>{{order.date}}</p>
-    	<p>{{order.startDate}}</p>
-    	<p>{{order.$key}}</p>
+        <p>Delivery Date{{order.date | date: 'dd/MM/yyyy'}}</p>
+    	<p>Date Ordered: {{order.startDate | date: 'dd/MM/yyyy'}}</p>
         <p>Price: NGN{{order.price}}.00</p>
 	</div>
 	<div>

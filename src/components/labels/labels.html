@@ -8,7 +8,7 @@
     		<h2>{{order.name}}</h2>
     		<p>{{order.label}}</p>
     		<p>Status: <span class='danger'>{{order.status}}</span></p>
-        <p>{{order.date}}</p>
+        <p>Delivery date: {{order.date | date: 'dd/MM/yyyy' }}</p>
   		</ion-item>
 	</ion-list>
   </div>

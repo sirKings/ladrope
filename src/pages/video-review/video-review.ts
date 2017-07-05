@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { File } from '@ionic-native/file';
 import { AlertController } from 'ionic-angular';
 import { HTTP } from '@ionic-native/http';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -16,13 +17,16 @@ export class VideoReviewPage implements OnInit {
   @ViewChild('player') playerRef;
 
   video;
+  submitted = false
   bodyCheck = 2;
   public videoRef:firebase.storage.Reference;
   progressbar = 0;
   cloudinaryUrl = 'https://api.cloudinary.com/v1_1/ladrope/upload';
   cloudinaryPreset = 'kfmwfbua';
   form;
-  user;
+  userKey;
+  uid;
+  videoLink;
   videoPath;
   filePath;
   headers = {
@@ -30,9 +34,10 @@ export class VideoReviewPage implements OnInit {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private file: File, public alertCtrl: AlertController, private http: HTTP) {
+  constructor(public navCtrl: NavController, public db: AngularFireDatabase, public navParams: NavParams, private file: File, public alertCtrl: AlertController, private http: HTTP) {
      this.video = navParams.get('video');
-     this.user = navParams.get('user');
+     this.userKey = navParams.get('userKey');
+     this.uid = navParams.get('uid');
      console.log(this.video);
      //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
@@ -46,6 +51,7 @@ export class VideoReviewPage implements OnInit {
   }
 
   submitVideo(){
+      this.submitted = true;
       let progress = this.progressRef.nativeElement;
       let info = this.progress.nativeElement;
 
@@ -73,7 +79,7 @@ export class VideoReviewPage implements OnInit {
           let  blob = new Blob([sucess], {type: "video/mp4"});
           console.log(blob);
           // Upload file and metadata to the object 'images/mountains.jpg'
-          var uploadTask = this.videoRef.child('/' + this.user).put(blob);
+          var uploadTask = this.videoRef.child('/' + this.uid).put(blob);
 
           // Listen for state changes, errors, and completion of the upload.
           uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
@@ -91,7 +97,7 @@ export class VideoReviewPage implements OnInit {
             }, function() {
               //    Upload completed successfully, now we can get the download URL
                   var downloadURL = uploadTask.snapshot.downloadURL;
-                  console.log(downloadURL)
+                  this.videoLink = downloadURL;
                   info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';  
           });
 
@@ -130,6 +136,8 @@ export class VideoReviewPage implements OnInit {
           .catch((err) => {
               console.log('failed to remove')
           })
+    this.db.object('/users/'+this.uid+ '/'+ this.userKey)
+      .update({size: this.videoLink})
   }
 
   ngOnInit(){

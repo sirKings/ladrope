@@ -175,7 +175,8 @@ export class HomeComponent {
         cloth: cloth,
         key: cloth.$key,
         uid: this.uid,
-        userKey: this.userKey
+        userKey: this.userKey,
+        user: this.user
 
     })
     
@@ -188,7 +189,8 @@ export class HomeComponent {
           cloth: cloth,
           uid: uid,
           key: cloth.$key,
-          userKey: this.userKey
+          userKey: this.userKey,
+          user: this.user
       })
   }
 

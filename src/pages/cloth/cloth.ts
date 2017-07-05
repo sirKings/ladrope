@@ -16,6 +16,7 @@ import { OptionsPage } from '../../pages/options/options';
 export class ClothPage {
   cloth;
   uid;
+  user;
   message = 'LadRope... Bespoke designs made just for you!';
   url = 'www.ladrope.com';
   image;
@@ -27,7 +28,8 @@ export class ClothPage {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
-    this.userKey = navParams.get('userKey')
+    this.userKey = navParams.get('userKey');
+    this.user = navParams.get('user')
   }
 
   like (cloth, uid) {
@@ -113,7 +115,8 @@ export class ClothPage {
         cloth: cloth,
         key: this.key,
         uid: this.uid,
-        userKey: this.userKey
+        userKey: this.userKey,
+        user: this.user
     })
     
   }
