@@ -1,5 +1,18 @@
 ﻿<ion-content>
   <div *ngIf = 'isOrders'>
+  <div *ngIf = 'isSavedOrders'>
+  <p padding> Go to <span (tap)='goToUser()' class='link'>user tab</span> and provide every required information and take your measurement</p>
+  <ion-list *ngFor = 'let order of savedOrders'>
+      <ion-item>
+        <ion-thumbnail item-start>
+            <img src="{{order.image1}}">
+        </ion-thumbnail>
+        <h2>{{order.name}}</h2>
+        <p>{{order.label}}</p>
+        <p>Status: <span class='danger'>{{order.status}}</span></p>
+      </ion-item>
+   </ion-list>
+  </div>
 	<ion-list *ngFor = 'let order of orders'>
   		<ion-item (tap) = "goToOrder(order)">
     		<ion-thumbnail item-start>
@@ -10,7 +23,7 @@
     		<p>Status: <span class='danger'>{{order.status}}</span></p>
         <p>Delivery date: {{order.date | date: 'dd/MM/yyyy' }}</p>
   		</ion-item>
-	</ion-list>
+	 </ion-list>
   </div>
 
 

@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
   
   userDetails: FirebaseObjectObservable<any>;
   uid;
-  user;
   userKey;
 
   constructor(private authData: AuthProvider, public afAuth: AngularFireAuth, public navCtrl: NavController, private db: AngularFireDatabase) {
@@ -64,7 +63,7 @@ export class UserComponent implements OnInit {
 
   measure(){
       this.navCtrl.parent.parent.push(MeasurementPage, {
-        uid: this.uid,
+        user: this.userDetails,
         userKey: this.userKey
       })
   }

@@ -22,7 +22,7 @@ export class VideoPage {
 
   subscription;
   userKey;
-  uid;
+  user;
   z;
   videoTaken = false;
   video;
@@ -31,7 +31,7 @@ export class VideoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
     this.userKey = navParams.get('userKey');
-    this.uid = navParams.get('uid');
+    this.user = navParams.get('user');
     
     dm.getCurrentAcceleration().then(
         (acceleration: DeviceMotionAccelerationData) => {
@@ -80,7 +80,7 @@ export class VideoPage {
       this.navCtrl.push(VideoReviewPage, {
           video: this.video[0],
           userKey: this.userKey,
-          uid: this.uid
+          user: this.user
       })
   }
 

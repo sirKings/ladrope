@@ -15,6 +15,8 @@ export class LabelsComponent implements OnInit {
 
 uid;
 orders;
+savedOrders;
+isSavedOrders = false;
 isOrders = false;
 
   constructor(private navCtrl: NavController, private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
@@ -56,6 +58,10 @@ isOrders = false;
                         	this.orders =  this.getOrders(userDetails.orders)
                         	console.log(this.orders)
                         }
+                        if(userDetails.savedOrders){
+                        	this.isSavedOrders = true;
+                        	this.savedOrders = this.getOrders(userDetails.savedOrders)
+                        }
 
            });
 
@@ -65,5 +71,9 @@ isOrders = false;
   	this.navCtrl.parent.parent.push(OrderPage, {
   		order: order
   	})
+  }
+
+  goToUser(){
+  	this.navCtrl.parent.select(3);
   }
 }

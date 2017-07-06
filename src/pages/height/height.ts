@@ -24,6 +24,9 @@ export class HeightPage {
     this.user = navParams.get('user');
     this.userKey = navParams.get('userKey');
     this.uid = navParams.get('uid')
+
+    this.height.get("height").setValue(this.user.height.height);
+    this.height.get("unit").setValue(this.user.phone);
   }
 
   save(){

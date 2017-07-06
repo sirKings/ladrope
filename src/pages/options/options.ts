@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
@@ -21,7 +21,7 @@ export class OptionsPage {
   selectedOptions = [];
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private toastCtrl: ToastController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
@@ -79,7 +79,6 @@ export class OptionsPage {
   pay(){
     this.createOrder(this.cloth, this.selectedOptions);
     console.log(this.userKey)
-    this.navCtrl.pop();
      /* let options = {
         customer_email: "se@r.c",
         txref: "s23qw3e5rqeasg",
@@ -96,7 +95,8 @@ export class OptionsPage {
   }
 
   createOrder(cloth, options){
-    if(this.user.size){
+    if(this.user.size && this.user.height){
+      let date1 = new Date();
       let order = {
       clothId: this.key,
       options: options,
@@ -105,7 +105,8 @@ export class OptionsPage {
       name: cloth.name,
       price: cloth.price,
       image1: cloth.image1,
-      date: new Date(+new Date + 12096e5),
+      startDate: date1.toISOString(),
+      date: this.deliveryDate,
       status: 'pending',
       userKey: this.userKey,
       size: this.user.size
@@ -120,6 +121,7 @@ export class OptionsPage {
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/users/'+this.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/' + cloth.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.navCtrl.pop();
     } else {
      let date1 = new Date();
      
@@ -133,19 +135,21 @@ export class OptionsPage {
       image1: cloth.image1,
       startDate: date1.toISOString(),
       date: this.deliveryDate,
-      status: 'pending',
+      status: 'Not Submitted',
       userKey: this.userKey
     }
-    let ordersKey = this.db.list('/orders')
-      .push(order).key;
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+ this.userKey+ '/orders')
-      .push(order).key;
-   let tailorOrderKey = this.db.list('/tailors/' + cloth.label +'/orders')
+    
+    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+ this.userKey+ '/savedOrders')
       .push(order).key;
 
-     this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/users/'+this.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/tailors/' + cloth.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+    
+     this.db.object('/users/'+this.uid+'/'+this.userKey+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
+       let toast = this.toastCtrl.create({
+          message: 'Your orders have been saved, it will be submitted after you take your measurement',
+          duration: 5000,
+      })
+      toast.present()
+     this.navCtrl.pop()
     }
   }
 
