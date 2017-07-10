@@ -47,12 +47,14 @@
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty"></ion-input>
     </ion-item>
 
+    <p><ion-checkbox type="checkbox" formControlName= "agree"></ion-checkbox><a (click)="seeTerms()"> I agree to Terms And Conditions</a></p>
+
     <button ion-button block type="submit">
       Create an Account
     </button>
   </form>
 
-  <ion-grid>
+  <!--<ion-grid>
     <ion-row>
        <ion-col col-4>
           <button ion-button (click)="signInWithFacebook()" class='loginbutton'>
@@ -70,7 +72,7 @@
           </button>
         </ion-col>
      </ion-row>
-  </ion-grid>
+  </ion-grid>-->
     
   <h6 ion-text>Have an account?</h6>
   <button ion-button block (click)="login()">

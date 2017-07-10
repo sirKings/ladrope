@@ -24,11 +24,11 @@
        </button>
        <button ion-item (click)='height()'>
         <ion-icon name="man" item-left></ion-icon>
-        Height
+        Height <span *ngIf='userDetails.height'>Saved</span>
        </button>
        <button (click)='measure()' ion-item>
         <ion-icon name="videocam" item-left></ion-icon>
-        Measurement
+        Measurement <span *ngIf = 'userDetails.size'>Saved</span>
        </button>
     </ion-list>
   </ion-card-content>

@@ -23,6 +23,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { HTTP } from '@ionic-native/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
@@ -130,7 +131,8 @@ export const firebaseConfig = {
     DeviceMotion,
     File,
     VideoCapturePlus,
-    HTTP
+    HTTP,
+    InAppBrowser
   ]
 })
 export class AppModule {}

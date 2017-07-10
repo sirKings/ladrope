@@ -12,6 +12,8 @@ import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { EmailValidator } from '../../validators/email';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 @IonicPage()
 @Component({
   selector: 'page-signup',
@@ -24,13 +26,15 @@ export class SignupPage {
   photoURL = 'assets/images/Male-Placeholder.jpg';
   
 
+
   constructor(public navCtrl: NavController, public authData: AuthProvider, 
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController, private iab: InAppBrowser) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       gender: ['', Validators.compose([Validators.required])],
+      agree: "",
       name: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
       passwordRetyped: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -47,7 +51,17 @@ export class SignupPage {
     if(this.signupForm.value.password !== this.signupForm.value.passwordRetyped) {
       let alert = this.alertCtrl.create({
         title: 'Error',
-        message: 'Your password and your re-entered password does not match each other.',
+        message: 'Your password and your re-entered password does not match.',
+        buttons: ['OK']
+      });
+      alert.present();
+      return;
+    }
+
+    if(!this.signupForm.value.agree){
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        message: 'Please agree to the terms and condition.',
         buttons: ['OK']
       });
       alert.present();
@@ -161,6 +175,10 @@ export class SignupPage {
 
   login() {
       this.navCtrl.push(LoginPage)
+  }
+
+  seeTerms(){
+    this.iab.create('https://ladrope.com/privacy');
   }
 
 }

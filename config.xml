@@ -102,5 +102,6 @@
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="224fde44bb3ac664be1ef90034eaca8a36667669" />
     </plugin>
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <engine name="android" spec="~6.2.3" />
 </widget>

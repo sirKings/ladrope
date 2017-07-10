@@ -6,6 +6,8 @@ import { ToastController } from 'ionic-angular';
 //import { HTTP } from '@ionic-native/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 
+import { HomePage } from '../home/home'
+
 @IonicPage()
 @Component({
   selector: 'page-video-review',
@@ -17,7 +19,7 @@ export class VideoReviewPage implements OnInit {
   @ViewChild('player') playerRef;
 
   video;
-  submitted = false
+  submitted = false;
   bodyCheck = 2;
   public videoRef:firebase.storage.Reference;
   progressbar = 0;
@@ -26,10 +28,12 @@ export class VideoReviewPage implements OnInit {
   form;
   userKey;
   user;
+  uid
   videoLink;
   videoPath;
   filePath;
   deliveryDate;
+  uploadComplete = false;
   //headers = {
     //'Content-Type': 'application/x-www-form-urlencoded'
   //};
@@ -39,7 +43,7 @@ export class VideoReviewPage implements OnInit {
      this.video = navParams.get('video');
      this.userKey = navParams.get('userKey');
      this.user = navParams.get('user');
-     console.log(this.video);
+     this.uid = navParams.get('uid');
      //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
      this.filePath = this.getPath(this.video.fullPath, this.video.name);
@@ -82,11 +86,11 @@ export class VideoReviewPage implements OnInit {
           let  blob = new Blob([sucess], {type: "video/mp4"});
           console.log(blob);
           // Upload file and metadata to the object 'images/mountains.jpg'
-          var uploadTask = this.videoRef.child('/' + this.user.uid).put(blob);
+          var uploadTask = this.videoRef.child('/' + this.uid).put(blob);
 
           // Listen for state changes, errors, and completion of the upload.
           uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-            function(snapshot) {
+             (snapshot) => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
               let progresbar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
               console.log(progresbar);
@@ -94,14 +98,15 @@ export class VideoReviewPage implements OnInit {
               progress.style.width = progresbar + '%';
               info.innerHTML = 'Please wait, Uploading Video';
 
-            }, function(error) {
+            }, (error) => {
                 console.log('there was an error uploading file');
                 info.innerHTML = 'Upload failed, please try agiain';
-            }, function() {
+            }, () => {
               //    Upload completed successfully, now we can get the download URL
                   var downloadURL = uploadTask.snapshot.downloadURL;
                   this.videoLink = downloadURL;
-                  info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';  
+                  info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';
+                  this.uploadComplete = true;  
           });
 
         }), function (error) {
@@ -139,14 +144,14 @@ export class VideoReviewPage implements OnInit {
           .catch((err) => {
               console.log('failed to remove')
           })
-    this.db.object('/users/'+this.user.uid+ '/'+ this.userKey)
+    this.db.object('/users/'+this.uid+ '/'+ this.userKey)
       .update({size: this.videoLink})
 
     if(this.user.savedOrder){
       for(var prop in this.user.savedOrder){
         this.submitOrder(this.user.savedOrder[prop])
       }
-      this.db.object('users/'+this.user.uid+ '/'+ this.userKey).update({savedOrder: null})
+      this.db.object('users/'+this.uid+ '/'+ this.userKey).update({savedOrder: null})
       let toast = this.toastCtrl.create({
           message: 'Your saved Orders have been submitted',
           duration: 3000,
@@ -195,15 +200,19 @@ export class VideoReviewPage implements OnInit {
     }
     let ordersKey = this.db.list('/orders')
       .push(newOrder).key;
-    let userOrderKey = this.db.list('/users/'+ this.user.uid +'/'+ this.userKey+ '/orders')
+    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+ this.userKey+ '/orders')
       .push(newOrder).key;
    let tailorOrderKey = this.db.list('/tailors/' + order.label +'/orders')
       .push(newOrder).key;
 
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/users/'+this.user.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.db.object('/users/'+this.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/' + order.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
     
+  }
+
+  home(){
+    this.navCtrl.setRoot(HomePage)
   }
 
 }

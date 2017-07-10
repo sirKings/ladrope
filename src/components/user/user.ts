@@ -64,6 +64,7 @@ export class UserComponent implements OnInit {
   measure(){
       this.navCtrl.parent.parent.push(MeasurementPage, {
         user: this.userDetails,
+        uid: this.uid,
         userKey: this.userKey
       })
   }
