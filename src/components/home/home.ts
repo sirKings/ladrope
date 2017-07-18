@@ -27,47 +27,20 @@ export class HomeComponent {
   url = 'www.ladrope.com';
   image;
   user;
-  userKey;
-  /*token;
-  graphUrl = 'https://graph.facebook.com/';
-  idPath = 'me'+`?access_token=${this.token}`;
-  genderPath = `?access_token=${this.token}&fields=gender`;
-  gender;*/
+  
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
-    
-    /*let res = navParams.get('res');
-    console.log(res)
-
-    if(res){
-      this.token = res.credential.accessToken;
-
-      let id = this.getId();
-
-      this.gender = this.getGender(id)
-      this.initialise(this.gender)
-      console.log(this.gender)
-    }else {*/
+   
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
         this.uid = user.uid;
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
-                        let userDetails = snapshot;
-                        //console.log(userDetails);
-
-                        for (var property in userDetails) {
-                          if (userDetails.hasOwnProperty(property)) {
-                          this.user = userDetails[property];
-                          //this.gender = this.user.gender
-                          this.initialise()
-                          this.userKey = property;
-                           console.log(this.userKey)
-                          }
-                        }
+                        this.user = snapshot;
            });
         authObserver.unsubscribe();
+        this.initialise()
       } 
     });
    
@@ -170,12 +143,10 @@ export class HomeComponent {
   }
 
   addToCart(cloth) {
-    console.log(this.userKey)
     this.navCtrl.parent.parent.push(OptionsPage, {
         cloth: cloth,
         key: cloth.$key,
         uid: this.uid,
-        userKey: this.userKey,
         user: this.user
 
     })
@@ -183,36 +154,13 @@ export class HomeComponent {
   }
 
   goToCloth(cloth, uid){
-      console.log(this.userKey)
       this.navCtrl.parent.parent.push(ClothPage, {
        
           cloth: cloth,
           uid: uid,
           key: cloth.$key,
-          userKey: this.userKey,
           user: this.user
       })
   }
-
-  /*getId(){
-    let url = this.graphUrl + this.idPath;
-
-    return this.http
-        .get(url)
-        .map(response => response.json()).subscribe(data => {
-       data.data.id
-     });
-  }
-
-  getGender(id) {
-      let url = this.graphUrl + this.genderPath;
-
-      return this.http
-          .get(url)
-          .map(response => response.json()).subscribe(data => {
-       data.data.gender
-    });
-  }*/
-
   
 }

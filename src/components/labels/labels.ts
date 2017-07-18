@@ -46,13 +46,6 @@ isOrders = false;
   	this.db.object('users/' + this.uid)
     	.subscribe( snapshot => {
                         let userDetails = snapshot;
-                        console.log(snapshot);
-                        for (var property in userDetails) {
-                          if (userDetails.hasOwnProperty(property)) {
-                          userDetails = userDetails[property];
-                          console.log(userDetails)
-                          }
-                        }
                         if(userDetails.orders){
                         	this.isOrders = true;
                         	this.orders =  this.getOrders(userDetails.orders)

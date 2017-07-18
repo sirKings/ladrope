@@ -19,12 +19,10 @@ import { UserComponent } from '../../components/user/user';
 export class EditUserPage {
   uid;
   user;
-  userKey;
   userForm:FormGroup;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider) {
     this.user = navParams.get('user');
-    this.userKey = navParams.get('userKey');
     this.uid = navParams.get('uid');
 
 
@@ -41,7 +39,7 @@ export class EditUserPage {
       if(!this.userForm.valid){
       
       }else {
-        this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address, this.userForm.value.phone, this.userKey);
+        this.authData.updateUser(this.uid, this.user.displayName, this.user.email, this.user.photoURL, this.userForm.value.address, this.userForm.value.phone);
         this.navCtrl.push(UserComponent)
       }
       

@@ -21,14 +21,12 @@ export class ClothPage {
   url = 'www.ladrope.com';
   image;
   key;
-  userKey;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
-    this.userKey = navParams.get('userKey');
     this.user = navParams.get('user')
   }
 
@@ -37,14 +35,14 @@ export class ClothPage {
       let num = cloth.likes
       if(cloth.likers[uid] == true){
         num++;
-        this.db.object('/cloths/'+cloth.$key).update({likes: num});
+        this.db.object('/cloths/'+this.key).update({likes: num});
         cloth.likers[uid] = null;
       } else {
        num-- 
-      this.db.object('/cloths/'+cloth.$key).update({likes: num});
+      this.db.object('/cloths/'+this.key).update({likes: num});
        cloth.likers[uid] = true;
       }
-     this.db.object('/cloths/'+cloth.$key).update({likers: cloth.likers})
+     this.db.object('/cloths/'+this.key).update({likers: cloth.likers})
   }
 
   shareViaTwitter(cloth){
@@ -115,7 +113,6 @@ export class ClothPage {
         cloth: cloth,
         key: this.key,
         uid: this.uid,
-        userKey: this.userKey,
         user: this.user
     })
     

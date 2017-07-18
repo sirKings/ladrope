@@ -21,7 +21,6 @@ export class VideoPage {
    }
 
   subscription;
-  userKey;
   user;
   uid;
   z;
@@ -31,7 +30,6 @@ export class VideoPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
-    this.userKey = navParams.get('userKey');
     this.user = navParams.get('user');
     this.uid = navParams.get('uid')
     
@@ -81,7 +79,6 @@ export class VideoPage {
   reviewVideo(){
       this.navCtrl.push(VideoReviewPage, {
           video: this.video[0],
-          userKey: this.userKey,
           user: this.user,
           uid: this.uid
       })

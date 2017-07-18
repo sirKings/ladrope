@@ -29,10 +29,7 @@ export class DetailsPage {
         this.name = user.displayName;
         this.photoURL = user.photoURL;
         authObserver.unsubscribe();
-      } else {
-        this.navCtrl.pop();
-        authObserver.unsubscribe();
-      }
+        }
       });
 
     this.userDetailsForm = formBuilder.group({

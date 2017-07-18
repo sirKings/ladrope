@@ -1,8 +1,13 @@
 ﻿  <div class="filter" (click) = 'filter()'>
       <ion-icon class='button-filter' name="options"></ion-icon>
   </div>
-
  <ion-content>
+  <div *ngIf='!cloths'>
+    <p>oops, more like bad connection</p>
+        <button ion-button block type="button" (click)='initialise()'>
+          Refresh
+        </button>
+  </div>
   <ion-item *ngFor='let cloth of cloths | async'>
     <div float-right>
       <ion-badge>NGN{{cloth.price}}.00</ion-badge> <br>

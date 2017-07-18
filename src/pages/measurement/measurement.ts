@@ -12,19 +12,18 @@ import { TimeModalComponent } from '../../components/time-modal/time-modal';
   templateUrl: 'measurement.html',
 })
 export class MeasurementPage {
-  userKey;
+  
   user;
   uid;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ln: LocalNotifications, private modalCtrl: ModalController) {
     this.user = navParams.get('user');
-    this.userKey = navParams.get('userKey');
     this.uid = navParams.get('uid');
   }
 
   startMeasure(){
       this.navCtrl.push(VideoPage, {
-        userKey: this.userKey,
+     
         user: this.user,
         uid: this.uid
       })

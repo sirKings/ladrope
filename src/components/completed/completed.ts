@@ -33,7 +33,7 @@ newRate;
   ionViewDidLeave() {
       this.db.object('cloths/'+this.order.clothId).update({rating: this.newRate});
       this.db.object('/orders/'+ this.order.ordersKey).update({status: 'completed'});
-     this.db.object('/users/'+this.order.user+'/'+this.order.userKey+'/orders/'+ this.order.userOrderKey).update({status: 'completed'});
+     this.db.object('/users/'+this.order.user+'/orders/'+ this.order.userOrderKey).update({status: 'completed'});
      this.db.object('/tailors/' + this.order.label +'/orders/' + this.order.tailorOrderKey).update({status: 'completed'});
   }
 

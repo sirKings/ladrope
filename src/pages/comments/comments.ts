@@ -16,23 +16,18 @@ export class CommentsPage {
  numComment;
  comments: FirebaseListObservable<any[]>;
  comment: FormGroup;
- title;
+ user;
  key;
+ authObserver
 
   constructor(private navParam: NavParams, private navCtrl: NavController, private afAuth: AngularFireAuth, private db: AngularFireDatabase, private formBuilder: FormBuilder) {
 
-    const authObserver = afAuth.authState.subscribe( user => {
+    this.authObserver = afAuth.authState.subscribe( user => {
       if (user) {
         let uid = user.uid
         db.object('/users/'+uid)
           .subscribe(snapshot => {
-              this.title = snapshot;
-                        for (var property in this.title) {
-                          if (this.title.hasOwnProperty(property)) {
-                          this.title = this.title[property].displayName;
-                           }
-                         }
-            authObserver.unsubscribe();
+              this.user = snapshot;
           })
       }
     })
@@ -60,7 +55,7 @@ export class CommentsPage {
       
       } else {
          this.comments.push({
-         title: this.title,
+         title: this.user.name,
          message: this.comment.value.message
           })
           this.cloth.numComment++;
@@ -72,6 +67,7 @@ export class CommentsPage {
   ionViewDidLeave() {
       let num = this.cloth.numComment;
       this.db.object('cloths/'+this.key).update({numComment: num});
+      this.authObserver.unsubscribe();
   }
 }
 

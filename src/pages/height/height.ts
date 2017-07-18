@@ -12,7 +12,6 @@ export class HeightPage {
   
   uid;
   user;
-  userKey;
   height: FormGroup;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private formBuilder: FormBuilder, private authData: AuthProvider) {
@@ -22,7 +21,6 @@ export class HeightPage {
     })
 
     this.user = navParams.get('user');
-    this.userKey = navParams.get('userKey');
     this.uid = navParams.get('uid')
 
     if(this.user.height){
@@ -32,7 +30,7 @@ export class HeightPage {
   }
 
   save(){
-    this.authData.updateHeight(this.height.value, this.userKey, this.uid);
+    this.authData.updateHeight(this.height.value, this.uid);
       this.navCtrl.pop()
   }
 

@@ -23,10 +23,8 @@ export class VideoReviewPage implements OnInit {
   bodyCheck = 2;
   public videoRef:firebase.storage.Reference;
   progressbar = 0;
-  //cloudinaryUrl = 'https://api.cloudinary.com/v1_1/ladrope/upload';
-  //cloudinaryPreset = 'kfmwfbua';
+  
   form;
-  userKey;
   user;
   uid
   videoLink;
@@ -34,14 +32,10 @@ export class VideoReviewPage implements OnInit {
   filePath;
   deliveryDate;
   uploadComplete = false;
-  //headers = {
-    //'Content-Type': 'application/x-www-form-urlencoded'
-  //};
-
+  
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public db: AngularFireDatabase, public navParams: NavParams, private file: File) {
      this.video = navParams.get('video');
-     this.userKey = navParams.get('userKey');
      this.user = navParams.get('user');
      this.uid = navParams.get('uid');
      //this.form = new FormData();
@@ -69,20 +63,9 @@ export class VideoReviewPage implements OnInit {
               contentType: 'video/mp4'
       };
 
-      this.file.readAsDataURL(this.filePath, this.video.name)
+      this.file.readAsArrayBuffer(this.filePath, this.video.name)
         .then((sucess) => {
-            //console.log(sucess);
-
-            /*this.form.append('file', sucess);
-            this.form.append('upload_preset', this.cloudinaryPreset);
-
-            this.http.post(this.cloudinaryUrl, this.form, this.headers)
-              .then((res) => {
-                console.log(res)
-              })
-              .catch((err) => {
-                console.log(err)
-              })*/
+          
           let  blob = new Blob([sucess], {type: "video/mp4"});
           console.log(blob);
           // Upload file and metadata to the object 'images/mountains.jpg'
@@ -106,7 +89,8 @@ export class VideoReviewPage implements OnInit {
                   var downloadURL = uploadTask.snapshot.downloadURL;
                   this.videoLink = downloadURL;
                   info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';
-                  this.uploadComplete = true;  
+                  this.uploadComplete = true;
+                  this.bodyCheck = 2;  
           });
 
         }), function (error) {
@@ -144,14 +128,14 @@ export class VideoReviewPage implements OnInit {
           .catch((err) => {
               console.log('failed to remove')
           })
-    this.db.object('/users/'+this.uid+ '/'+ this.userKey)
+    this.db.object('/users/'+this.uid)
       .update({size: this.videoLink})
 
     if(this.user.savedOrder){
       for(var prop in this.user.savedOrder){
         this.submitOrder(this.user.savedOrder[prop])
       }
-      this.db.object('users/'+this.uid+ '/'+ this.userKey).update({savedOrder: null})
+      this.db.object('users/'+this.uid).update({savedOrder: null})
       let toast = this.toastCtrl.create({
           message: 'Your saved Orders have been submitted',
           duration: 3000,
@@ -195,18 +179,17 @@ export class VideoReviewPage implements OnInit {
       startDate: date1.toISOString(),
       date: this.deliveryDate,
       status: 'pending',
-      userKey: order.userKey,
       size: this.user.size
     }
     let ordersKey = this.db.list('/orders')
       .push(newOrder).key;
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+ this.userKey+ '/orders')
+    let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
       .push(newOrder).key;
    let tailorOrderKey = this.db.list('/tailors/' + order.label +'/orders')
       .push(newOrder).key;
 
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/users/'+this.uid+'/'+this.userKey+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.db.object('/users/'+this.uid+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/' + order.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
     
   }
