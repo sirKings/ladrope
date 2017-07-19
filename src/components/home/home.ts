@@ -67,12 +67,12 @@ export class HomeComponent {
   like (cloth, uid) {
       //console.log(cloth.likers)
       let num = cloth.likes
-      if(cloth.likers[uid] == true){
-        num++;
+      if(cloth.likers[uid] === true){
+        num--;
         this.db.object('/cloths/'+cloth.$key).update({likes: num});
         cloth.likers[uid] = null;
       } else {
-       num-- 
+       num++ 
       this.db.object('/cloths/'+cloth.$key).update({likes: num});
        cloth.likers[uid] = true;
       }

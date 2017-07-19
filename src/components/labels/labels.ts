@@ -46,6 +46,7 @@ isOrders = false;
   	this.db.object('users/' + this.uid)
     	.subscribe( snapshot => {
                         let userDetails = snapshot;
+                        console.log(userDetails)
                         if(userDetails.orders){
                         	this.isOrders = true;
                         	this.orders =  this.getOrders(userDetails.orders)
@@ -54,6 +55,7 @@ isOrders = false;
                         if(userDetails.savedOrders){
                         	this.isSavedOrders = true;
                         	this.savedOrders = this.getOrders(userDetails.savedOrders)
+                          console.log(this.savedOrders)
                         }
 
            });

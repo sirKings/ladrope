@@ -28,6 +28,7 @@ export class CommentsPage {
         db.object('/users/'+uid)
           .subscribe(snapshot => {
               this.user = snapshot;
+              console.log(this.user)
           })
       }
     })
@@ -55,7 +56,7 @@ export class CommentsPage {
       
       } else {
          this.comments.push({
-         title: this.user.name,
+         title: this.user.displayName,
          message: this.comment.value.message
           })
           this.cloth.numComment++;
