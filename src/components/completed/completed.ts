@@ -13,12 +13,14 @@ rate = 0;
 order;
 oldRating;
 newRate;
+oldnumSold
 
   constructor(private db: AngularFireDatabase, private viewCtrl: ViewController, public navParams: NavParams) {
     this.order = navParams.get('order');
     this.db.object('/cloths/'+ this.order.clothId)
   		.subscribe(res => {
-  			this.oldRating = res.rating
+  			this.oldRating = res.rating;
+        this.oldnumSold = res.numSold;
   			console.log(this.oldRating)
   		})
   }
@@ -30,11 +32,18 @@ newRate;
   }
 
 
+
+
   ionViewDidLeave() {
+      this.order.status = 'completed';
+      this.db.object('/cloths/'+this.order.clothId).update({numSold: this.oldnumSold++})
       this.db.object('cloths/'+this.order.clothId).update({rating: this.newRate});
-      this.db.object('/orders/'+ this.order.ordersKey).update({status: 'completed'});
-     this.db.object('/users/'+this.order.user+'/orders/'+ this.order.userOrderKey).update({status: 'completed'});
-     this.db.object('/tailors/' + this.order.label +'/orders/' + this.order.tailorOrderKey).update({status: 'completed'});
+      this.db.object('/orders/'+ this.order.ordersKey).set(null);
+      this.db.list('/completedorders').push(this.order)
+     this.db.object('/users/'+this.order.user+'/orders/'+ this.order.userOrderKey).set(null);
+     this.db.list('users/' +this.order.user+'/orders/completedorders').push(this.order);
+     this.db.object('/tailors/' + this.order.labelId +'/orders/' + this.order.tailorOrderKey).set(null);
+     this.db.list('/tailors/' + this.order.labelId + '/completedOrders').push(this.order);
   }
 
   close(){

@@ -16,6 +16,7 @@ export class LabelsComponent implements OnInit {
 uid;
 orders;
 savedOrders;
+completedOrders;
 isSavedOrders = false;
 isOrders = false;
 
@@ -56,6 +57,10 @@ isOrders = false;
                         	this.isSavedOrders = true;
                         	this.savedOrders = this.getOrders(userDetails.savedOrders)
                           console.log(this.savedOrders)
+                        }
+                        if(userDetails.completedorders){
+                          this.isOrders = true;
+                          this.completedOrders = this.getOrders(userDetails.completedorders)
                         }
 
            });

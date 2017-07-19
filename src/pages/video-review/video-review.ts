@@ -174,6 +174,7 @@ export class VideoReviewPage implements OnInit {
       user: order.user,
       label: order.label,
       name: order.name,
+      labelId: order.labelId,
       price: order.price,
       image1: order.image1,
       startDate: date1.toISOString(),
@@ -185,12 +186,12 @@ export class VideoReviewPage implements OnInit {
       .push(newOrder).key;
     let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
       .push(newOrder).key;
-   let tailorOrderKey = this.db.list('/tailors/' + order.label +'/orders')
+   let tailorOrderKey = this.db.list('/tailors/' + order.labelId +'/orders')
       .push(newOrder).key;
 
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/users/'+this.uid+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/tailors/' + order.label +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     this.db.object('/tailors/' + order.labelId +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
     
   }
 
