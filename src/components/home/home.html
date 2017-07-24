@@ -8,7 +8,7 @@
           Refresh
         </button>
   </div>
-  <ion-item *ngFor='let cloth of cloths | async'>
+  <ion-item *ngFor='let cloth of cloths'>
     <div float-right>
       <ion-badge>NGN{{cloth.price}}.00</ion-badge>
       <div><span class='count'></span>({{cloth.numSold}})

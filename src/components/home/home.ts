@@ -22,7 +22,7 @@ import { ClothPage } from '../../pages/cloth/cloth';
 export class HomeComponent {
   uid;
   options;
-  cloths: FirebaseListObservable<any[]>;
+  cloths;
   message = 'LadRope... Bespoke designs made just for you!';
   url = 'www.ladrope.com';
   image;
@@ -40,23 +40,28 @@ export class HomeComponent {
                         this.user = snapshot;
            });
         authObserver.unsubscribe();
-        this.initialise()
+        this.initialise({})
       } 
     });
    
     //}
   }
 
-  initialise(){
-     this.cloths = this.db.list('/cloths');
-     //console.log(this.cloths)
+  initialise(obj){  
+      this.db.list('/cloths', {
+        query: obj
+      }).subscribe((res)=>{
+        this.cloths = res;
+        this.loading = false;
+      });
+       
   }
 
   filter() {
     let modal = this.modalCtrl.create(FilterComponent);
     modal.onDidDismiss(data => {
        if(data !== null){
-        this.initialise()
+        this.initialise({orderByChild: 'tags', equalTo: data})
        } else {}
        
     });
