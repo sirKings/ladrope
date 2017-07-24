@@ -38,13 +38,14 @@ export class HomeComponent {
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
                         this.user = snapshot;
+                        this.initialise({})
+                        this.getTransactionRef()
            });
         authObserver.unsubscribe();
-        this.initialise({})
       } 
     });
    
-    //}
+    
   }
 
   initialise(obj){  
@@ -60,7 +61,7 @@ export class HomeComponent {
     let modal = this.modalCtrl.create(FilterComponent);
     modal.onDidDismiss(data => {
        if(data !== null){
-        this.initialise({orderByChild: 'tags', equalTo: data})
+        this.initialise({orderByChild: 'tags', equalTo: data.class})
        } else {}
        
     });
@@ -166,5 +167,11 @@ export class HomeComponent {
           user: this.user
       })
   }
-  
+   getTransactionRef(){
+    let date = +new Date();
+    console.log('hello'+date)
+    let transRef = this.uid.substr(1, 4);
+    console.log(transRef+date)
+  }
+
 }

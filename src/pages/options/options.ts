@@ -18,6 +18,7 @@ export class OptionsPage {
   showOptions = false;
   clothOptions;
   selectedOptions = [];
+  transRef;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private toastCtrl: ToastController) {
@@ -37,7 +38,7 @@ export class OptionsPage {
     }
 
    
-    
+    this.getTransactionRef()
   }
 
   getOptions(obj){
@@ -75,15 +76,16 @@ export class OptionsPage {
 
   pay(){
     this.createOrder(this.cloth, this.selectedOptions);
-     /* let options = {
-        customer_email: "se@r.c",
-        txref: "s23qw3e5rqeasg",
+      this.transRef = this.getTransactionRef;
+      let options = {
+        customer_email: this.user.email,
+        txref: this.transRef,
         amount: this.cloth.price,
         callback: function(d){
           this.createOrder(this.cloth, this.selectedOptions)
         }
       }
-      window.initRavePay(options)*/
+      window.initRavePay(options)
   }
 
   ionViewDidLoad() {
@@ -98,6 +100,7 @@ export class OptionsPage {
       options: options,
       user: this.uid,
       label: cloth.label,
+      orderId: this.transRef,
       name: cloth.name,
       price: cloth.price,
       image1: cloth.image1,
@@ -129,6 +132,7 @@ export class OptionsPage {
       labelId: cloth.labelId,
       name: cloth.name,
       price: cloth.price,
+      orderId: this.transRef,
       image1: cloth.image1,
       startDate: date1.toISOString(),
       date: this.deliveryDate,
@@ -158,6 +162,12 @@ export class OptionsPage {
     console.log(myDate)
     return myDate.toString();
 
+  }
+
+ getTransactionRef(){
+    let date = +new Date();
+    let transRef = this.uid.substr(1, 4);
+    return transRef+date;
   }
 
 }
