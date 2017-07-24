@@ -48,11 +48,10 @@ export class HomeComponent {
   }
 
   initialise(obj){  
-      this.db.list('/cloths', {
+      this.db.list('/cloths/'+this.user.gender, {
         query: obj
       }).subscribe((res)=>{
         this.cloths = res;
-        this.loading = false;
       });
        
   }
