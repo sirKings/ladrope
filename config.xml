@@ -104,4 +104,5 @@
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="224fde44bb3ac664be1ef90034eaca8a36667669" />
     </plugin>
+    <plugin name="cordova-plugin-media-capture" spec="~1.2.0" />
 </widget>

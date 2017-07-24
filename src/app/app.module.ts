@@ -9,6 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
+import { MediaCapture } from '@ionic-native/media-capture'
 import { File } from '@ionic-native/file';
 
 import { MyApp } from './app.component';
@@ -132,7 +133,8 @@ export const firebaseConfig = {
     File,
     VideoCapturePlus,
     HTTP,
-    InAppBrowser
+    InAppBrowser,
+    MediaCapture
   ]
 })
 export class AppModule {}
