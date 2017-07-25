@@ -1,7 +1,8 @@
-﻿import { ViewChild, Component } from '@angular/core';
+import { ViewChild, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-capture-plus';
+
 import { VideoReviewPage } from '../video-review/video-review';
 
 
@@ -17,7 +18,8 @@ export class VideoPage {
   options: VideoCapturePlusOptions = {
       limit: 1,
       duration: 15,
-      frontcamera: true
+      frontcamera: true,
+      highquality: true
    }
 
   subscription;
