@@ -35,7 +35,7 @@ export class CommentsPage {
 
     this.cloth = navParam.get('cloth');
     this.key = navParam.get('key');
-    this.comments = db.list('/cloths/'+this.key +'/comment', {
+    this.comments = db.list('/cloths/'+'/'+this.user.gender+'/'+this.key +'/comment', {
         query: {
             orderByKey: true,
             }
@@ -67,7 +67,7 @@ export class CommentsPage {
 
   ionViewDidLeave() {
       let num = this.cloth.numComment;
-      this.db.object('cloths/'+this.key).update({numComment: num});
+      this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({numComment: num});
       this.authObserver.unsubscribe();
   }
 }

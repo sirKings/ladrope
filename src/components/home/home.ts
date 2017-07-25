@@ -39,13 +39,12 @@ export class HomeComponent {
           .subscribe( snapshot => {
                         this.user = snapshot;
                         this.initialise({})
-                        this.getTransactionRef()
            });
         authObserver.unsubscribe();
       } 
     });
    
-    
+    //}
   }
 
   initialise(obj){  
@@ -62,7 +61,9 @@ export class HomeComponent {
     modal.onDidDismiss(data => {
        if(data !== null){
         this.initialise({orderByChild: 'tags', equalTo: data.class})
-       } else {}
+       } else {
+         this.initialise({})
+       }
        
     });
 
@@ -74,14 +75,16 @@ export class HomeComponent {
       let num = cloth.likes
       if(cloth.likers[uid] === true){
         num--;
-        this.db.object('/cloths/'+cloth.$key).update({likes: num});
+        cloth.likes--
+        this.db.object('/cloths/'+'/'+this.user.gender+'/'+cloth.$key).update({likes: num});
         cloth.likers[uid] = null;
       } else {
-       num++ 
-      this.db.object('/cloths/'+cloth.$key).update({likes: num});
+       num++
+       cloth.likes++
+      this.db.object('/cloths/'+'/'+this.user.gender+'/'+cloth.$key).update({likes: num});
        cloth.likers[uid] = true;
       }
-     this.db.object('/cloths/'+cloth.$key).update({likers: cloth.likers})
+     this.db.object('/cloths/'+'/'+this.user.gender+'/'+cloth.$key).update({likers: cloth.likers})
   }
 
   shareViaTwitter(cloth){
@@ -167,11 +170,5 @@ export class HomeComponent {
           user: this.user
       })
   }
-   getTransactionRef(){
-    let date = +new Date();
-    console.log('hello'+date)
-    let transRef = this.uid.substr(1, 4);
-    console.log(transRef+date)
-  }
-
+  
 }

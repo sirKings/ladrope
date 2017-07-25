@@ -5,6 +5,7 @@ import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-c
 import { VideoReviewPage } from '../video-review/video-review';
 
 
+
 @IonicPage()
 @Component({
   selector: 'page-video',
@@ -17,7 +18,8 @@ export class VideoPage {
   options: VideoCapturePlusOptions = {
       limit: 1,
       duration: 15,
-      frontcamera: true
+      frontcamera: true,
+      highquality: true,
    }
 
   subscription;

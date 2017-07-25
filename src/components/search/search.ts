@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 
+import { AngularFireDatabase } from 'angularfire2/database'
+
 import { ClothPage } from '../../pages/cloth/cloth';
 
 
@@ -17,28 +19,35 @@ export class SearchComponent {
   public clothRef:firebase.database.Reference;
   cloth;
   uid;
+  user
 
-  constructor( private afAuth: AngularFireAuth, private navCtrl: NavController) {
+  constructor( private afAuth: AngularFireAuth, private navCtrl: NavController, private db: AngularFireDatabase) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
         console.log(user)
         this.uid = user.uid;
+        db.object('/users/'+this.uid)
+          .subscribe(res => {
+            this.user = res;
+            console.log(this.user)
+            this.clothRef = firebase.database().ref('/cloths/'+this.user.gender);
+
+            this.clothRef.on('value', clothList => {
+              let cloths = [];
+              clothList.forEach( cloth => {
+                cloths.push(cloth);
+                return false;
+              });
+
+              this.clothList = cloths;
+              this.loadedClothList = cloths;
+            });
+          })
          authObserver.unsubscribe();
       } 
     });
 
-    this.clothRef = firebase.database().ref('/cloths');
-
-    this.clothRef.on('value', clothList => {
-      let cloths = [];
-      clothList.forEach( cloth => {
-        cloths.push(cloth);
-        return false;
-      });
-
-      this.clothList = cloths;
-      this.loadedClothList = cloths;
-    });
+    
   }
 
   initializeCloths(): void {

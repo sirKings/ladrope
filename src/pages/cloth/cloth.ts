@@ -35,14 +35,14 @@ export class ClothPage {
       let num = cloth.likes
       if(cloth.likers[uid] == true){
         num++;
-        this.db.object('/cloths/'+this.key).update({likes: num});
+        this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likes: num});
         cloth.likers[uid] = null;
       } else {
        num-- 
-      this.db.object('/cloths/'+this.key).update({likes: num});
+      this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likes: num});
        cloth.likers[uid] = true;
       }
-     this.db.object('/cloths/'+this.key).update({likers: cloth.likers})
+     this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likers: cloth.likers})
   }
 
   shareViaTwitter(cloth){

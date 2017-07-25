@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { HTTP } from '@ionic-native/http';
 
 @IonicPage()
 @Component({
@@ -19,14 +20,15 @@ export class OptionsPage {
   clothOptions;
   selectedOptions = [];
   transRef;
+  ordered = false;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
     this.user = navParams.get('user')
-
+    this.transRef = this.getTransactionRef();
     this.deliveryDate = this.addDays(this.cloth.time + 2);
     console.log(this.deliveryDate)
 
@@ -38,7 +40,7 @@ export class OptionsPage {
     }
 
    
-    this.getTransactionRef()
+    //this.getTransactionRef()
   }
 
   getOptions(obj){
@@ -76,16 +78,17 @@ export class OptionsPage {
 
   pay(){
     this.createOrder(this.cloth, this.selectedOptions);
-      this.transRef = this.getTransactionRef;
-      let options = {
-        customer_email: this.user.email,
-        txref: this.transRef,
-        amount: this.cloth.price,
-        callback: function(d){
-          this.createOrder(this.cloth, this.selectedOptions)
-        }
-      }
-      window.initRavePay(options)
+      // this.transRef = this.getTransactionRef;
+      // let options = {
+      //   customer_email: this.user.email,
+      //   txref: this.transRef,
+      //   amount: this.cloth.price,
+      //   callback: function(d){
+          this.createOrder(this.cloth, this.selectedOptions);
+          this.callTailor(this.cloth)
+      //   }
+      // }
+      // window.initRavePay(options)
   }
 
   ionViewDidLoad() {
@@ -93,64 +96,71 @@ export class OptionsPage {
   }
 
   createOrder(cloth, options){
-    if(this.user.size && this.user.height){
-      let date1 = new Date();
-      let order = {
-      clothId: this.key,
-      options: options,
-      user: this.uid,
-      label: cloth.label,
-      orderId: this.transRef,
-      name: cloth.name,
-      price: cloth.price,
-      image1: cloth.image1,
-      labelId: cloth.labelId,
-      startDate: date1.toISOString(),
-      date: this.deliveryDate,
-      status: 'pending',
-      size: this.user.size
-    }
-    let ordersKey = this.db.list('/orders')
-      .push(order).key;
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
-      .push(order).key;
-   let tailorOrderKey = this.db.list('/tailors/'+this.cloth.labelId+'/orders')
-      .push(order).key;
+    if(this.ordered === false){
+        if(this.user.size && this.user.height){
+              let date1 = new Date();
+              let order = {
+              clothId: this.key,
+              options: options,
+              user: this.uid,
+              label: cloth.label,
+              orderId: this.transRef,
+              name: cloth.name,
+              labelPhone: cloth.labelPhone,
+              price: cloth.price,
+              image1: cloth.image1,
+              labelId: cloth.labelId,
+              startDate: date1.toISOString(),
+              date: this.deliveryDate,
+              status: 'pending',
+              size: this.user.size
+            }
+           let ordersKey = this.db.list('/orders')
+                  .push(order).key;
+           let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
+                  .push(order).key;
+           let tailorOrderKey = this.db.list('/tailors/'+this.cloth.labelId+'/orders')
+                  .push(order).key;
 
-     this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/users/'+this.uid+'/'+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/tailors/'+this.cloth.labelId+'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.navCtrl.pop();
-    } else {
-     let date1 = new Date();
+             this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+             this.db.object('/users/'+this.uid+'/'+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+             this.db.object('/tailors/'+this.cloth.labelId+'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+     //this.navCtrl.pop();
+             this.callTailor(cloth)
+        } else {
+           let date1 = new Date();
      
-    let order = {
-      clothId: this.key,
-      options: options,
-      user: this.uid,
-      label: cloth.label,
-      labelId: cloth.labelId,
-      name: cloth.name,
-      price: cloth.price,
-      orderId: this.transRef,
-      image1: cloth.image1,
-      startDate: date1.toISOString(),
-      date: this.deliveryDate,
-      status: 'Not Submitted',
-    }
+           let order = {
+          clothId: this.key,
+          options: options,
+          user: this.uid,
+          label: cloth.label,
+          labelId: cloth.labelId,
+          labelPhone: cloth.labelPhone,
+          name: cloth.name,
+          price: cloth.price,
+          orderId: this.transRef,
+          image1: cloth.image1,
+          startDate: date1.toISOString(),
+          date: this.deliveryDate,
+          status: 'Not Submitted',
+           }
     
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+'/savedOrders')
-      .push(order).key;
+        let userOrderKey = this.db.list('/users/'+ this.uid +'/'+'/savedOrders')
+              .push(order).key;
 
     
-     this.db.object('/users/'+this.uid+'/'+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
-       let toast = this.toastCtrl.create({
-          message: 'Your orders have been saved, it will be submitted after you take your measurement',
-          duration: 5000,
-      })
-      toast.present()
-     this.navCtrl.pop()
-    }
+        this.db.object('/users/'+this.uid+'/'+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
+           let toast = this.toastCtrl.create({
+             message: 'Your orders have been saved, it will be submitted after you take your measurement',
+             duration: 5000,
+              })
+            toast.present()
+        }
+        
+    //this.navCtrl.pop()
+        this.ordered = true;
+     }
   }
 
 
@@ -168,6 +178,12 @@ export class OptionsPage {
     let date = +new Date();
     let transRef = this.uid.substr(1, 4);
     return transRef+date;
+  }
+
+  callTailor(cloth){
+    let labelPhone = +2347030942828
+    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
+    this.http.post(baseUrl, {}, {})
   }
 
 }
