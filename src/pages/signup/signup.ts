@@ -23,7 +23,7 @@ export class SignupPage {
   public signupForm:FormGroup;
   public loading:Loading;
   user;
-  photoURL = 'assets/images/Male-Placeholder.jpg';
+  photoURL
   
 
 
@@ -83,9 +83,16 @@ export class SignupPage {
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(res => {
+        if(this.signupForm.value.gender === 'male'){
+          this.photoURL  = 'assets/images/Male-Placeholder.jpg';
+        }else{
+          this.photoURL = 'assets/images/Female-Placeholder1.jpg'
+        }
+
        this.authData.createUser(res.uid, this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.gender, this.photoURL);
        this.navCtrl.setRoot(HomePage)
        console.log(res)
+        
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -114,7 +121,7 @@ export class SignupPage {
       .then(res => {
         this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
         this.navCtrl.setRoot(HomePage);
-      console.log(res)
+     
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -135,7 +142,7 @@ export class SignupPage {
      .then(res => {
       this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
       this.navCtrl.setRoot(HomePage);
-      console.log(res)
+      
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({
@@ -156,7 +163,7 @@ export class SignupPage {
       .then(res => {
       this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
       this.navCtrl.setRoot(HomePage);
-      console.log(res)
+    
       }, error => {
         var errorMessage: string = error.message;
         let alert = this.alertCtrl.create({

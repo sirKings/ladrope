@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { HTTP } from '@ionic-native/http';
 
 @IonicPage()
 @Component({
@@ -20,14 +21,15 @@ export class OptionsPage {
   selectedOptions = [];
   transRef;
   tailorDate;
+  ordered = false;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
     this.user = navParams.get('user')
-
+    this.transRef = this.getTransactionRef();
     this.deliveryDate = this.addDays(this.cloth.time + 2);
     console.log(this.deliveryDate)
     this.tailorDate = this.addDays(this.cloth.time);
@@ -40,7 +42,7 @@ export class OptionsPage {
     }
 
    
-    this.getTransactionRef()
+    //this.getTransactionRef()
   }
 
   getOptions(obj){
@@ -78,16 +80,17 @@ export class OptionsPage {
 
   pay(){
     this.createOrder(this.cloth, this.selectedOptions);
-      this.transRef = this.getTransactionRef;
-      let options = {
-        customer_email: this.user.email,
-        txref: this.transRef,
-        amount: this.cloth.price,
-        callback: function(d){
-          this.createOrder(this.cloth, this.selectedOptions)
-        }
-      }
-      window.initRavePay(options)
+      // this.transRef = this.getTransactionRef;
+      // let options = {
+      //   customer_email: this.user.email,
+      //   txref: this.transRef,
+      //   amount: this.cloth.price,
+      //   callback: function(d){
+          this.createOrder(this.cloth, this.selectedOptions);
+          this.callTailor(this.cloth)
+      //   }
+      // }
+      // window.initRavePay(options)
   }
 
   ionViewDidLoad() {
@@ -123,7 +126,8 @@ export class OptionsPage {
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/users/'+this.uid+'/'+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/'+this.cloth.labelId+'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.navCtrl.pop();
+     this.callTailor(cloth)
+     //this.navCtrl.pop();
     } else {
      let date1 = new Date();
      
@@ -152,8 +156,9 @@ export class OptionsPage {
           duration: 5000,
       })
       toast.present()
-     this.navCtrl.pop()
+     //this.navCtrl.pop()
     }
+    this.navCtrl.pop()
   }
 
 
@@ -171,6 +176,12 @@ export class OptionsPage {
     let date = +new Date();
     let transRef = this.uid.substr(1, 4);
     return transRef+date;
+  }
+
+  callTailor(cloth){
+    let labelPhone = +2347030942828
+    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
+    this.http.post(baseUrl, {}, {})
   }
 
 }

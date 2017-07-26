@@ -11,6 +11,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
 import { File } from '@ionic-native/file';
 
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
@@ -132,7 +133,7 @@ export const firebaseConfig = {
     File,
     VideoCapturePlus,
     HTTP,
-    InAppBrowser,
+    InAppBrowser
   ]
 })
 export class AppModule {}

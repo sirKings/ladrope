@@ -4,6 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import firebase from 'firebase';
 
+import { AngularFireDatabase } from 'angularfire2/database'
+
 import { ClothPage } from '../../pages/cloth/cloth';
 
 
@@ -44,10 +46,6 @@ export class SearchComponent {
          authObserver.unsubscribe();
       } 
     });
-
-    
-
-    
   }
 
   initializeCloths(): void {

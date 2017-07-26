@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { File } from '@ionic-native/file';
 import { ToastController } from 'ionic-angular';
-//import { HTTP } from '@ionic-native/http';
+
+import { HTTP } from '@ionic-native/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 import { HomePage } from '../home/home'
@@ -33,11 +34,10 @@ export class VideoReviewPage implements OnInit {
   uploadComplete = false;
   
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public db: AngularFireDatabase, public navParams: NavParams, private file: File) {
+  constructor(public navCtrl: NavController, private http: HTTP, private toastCtrl: ToastController, public db: AngularFireDatabase, public navParams: NavParams, private file: File) {
      this.video = navParams.get('video');
      this.user = navParams.get('user');
      this.uid = navParams.get('uid');
-     //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
      this.filePath = this.getPath(this.video.fullPath, this.video.name);
 
@@ -52,13 +52,6 @@ export class VideoReviewPage implements OnInit {
       this.submitted = true;
       let progress = this.progressRef.nativeElement;
       let info = this.progress.nativeElement;
-
-
-      
-      // Create the file metadata
-      var metadata = {
-              contentType: 'video/mp4'
-      };
 
       this.file.readAsArrayBuffer(this.filePath, this.video.name)
         .then((sucess) => {
@@ -175,6 +168,7 @@ export class VideoReviewPage implements OnInit {
       label: order.label,
       name: order.name,
       labelId: order.labelId,
+      labelPhone: order.labelPhone,
       price: order.price,
       image1: order.image1,
       startDate: date1.toISOString(),
@@ -193,11 +187,15 @@ export class VideoReviewPage implements OnInit {
      this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/users/'+this.uid+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/' + order.labelId +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-    
+     this.callTailor(order)
   }
 
   home(){
     this.navCtrl.setRoot(HomePage)
   }
 
+  callTailor(cloth){
+    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+cloth.labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
+    this.http.post(baseUrl, {}, {})
+  }
 }

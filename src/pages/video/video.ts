@@ -6,6 +6,7 @@ import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-c
 import { VideoReviewPage } from '../video-review/video-review';
 
 
+
 @IonicPage()
 @Component({
   selector: 'page-video',
