@@ -19,6 +19,7 @@ export class OptionsPage {
   clothOptions;
   selectedOptions = [];
   transRef;
+  tailorDate;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private toastCtrl: ToastController) {
@@ -29,6 +30,7 @@ export class OptionsPage {
 
     this.deliveryDate = this.addDays(this.cloth.time + 2);
     console.log(this.deliveryDate)
+    this.tailorDate = this.addDays(this.cloth.time);
 
     if(this.cloth.options){
       this.showOptions = true;
@@ -43,11 +45,11 @@ export class OptionsPage {
 
   getOptions(obj){
       let result = Object.keys(obj).map(function(e) {
-	  let r = Object.keys(obj[e]).map(function(k){
-		  return obj[e][k]
+	  //let r = Object.keys(obj[e]).map(function(k){
+		  return obj[e]//[k]
 	  })
-       return r
-      });
+      // return r
+     // });
       return result;
   }
 
@@ -107,6 +109,7 @@ export class OptionsPage {
       labelId: cloth.labelId,
       startDate: date1.toISOString(),
       date: this.deliveryDate,
+      tailorDate: this.tailorDate,
       status: 'pending',
       size: this.user.size
     }
@@ -134,16 +137,16 @@ export class OptionsPage {
       price: cloth.price,
       orderId: this.transRef,
       image1: cloth.image1,
+      time: cloth.time,
       startDate: date1.toISOString(),
-      date: this.deliveryDate,
       status: 'Not Submitted',
     }
     
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/'+'/savedOrders')
+    let userOrderKey = this.db.list('/users/'+ this.uid +'/savedOrders')
       .push(order).key;
 
     
-     this.db.object('/users/'+this.uid+'/'+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
+     this.db.object('/users/'+this.uid+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
        let toast = this.toastCtrl.create({
           message: 'Your orders have been saved, it will be submitted after you take your measurement',
           duration: 5000,

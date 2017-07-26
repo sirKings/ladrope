@@ -30,7 +30,6 @@ export class VideoReviewPage implements OnInit {
   videoLink;
   videoPath;
   filePath;
-  deliveryDate;
   uploadComplete = false;
   
 
@@ -41,8 +40,6 @@ export class VideoReviewPage implements OnInit {
      //this.form = new FormData();
      this.videoRef = firebase.storage().ref().child('/videos');
      this.filePath = this.getPath(this.video.fullPath, this.video.name);
-
-     this.deliveryDate = this.addDays(14);
 
     
   }
@@ -167,6 +164,9 @@ export class VideoReviewPage implements OnInit {
 
   submitOrder (order) {
 
+      let deliveryDate = this.addDays(order.time + 2);
+      let tailorDate = this.addDays(order.time)
+
       let date1 = new Date();
       let newOrder = {
       clothId: order.clothId,
@@ -178,7 +178,8 @@ export class VideoReviewPage implements OnInit {
       price: order.price,
       image1: order.image1,
       startDate: date1.toISOString(),
-      date: this.deliveryDate,
+      date: deliveryDate,
+      tailorDate: tailorDate,
       status: 'pending',
       size: this.user.size
     }
