@@ -4,8 +4,9 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 //import { Http } from '@angular/http';
 //import 'rxjs/add/operator/map';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { FilterComponent } from '../filter/filter';
@@ -27,6 +28,10 @@ export class HomeComponent {
   url = 'www.ladrope.com';
   image;
   user;
+  limit:BehaviorSubject<number> = new BehaviorSubject<number>(8);
+  lastKey: string;
+  queryable: boolean = true;
+
   
 
   constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
@@ -38,17 +43,17 @@ export class HomeComponent {
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
                         this.user = snapshot;
-                        this.initialise({})
+                        this.initialise({orderByChild: 'name', limitToFirst: this.limit})
+                        this.startTracking();
            });
         authObserver.unsubscribe();
       } 
     });
    
-    //}
   }
 
-  initialise(obj){  
-      this.db.list('/cloths/'+this.user.gender, {
+  initialise(obj){ 
+      this.db.list('/cloths/' + this.user.gender, {
         query: obj
       }).subscribe((res)=>{
         this.cloths = res;
@@ -62,7 +67,7 @@ export class HomeComponent {
        if(data !== null){
         this.initialise({orderByChild: 'tags', equalTo: data.class})
        } else {
-         this.initialise({})
+         this.initialise({orderByChild: 'name', limitToFirst: this.limit})
        }
        
     });
@@ -170,5 +175,48 @@ export class HomeComponent {
           user: this.user
       })
   }
+
+  startTracking(){
+      this.db.list('/cloths/' + this.user.gender, {
+        query: {
+          orderByChild: 'name',
+          limitToLast: 1
+        }
+      }).subscribe((res) => {
+          if (res.length > 0) {
+                  this.lastKey = res[0].$key;
+              } else {
+                  this.lastKey = '';
+              }
+        });
+
+      this.db.list('/cloths/' +this.user.gender, {
+        query: {
+          orderByChild: 'name',
+          limitToFirst: this.limit
+        }
+      }).subscribe( (data) => {
+          if (data.length > 0) {
+              // If the last key in the list equals the last key in the database
+              if (data[data.length - 1].$key === this.lastKey) {
+                  this.queryable = false;
+              } else {
+                  this.queryable = true;
+              }
+          }
+      });
+
+
+    }
+    doInfinite(infiniteScroll) {
+        console.log('Begin async operation');
+
+        if (this.queryable) {
+              this.limit.next( this.limit.getValue() + 10);
+          }
+          
+          infiniteScroll.complete();
+    }
+   
   
 }

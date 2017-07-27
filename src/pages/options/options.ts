@@ -79,7 +79,7 @@ export class OptionsPage {
   }
 
   pay(){
-    this.createOrder(this.cloth, this.selectedOptions);
+    //this.createOrder(this.cloth, this.selectedOptions);
       // this.transRef = this.getTransactionRef;
       // let options = {
       //   customer_email: this.user.email,

@@ -29,17 +29,18 @@ export class CommentsPage {
           .subscribe(snapshot => {
               this.user = snapshot;
               console.log(this.user)
+              this.cloth = navParam.get('cloth');
+              this.key = navParam.get('key');
+              this.comments = db.list('/cloths/'+'/'+this.user.gender+'/'+this.key +'/comment', {
+                  query: {
+                      orderByKey: true,
+                      }
+              });
           })
       }
     })
 
-    this.cloth = navParam.get('cloth');
-    this.key = navParam.get('key');
-    this.comments = db.list('/cloths/'+'/'+this.user.gender+'/'+this.key +'/comment', {
-        query: {
-            orderByKey: true,
-            }
-    });
+    
     
     this.comment = formBuilder.group({
       message: ['', Validators.compose([Validators.required])]
