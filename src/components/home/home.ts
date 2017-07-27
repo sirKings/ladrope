@@ -28,7 +28,7 @@ export class HomeComponent {
   url = 'www.ladrope.com';
   image;
   user;
-  limit:BehaviorSubject<number> = new BehaviorSubject<number>(8);
+  limit:BehaviorSubject<number> = new BehaviorSubject<number>(2);
   lastKey: string;
   queryable: boolean = true;
 
