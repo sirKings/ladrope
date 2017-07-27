@@ -21,15 +21,14 @@
         </ion-card-header>
         <ion-list>
           <div *ngFor='let option of clothOptions'>
-            <div *ngFor='let subOption of option'>
             
-              <ion-item (click)='select(subOption)'>
+              <ion-item (click)='select(option)'>
                 <ion-thumbnail item-start>
-                  <img src="{{subOption.image}}">
+                  <img src="{{option.image}}">
                 </ion-thumbnail>
-                <h2>{{subOption.name}}</h2>
-                <button  *ngIf='!checkOptions(subOption)' ion-button clear item-end><ion-icon name="checkbox"></ion-icon>Selected</button>
-                <button  *ngIf='checkOptions(subOption)' ion-button clear item-end>Select</button>
+                <h2>{{option.name}}</h2>
+                <button  *ngIf='!checkOptions(option)' ion-button clear item-end><ion-icon name="checkbox"></ion-icon>Selected</button>
+                <button  *ngIf='checkOptions(option)' ion-button clear item-end>Select</button>
               </ion-item>
             </div>
           </div>
