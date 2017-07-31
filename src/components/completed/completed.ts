@@ -39,7 +39,7 @@ oldnumSold
       this.db.object('/cloths/'+this.order.clothId).update({numSold: this.oldnumSold++})
       this.db.object('cloths/'+this.order.clothId).update({rating: this.newRate});
       this.db.object('/orders/'+ this.order.ordersKey).set(null);
-      this.db.list('/completedorders').push(this.order)
+      this.db.list('/completedOrders').push(this.order)
      this.db.object('/users/'+this.order.user+'/orders/'+ this.order.userOrderKey).set(null);
      this.db.list('users/' +this.order.user+'/orders/completedorders').push(this.order);
      this.db.object('/tailors/' + this.order.labelId +'/orders/' + this.order.tailorOrderKey).set(null);
