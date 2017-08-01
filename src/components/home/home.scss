@@ -13,6 +13,12 @@
       color: #FF9800
     }
 
+    .desc{
+      background-color: white;
+      padding: 7px;
+      margin: -20px; 
+    }
+
     .action-button{
       font-size: 2rem
     }
@@ -34,11 +40,9 @@
 
     ion-fab[top][edge] {
     top: -14px;
+    left: -10px;
     }
 
-    ion-fab[top] {
-    top: 0px;
-    }
 
     .liked {
       color: rgb(0, 74, 0);

@@ -169,6 +169,7 @@ export class VideoReviewPage implements OnInit {
       name: order.name,
       labelId: order.labelId,
       labelPhone: order.labelPhone,
+      cost: order.cost,
       price: order.price,
       image1: order.image1,
       startDate: date1.toISOString(),
