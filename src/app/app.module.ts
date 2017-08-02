@@ -10,6 +10,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
 import { File } from '@ionic-native/file';
+import { TooltipsModule } from 'ionic-tooltips';
 
 
 import { MyApp } from './app.component';
@@ -92,6 +93,7 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     Ionic2RatingModule,
+    TooltipsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -66,7 +66,7 @@
           </ion-fab>
            </ion-col>
            <ion-col col-sm-2 col-md-3 class='action-button'>
-            <ion-icon name="information-circle"></ion-icon>
+            <ion-icon name="information-circle" [tooltip]= 'cloth.description' positionV="top" ></ion-icon>
            </ion-col>
           <ion-col col-sm-3 col-md-3 (click)='addToCart(cloth)' class='buy-button'>
             Order<ion-icon name="cart" side="right"></ion-icon>
