@@ -51,7 +51,7 @@
             <ion-icon *ngIf='!cloth.likers[uid]' name="heart-outline"></ion-icon>
             <ion-icon *ngIf='cloth.likers[uid]' name="heart"></ion-icon>
           </ion-col>
-          <ion-col col-sm-2 col-md-3 (click)='comment(cloth)' class='action-button'>
+          <ion-col col-sm-1 col-md-3 (click)='comment(cloth)' class='action-button'>
              {{cloth.numComment}}
              <ion-icon name="text"></ion-icon>
           </ion-col>
@@ -65,7 +65,9 @@
               </ion-fab-list>
           </ion-fab>
            </ion-col>
-
+           <ion-col col-sm-2 col-md-3 class='action-button'>
+            <ion-icon name="information-circle"></ion-icon>
+           </ion-col>
           <ion-col col-sm-3 col-md-3 (click)='addToCart(cloth)' class='buy-button'>
             Order<ion-icon name="cart" side="right"></ion-icon>
           </ion-col>
