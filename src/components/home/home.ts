@@ -217,6 +217,11 @@ export class HomeComponent {
           
           infiniteScroll.complete();
     }
+
+    info(cloth){
+    let info = cloth.description;
+    return info + '. Production time is ' +cloth.time +' days';
+  }
    
   
 }

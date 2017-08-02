@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ClothPage } from './cloth';
 import { Ionic2RatingModule } from 'ionic2-rating';
+import { TooltipsModule } from 'ionic-tooltips';
+
 
 @NgModule({
   declarations: [
@@ -9,7 +11,8 @@ import { Ionic2RatingModule } from 'ionic2-rating';
   ],
   imports: [
     IonicPageModule.forChild(ClothPage),
-    Ionic2RatingModule
+    Ionic2RatingModule,
+    TooltipsModule
   ],
   exports: [
     ClothPage
