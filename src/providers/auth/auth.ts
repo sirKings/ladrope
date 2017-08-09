@@ -80,12 +80,12 @@ export class AuthProvider {
       });
    }
 
-   updateUser(uid, displayName, email, imageUrl, address, phone){
+   updateUser(uid, displayName, email, height, address, phone){
        this.userDb = this.db.object('/users/'+ uid);
        this.userDb.update({
               displayName: displayName,
               email: email,
-              photoURL: imageUrl,
+              height: height,
               address: address,
               phone: phone,
            })

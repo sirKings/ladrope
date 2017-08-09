@@ -47,6 +47,9 @@ import { VideoReviewPage } from '../pages/video-review/video-review';
 import { ClothPage } from '../pages/cloth/cloth';
 import { OrderPage } from '../pages/order/order'
 import { CompletedComponent } from '../components/completed/completed';
+import { StartmeasurePage } from '../pages/startmeasure/startmeasure';
+import { SizePage } from '../pages/size/size';
+import { SchedulePage } from '../pages/schedule/schedule';
 
 export const firebaseConfig = {
 
@@ -84,7 +87,10 @@ export const firebaseConfig = {
     VideoReviewPage,
     ClothPage,
     OrderPage,
-    CompletedComponent
+    CompletedComponent,
+    StartmeasurePage,
+    SchedulePage,
+    SizePage
   ],
   imports: [
     BrowserModule,
@@ -120,7 +126,10 @@ export const firebaseConfig = {
     VideoReviewPage,
     ClothPage,
     OrderPage,
-    CompletedComponent
+    CompletedComponent,
+    StartmeasurePage,
+    SchedulePage,
+    SizePage
   ],
   providers: [
     StatusBar,

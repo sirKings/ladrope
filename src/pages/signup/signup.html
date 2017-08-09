@@ -47,7 +47,7 @@
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty"></ion-input>
     </ion-item>
 
-    <p><ion-checkbox type="checkbox" formControlName= "agree"></ion-checkbox><a (click)="seeTerms()"> I agree to Terms And Conditions</a></p>
+    <p><ion-checkbox type="checkbox" value='false' formControlName= "agree"></ion-checkbox><a (click)="seeTerms()"> I agree to Terms And Conditions</a></p>
 
     <button ion-button block type="submit">
       Create an Account

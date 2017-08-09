@@ -34,7 +34,7 @@ export class SignupPage {
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       gender: ['', Validators.compose([Validators.required])],
-      agree: "",
+      agree: [false],
       name: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
       passwordRetyped: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -83,6 +83,7 @@ export class SignupPage {
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(res => {
+
         if(this.signupForm.value.gender === 'male'){
           this.photoURL  = 'assets/images/Male-Placeholder.jpg';
         }else{

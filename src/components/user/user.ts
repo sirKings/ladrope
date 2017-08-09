@@ -8,7 +8,7 @@ import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/data
 
 import { SignupPage } from '../../pages/signup/signup';
 import { EditUserPage } from '../../pages/edit-user/edit-user';
-import { MeasurementPage } from '../../pages/measurement/measurement';
+import { StartmeasurePage } from '../../pages/startmeasure/startmeasure';
 import { HeightPage } from '../../pages/height/height';
 
 @Component({
@@ -54,7 +54,7 @@ export class UserComponent implements OnInit {
   }
 
   measure(){
-      this.navCtrl.parent.parent.push(MeasurementPage, {
+      this.navCtrl.parent.parent.push(StartmeasurePage, {
         user: this.userDetails,
         uid: this.uid,
       })

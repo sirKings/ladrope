@@ -22,9 +22,9 @@
         <ion-icon name="home" item-left></ion-icon>
         {{userDetails?.address}}
        </button>
-       <button ion-item (click)='height()'>
+       <button ion-item>
         <ion-icon name="man" item-left></ion-icon>
-        Height <span *ngIf='userDetails.height'>Saved</span>
+        {{userDetails?.height?.height}} {{userDetails?.height?.unit}}
        </button>
        <button (click)='measure()' ion-item>
         <ion-icon name="videocam" item-left></ion-icon>

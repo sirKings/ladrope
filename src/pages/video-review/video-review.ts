@@ -91,6 +91,14 @@ export class VideoReviewPage implements OnInit {
     
   }
 
+  yes(){
+    this.bodyCheck = 1;
+  }
+
+  no(){
+    this.bodyCheck = 2;
+  }
+
   retakeVideo(){
       this.navCtrl.pop();
   }

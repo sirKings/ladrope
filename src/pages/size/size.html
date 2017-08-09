@@ -1,0 +1,101 @@
+<!--
+  Generated template for the SizePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Enter measurement</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<h5>Enter your correct measurements</h5>
+	<div class='measurement'>
+			<form  [formGroup]="sizeForm" (submit)="save()">
+				<ion-item>
+				<ion-label>Select Unit</ion-label>
+				  <ion-select formControlName="unit">
+				   <ion-option value="inc">Inches</ion-option>
+				   <ion-option value="meters">Meters</ion-option>
+				   <ion-option value="cm">Centimeters (cm)</ion-option>
+				   <ion-option value="ft">Feet</ion-option>
+				  </ion-select>
+				</ion-item>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fbelly.jpg?alt=media&token=6612728b-ece5-4241-8d24-67ac07c5ed3a">
+					<ion-input formControlName="belly" placeholder = 'Enter Belly value' type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fwaist.jpg?alt=media&token=9138bec5-8246-4860-857f-820f59000262">
+					<ion-input formControlName="waist" placeholder = 'Enter Waist value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Ffullshoulder.jpg?alt=media&token=38390918-3dcc-4129-bbf8-441847c0c661">
+					<ion-input formControlName="shoulder" placeholder = 'Enter Shoulder value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fchest.jpg?alt=media&token=270be0ee-a354-41bf-a7a1-a8dd9d1e896c">
+					
+					<ion-input formControlName="chest" placeholder = 'Enter Chest value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fneck.jpg?alt=media&token=ab3cc89a-79f6-4732-bbc9-aba187cd522c">
+					
+					<ion-input formControlName="neck" placeholder = 'Enter Neck value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fhead.jpg?alt=media&token=cee4ba67-dcbe-474b-9fbd-23dccfe9f535">
+					
+					<ion-input formControlName="head" placeholder = 'Enter Head value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fsleeve.jpg?alt=media&token=b4d11e7b-cbf2-47f1-8431-3068631a9ef8">
+					
+					<ion-input formControlName="sleeve" placeholder = 'Enter Sleeve value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fhips.jpg?alt=media&token=c8bd95b0-f3fa-484a-98d7-a3932225b30b">
+				
+					<ion-input formControlName="hips" placeholder = 'Enter Hips value' type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Ffullback.jpg?alt=media&token=c9b9e579-f710-461b-b24a-7ec669468507">
+					
+					<ion-input formControlName="fullback" placeholder = 'Enter Fullback value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2FtrouserLength.jpg?alt=media&token=88366045-01ac-4a52-83e8-be5c2a04953b">
+					
+					<ion-input formControlName="trouserLength" placeholder = 'Enter Trouser length'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fthigh.jpg?alt=media&token=5d5bc3d1-0010-45f3-b5c6-27c0e4f50ce3">
+					
+					<ion-input formControlName="thigh" placeholder = 'Enter Thigh value'  type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fwrist.JPG?alt=media&token=62ab792b-08af-426f-9484-7fd53efbe9db">
+					
+					<ion-input formControlName="wrist" placeholder = 'Enter wrist value' type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fankle.jpg?alt=media&token=e15b7eaa-842d-427c-852a-91d96f009615">
+					
+					<ion-input formControlName="ankle" placeholder = 'Enter Ankle value' type="text"></ion-input>
+				</div>
+				<div class='card'>
+					<img src="https://firebasestorage.googleapis.com/v0/b/ladrope-9e888.appspot.com/o/assets%2Fbicep.jpg?alt=media&token=a1fab1a9-f210-48f2-8598-09b0c9b347f0">
+					
+					<ion-input formControlName="bicep" placeholder = 'Enter Bicep value' type="text"></ion-input>
+				</div>
+				<button ion-button block type="submit">
+				  Submit
+				</button>
+			</form>
+		</div>
+</ion-content>

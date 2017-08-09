@@ -39,6 +39,7 @@ export class HomeComponent {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
+        console.log(user)
         this.uid = user.uid;
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
@@ -46,6 +47,23 @@ export class HomeComponent {
                         this.initialise({orderByChild: 'name', limitToFirst: this.limit})
                         this.startTracking();
            });
+        if(user.emailVerified){
+        
+          }else{
+            user.sendEmailVerification()
+              .then(()=>{
+
+              })
+              .catch(()=>{
+
+              })
+            let alert = this.alertCtrl.create({
+              title: 'Please verify your email address, an email verification link has been sent to your email address',
+              buttons: ['ok']
+              });
+            alert.present();
+          }
+        
         authObserver.unsubscribe();
       } 
     });

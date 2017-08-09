@@ -1,0 +1,29 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Measurement</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<h2>Welcome to Measurement Page</h2>
+	<p>Accurate measurement is key to getting custom made wears, I mean why is it custom-made if it wasn't made for you?</p>
+	<p>Here at ladrope, we store your measurement so you dont have to repeat this process anytime you make an order. You only update the measurement information after every six months or if you had a significant change in weight.</p>
+	<p>For your convenience, you can choose one of the three methods to get measured.</p>
+
+	<div padding>
+		<button ion-button block (tap)='phone()'>Use phone camera</button>
+	</div>
+	
+	<div padding>
+		<button ion-button block (tap)='schedule()'>Request to be measured</button>
+	</div>
+	
+	<div padding>
+		<button ion-button block (tap)='enterSizes()'>Enter your measurement</button>
+	</div>
+	
+</ion-content>

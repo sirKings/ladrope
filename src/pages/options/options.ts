@@ -79,18 +79,18 @@ export class OptionsPage {
   }
 
   pay(){
-    //this.createOrder(this.cloth, this.selectedOptions);
-      // this.transRef = this.getTransactionRef;
-      // let options = {
-      //   customer_email: this.user.email,
-      //   txref: this.transRef,
-      //   amount: this.cloth.price,
-      //   callback: function(d){
+    this.createOrder(this.cloth, this.selectedOptions);
+      this.transRef = this.getTransactionRef;
+      let options = {
+        customer_email: this.user.email,
+         txref: this.transRef,
+         amount: this.cloth.price,
+         callback: (d) => {
           this.createOrder(this.cloth, this.selectedOptions);
           this.callTailor(this.cloth)
-      //   }
-      // }
-      // window.initRavePay(options)
+         }
+       }
+      window.initRavePay(options)
   }
 
   ionViewDidLoad() {

@@ -20,16 +20,23 @@
        </ion-item>
        <ion-item>
         <ion-icon name="call" item-left></ion-icon>
-        <ion-input formControlName='phone' value="{{user.phone}}" placeholder="Enter mobile number"></ion-input>
+        <ion-input formControlName='phone'  placeholder="Enter mobile number"></ion-input>
        </ion-item>
        <ion-item>
         <ion-icon name="home" item-left></ion-icon>
-          <ion-input formControlName='address' value="{{user.address}}" placeholder="Enter delivery address"></ion-input>
+          <ion-textarea formControlName='address' placeholder="Enter delivery address"></ion-textarea>
        </ion-item>
-       <ion-item *ngIf = "user.height">
+       <ion-item>
        <ion-icon name="man" item-left></ion-icon>
-          {{user.height.height}} {{user.height.unit}}
-       </ion-item>
+        <ion-input formControlName='height' placeholder="Enter your height"></ion-input>
+        <ion-select formControlName="unit">
+         <ion-option value="inc">Inches</ion-option>
+         <ion-option value="meters">Meters</ion-option>
+         <ion-option value="cm">Centimeters (cm)</ion-option>
+         <ion-option value="ft">Feet</ion-option>
+        </ion-select>
+
+      </ion-item>
        <ion-item>
        <ion-icon name="videocam" item-left></ion-icon>
         Measurement
