@@ -65,7 +65,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    HomePage/*,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -90,7 +90,7 @@ export const firebaseConfig = {
     CompletedComponent,
     StartmeasurePage,
     SchedulePage,
-    SizePage
+    SizePage*/
   ],
   imports: [
     BrowserModule,

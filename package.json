@@ -60,11 +60,11 @@
         "ionic-tooltips": "^1.0.0",
         "ionic2-rating": "^1.2.2",
         "ionicons": "3.0.0",
+        "nl.x-services.plugins.videocaptureplus": "~1.0.0",
         "rxjs": "5.1.1",
         "sw-toolbox": "3.6.0",
         "twitter-connect-plugin": "^0.6.0",
-        "zone.js": "0.8.11",
-        "nl.x-services.plugins.videocaptureplus": "~1.0.0"
+        "zone.js": "0.8.11"
     },
     "devDependencies": {
         "@ionic/app-scripts": "1.3.7",

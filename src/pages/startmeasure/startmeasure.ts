@@ -22,7 +22,7 @@ uid;
   	this.uid = navParams.get('uid');
   }
 
-  phone(){
+  measure(){
   	this.navCtrl.push(MeasurementPage, {
   		user: this.user,
         uid: this.uid,
