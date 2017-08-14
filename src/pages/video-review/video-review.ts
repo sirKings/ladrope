@@ -81,6 +81,17 @@ export class VideoReviewPage implements OnInit {
                   info.innerHTML = 'Upload Completed!! <br> Go to home tab and place your order';
                   this.uploadComplete = true;
                   this.bodyCheck = 2;  
+                  if(this.user.savedOrder){
+                    for(var prop in this.user.savedOrder){
+                      this.submitOrder(this.user.savedOrder[prop])
+                    }
+                    this.db.object('users/'+this.uid).update({savedOrder: null})
+                    let toast = this.toastCtrl.create({
+                        message: 'Your saved Orders have been submitted',
+                        duration: 3000,
+                    })
+                    toast.present()
+                  }
           });
 
         }), function (error) {
@@ -128,18 +139,7 @@ export class VideoReviewPage implements OnInit {
           })
     this.db.object('/users/'+this.uid)
       .update({size: this.videoLink})
-
-    if(this.user.savedOrder){
-      for(var prop in this.user.savedOrder){
-        this.submitOrder(this.user.savedOrder[prop])
-      }
-      this.db.object('users/'+this.uid).update({savedOrder: null})
-      let toast = this.toastCtrl.create({
-          message: 'Your saved Orders have been submitted',
-          duration: 3000,
-      })
-      toast.present()
-    }
+    
   }
 
   ngOnInit(){

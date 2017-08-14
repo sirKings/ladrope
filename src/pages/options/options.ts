@@ -79,13 +79,12 @@ export class OptionsPage {
   }
 
   pay(){
-    this.createOrder(this.cloth, this.selectedOptions);
       this.transRef = this.getTransactionRef;
       let options = {
         customer_email: this.user.email,
          txref: this.transRef,
          amount: this.cloth.price,
-         callback: (d) => {
+         callback: (d)=>{
           this.createOrder(this.cloth, this.selectedOptions);
           this.callTailor(this.cloth)
          }
