@@ -7,7 +7,7 @@
       <p> please wait....</p>
   </div>
   <ion-item *ngFor='let cloth of cloths'>
-    <div float-right>
+    <div float-right tooltip = "You can only rate designs you have bought">
       <ion-badge>NGN{{cloth.price}}.00</ion-badge>
       <div>
         <rating [(ngModel)]="cloth.rating"

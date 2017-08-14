@@ -37,8 +37,11 @@ export class EditUserPage {
 
     this.userForm.get("address").setValue(this.user.address);
     this.userForm.get("phone").setValue(this.user.phone);
-    this.userForm.get("height").setValue(this.user.height.height);
-    this.userForm.get('unit').setValue(this.user.height.height);
+    if(this.user.height){
+      this.userForm.get("height").setValue(this.user.height.height);
+      this.userForm.get('unit').setValue(this.user.height.height);
+    }
+    
   }
 
   saveUser(){
