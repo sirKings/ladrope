@@ -1,6 +1,9 @@
 ﻿<ion-content padding>
   <div *ngIf = 'isOrders || isSavedOrders'>
-  <p padding> Go to <span (tap)='goToUser()' class='link'>user tab</span> and provide every required information and take your measurement</p>
+  <p padding> Go to user tab and provide every required information and take your measurement</p>
+    <button ion-button (click)='goToUser()'>
+       User Tab
+    </button>
   <ion-list *ngFor = 'let order of savedOrders'>
       <ion-item>
         <ion-thumbnail item-start>
