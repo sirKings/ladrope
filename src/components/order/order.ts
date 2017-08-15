@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
 
-/**
- * Generated class for the OrderComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
+
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
 @Component({
   selector: 'order',
   templateUrl: 'order.html'
 })
 export class OrderComponent {
 
-  text: string;
+postList
 
-  constructor() {
-    console.log('Hello OrderComponent Component');
-    this.text = 'Hello World';
+  constructor( private db: AngularFireDatabase, private iab: InAppBrowser) {
+    this.db.list('blog').subscribe((res)=>{
+    	this.postList = res;
+    })
+  }
+
+
+  more(post){
+    this.iab.create(post.link);
   }
 
 }

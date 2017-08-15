@@ -2,8 +2,8 @@
       <ion-icon class='button-filter' name="options"></ion-icon>
   </div>
  <ion-content>
-  <div *ngIf='!cloths'>
-    <p>oops, more like bad connection</p>
+  <div *ngIf='!cloths' padding>
+      <p>oops, more like bad connection</p>
       <p> please wait....</p>
   </div>
   <ion-item *ngFor='let cloth of cloths'>

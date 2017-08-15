@@ -1,5 +1,18 @@
 ﻿<ion-content padding>
-  <div>
-  Coming soon. LadRope blog.
-  </div>
+  <h3>LadBlog</h3>
+  <ion-list>
+  	 <div *ngFor='let post of postList' (tap)='more(post)'>
+  	 	<ion-card>
+  	 	  <img src="{{post.image}}"/>
+  	 	  <ion-card-content>
+  	 	    <ion-card-title>
+  	 	      {{post.title}}
+  	 	      </ion-card-title>
+  	 	    <p>{{post.description}}
+  	 	    </p>
+  	 	    <p float-right (tap)='more(post)'>more..</p>
+  	 	  </ion-card-content>
+  	 	</ion-card>
+  	 </div>
+  </ion-list>
 </ion-content>
