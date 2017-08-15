@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { HTTP } from '@ionic-native/http';
 
@@ -24,7 +24,7 @@ export class OptionsPage {
   ordered = false;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
@@ -86,7 +86,43 @@ export class OptionsPage {
          amount: this.cloth.price,
          callback: (d)=>{
              console.log(d)
-            //this.createOrder(this.cloth, this.selectedOptions);
+             if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
+               if(d.success === true && d.tx.amount === this.cloth.price){
+                  this.createOrder(this.cloth, this.selectedOptions);
+                  // let alert = this.alertCtrl.create({
+                  //         message: 'Order successful, your cloth will be made and delivered on schedule. Thanks',
+                  //         buttons: [
+                  //           {
+                  //             text: "Ok",
+                  //             role: 'cancel'
+                  //           }
+                  //         ]
+                  //       });
+                  //     alert.present();
+               }else{
+                 // let alert = this.alertCtrl.create({
+                 //         message: 'Order not successful, Please try again',
+                 //         buttons: [
+                 //           {
+                 //             text: "Ok",
+                 //             role: 'cancel'
+                 //           }
+                 //         ]
+                 //       });
+                 //     alert.present();
+               }
+             }else{
+             //   let alert = this.alertCtrl.create({
+             //           message: 'Payment not successful, please try again',
+             //           buttons: [
+             //             {
+             //               text: "Ok",
+             //               role: 'cancel'
+             //             }
+             //           ]
+             //         });
+             //       alert.present();
+             }
          }
        }
       window.initRavePay(options)
