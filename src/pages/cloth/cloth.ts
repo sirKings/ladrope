@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { CommentsPage } from '../../pages/comments/comments';
 import { OptionsPage } from '../../pages/options/options';
@@ -23,22 +24,35 @@ export class ClothPage {
   key;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: AngularFireDatabase, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
-    this.cloth = navParams.get('cloth');
-    this.uid = navParams.get('uid');
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, public navParams: NavParams, private db: AngularFireDatabase, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
     this.key = navParams.get('key');
-    this.user = navParams.get('user')
+  
+      const authObserver = afAuth.authState.subscribe( user => {
+        if (user) {
+          this.uid = user.uid;
+          db.object('/users/' + this.uid)
+            .subscribe( snapshot => {
+                          this.user = snapshot;
+                          this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).subscribe((res)=>{
+                            this.cloth = res;
+                          })
+              });
+               authObserver.unsubscribe();
+             } 
+           });
+
+    
   }
 
   like (cloth, uid) {
       //console.log(cloth.likers)
       let num = cloth.likes
       if(cloth.likers[uid] == true){
-        num++;
+        num--;
         this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likes: num});
         cloth.likers[uid] = null;
       } else {
-       num-- 
+       num++ 
       this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likes: num});
        cloth.likers[uid] = true;
       }

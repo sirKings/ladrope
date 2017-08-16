@@ -25,7 +25,7 @@ export class HomeComponent {
   options;
   cloths;
   message = 'LadRope... Bespoke designs made just for you!';
-  url = 'www.ladrope.com';
+  url = 'https://ladrope.com/#/cloth';
   image;
   user;
   limit:BehaviorSubject<number> = new BehaviorSubject<number>(2);
@@ -39,7 +39,6 @@ export class HomeComponent {
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        console.log(user)
         this.uid = user.uid;
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
@@ -112,7 +111,7 @@ export class HomeComponent {
 
   shareViaTwitter(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaTwitter(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaTwitter(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
@@ -131,7 +130,7 @@ export class HomeComponent {
 
   shareViaFacebook(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaFacebook(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaFacebook(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
@@ -149,7 +148,7 @@ export class HomeComponent {
 
   shareViaWhatsApp(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
@@ -186,11 +185,7 @@ export class HomeComponent {
 
   goToCloth(cloth, uid){
       this.navCtrl.parent.parent.push(ClothPage, {
-       
-          cloth: cloth,
-          uid: uid,
           key: cloth.$key,
-          user: this.user
       })
   }
 

@@ -1,20 +1,23 @@
-﻿import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+﻿import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
+import { ClothPage } from '../pages/cloth/cloth';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any;
+  @ViewChild(Nav) navChild:Nav;
 
-  constructor(platform: Platform, statusBar: StatusBar, afAuth: AngularFireAuth, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, private deeplinks: Deeplinks, afAuth: AngularFireAuth, splashScreen: SplashScreen) {
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
         this.rootPage = HomePage;
@@ -30,6 +33,12 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      deeplinks.routeWithNavController(this.navChild, {
+              '/cloth/:key': ClothPage
+            }).subscribe((match) => {
+            }, (nomatch) => {
+            });
     });
   }
 }

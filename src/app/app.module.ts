@@ -11,6 +11,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
 import { File } from '@ionic-native/file';
 import { TooltipsModule } from 'ionic-tooltips';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 
 import { MyApp } from './app.component';
@@ -65,7 +66,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    HomePage/*,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -90,7 +91,7 @@ export const firebaseConfig = {
     CompletedComponent,
     StartmeasurePage,
     SchedulePage,
-    SizePage
+    SizePage*/
   ],
   imports: [
     BrowserModule,
@@ -144,7 +145,8 @@ export const firebaseConfig = {
     File,
     VideoCapturePlus,
     HTTP,
-    InAppBrowser
+    InAppBrowser,
+    Deeplinks
   ]
 })
 export class AppModule {}
