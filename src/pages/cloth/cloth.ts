@@ -19,7 +19,7 @@ export class ClothPage {
   uid;
   user;
   message = 'LadRope... Bespoke designs made just for you!';
-  url = 'www.ladrope.com';
+  url = 'https://ladrope.com/#/cloth';
   image;
   key;
 
@@ -61,7 +61,7 @@ export class ClothPage {
 
   shareViaTwitter(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaTwitter(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaTwitter(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
@@ -80,7 +80,7 @@ export class ClothPage {
 
   shareViaFacebook(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaFacebook(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaFacebook(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
@@ -98,7 +98,7 @@ export class ClothPage {
 
   shareViaWhatsApp(cloth){
     this.image = cloth.image1;
-    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url).then(() => {
+    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url+cloth.$key).then(() => {
             let alert = this.alertCtrl.create({
             title: 'Thanks for sharing',
             buttons: ['ok']
