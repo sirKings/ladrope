@@ -19,7 +19,7 @@ export class ClothPage {
   uid;
   user;
   message = 'LadRope... Bespoke designs made just for you!';
-  url = 'https://ladrope.com/#/cloth';
+  url = 'https://ladrope.com/cloth/';
   image;
   key;
 

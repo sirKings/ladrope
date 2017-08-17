@@ -1,10 +1,11 @@
 ﻿import { Component } from '@angular/core';
-import { ModalController, NavController, AlertController } from 'ionic-angular';
+import { ModalController, NavController, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 //import { Http } from '@angular/http';
 //import 'rxjs/add/operator/map';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,17 +26,23 @@ export class HomeComponent {
   options;
   cloths;
   message = 'LadRope... Bespoke designs made just for you!';
-  url = 'https://ladrope.com/#/cloth';
+  url = 'https://ladrope.com/cloth/';
   image;
   user;
   limit:BehaviorSubject<number> = new BehaviorSubject<number>(2);
   lastKey: string;
   queryable: boolean = true;
+  clothList: Subscription;
+  loading: Loading;
 
   
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
+  constructor(private db: AngularFireDatabase, private loadingCtrl: LoadingController, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
    
+    this.loading = this.loadingCtrl.create({
+      dismissOnPageChange: true,
+    });
+    this.loading.present();
 
     const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
@@ -70,19 +77,59 @@ export class HomeComponent {
   }
 
   initialise(obj){ 
-      this.db.list('/cloths/' + this.user.gender, {
+      this.clothList = this.db.list('/cloths/' + this.user.gender, {
         query: obj
       }).subscribe((res)=>{
+        this.loading.dismiss()
         this.cloths = res;
       });
        
+  }
+
+  filterWithPrice(obj){
+    if(obj.class !== ''){
+      this.db.list('/cloths/' + this.user.gender, {
+        query: {
+          orderByChild: 'tags', 
+          equalTo: obj.class
+        }
+      }).subscribe((res) => {
+        this.loading.dismiss()
+        this.cloths = res.filter((cloth)=>{
+          return cloth.price < obj.price;
+        })
+      })
+    }else{
+      this.db.list('/cloths/'+this.user.gender)
+        .subscribe((res)=>{
+          this.loading.dismiss()
+          this.cloths = res.filter((cloth)=>{
+            return cloth.price < obj.price;
+          })
+        })
+    }
+    
   }
 
   filter() {
     let modal = this.modalCtrl.create(FilterComponent);
     modal.onDidDismiss(data => {
        if(data !== null){
-        this.initialise({orderByChild: 'tags', equalTo: data.class})
+        if(data.price === ''){
+          this.loading = this.loadingCtrl.create({
+            dismissOnPageChange: true,
+          });
+          this.loading.present();
+          this.initialise({orderByChild: 'tags', equalTo: data.class})
+        }else {
+          this.clothList.unsubscribe()
+          this.loading = this.loadingCtrl.create({
+            dismissOnPageChange: true,
+          });
+          this.loading.present();
+          this.filterWithPrice(data)
+        }
+        
        } else {
          this.initialise({orderByChild: 'name', limitToFirst: this.limit})
        }

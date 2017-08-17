@@ -27,7 +27,6 @@ sizeForm;
   		sleeve: ['', Validators.required],
   		neck: ['', Validators.required],
   		chest: ['', Validators.required],
-  		burst: ['', Validators.required],
   		waist: ['', Validators.required],
   		hips: ['', Validators.required],
   		ankle: ['', Validators.required],

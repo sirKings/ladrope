@@ -13,6 +13,7 @@ export class FilterComponent {
   constructor(private viewCtrl: ViewController, private formBuilder: FormBuilder) {
     this.filterOptions = formBuilder.group({
       class: '',
+      price: ''
     })
   }
 
