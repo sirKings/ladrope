@@ -14,6 +14,7 @@ import { FilterComponent } from '../filter/filter';
 import { CommentsPage } from '../../pages/comments/comments';
 import { OptionsPage } from '../../pages/options/options';
 import { ClothPage } from '../../pages/cloth/cloth';
+import { HeightPage } from '../../pages/height/height';
 
 
 
@@ -34,6 +35,8 @@ export class HomeComponent {
   queryable: boolean = true;
   clothList: Subscription;
   loading: Loading;
+  noOfCartItems;
+  cart;
 
   
 
@@ -50,6 +53,7 @@ export class HomeComponent {
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
                         this.user = snapshot;
+                        this.getCartItems(this.user.cart)
                         this.initialise({orderByChild: 'name', limitToFirst: this.limit})
                         this.startTracking();
            });
@@ -74,6 +78,23 @@ export class HomeComponent {
       } 
     });
    
+  }
+
+  getCartItems(obj){
+    if(obj){
+      let result = Object.keys(obj).map(function(e) {
+          return obj[e]
+        })
+      this.noOfCartItems = result.length;
+      this.cart = result;
+    }else{
+      this.noOfCartItems = 0;
+    }
+      
+  }
+
+  goToCart(){
+    this.navCtrl.parent.parent.push(HeightPage, {data: this.cart, uid: this.uid, user: this.user});
   }
 
   initialise(obj){ 
@@ -158,6 +179,7 @@ export class HomeComponent {
 
   
   share(cloth){
+    console.log(cloth.image1)
     this.socialSharing.share('Bespoke Designs made for you', 'LadRope', cloth.image1, this.url+cloth.$key).then(() => {
               let alert = this.alertCtrl.create({
               title: 'Thanks for sharing',
@@ -245,6 +267,7 @@ export class HomeComponent {
     let info = cloth.description;
     return info + '. Production time is ' +cloth.time +' days';
   }
+
    
   
 }

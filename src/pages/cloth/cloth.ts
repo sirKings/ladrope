@@ -59,58 +59,20 @@ export class ClothPage {
      this.db.object('/cloths/'+'/'+this.user.gender+'/'+this.key).update({likers: cloth.likers})
   }
 
-  shareViaTwitter(cloth){
-    this.image = cloth.image1;
-    this.socialSharing.shareViaTwitter(this.message, this.image, this.url+cloth.$key).then(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Thanks for sharing',
-            buttons: ['ok']
-            });
-          alert.present();
-    }).catch(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Couldnt share',
-            subTitle: 'Are you sure Twitter is installed',
-            buttons: ['Dismiss']
-            });
-          alert.present();
-    })
-    
-  }
-
-  shareViaFacebook(cloth){
-    this.image = cloth.image1;
-    this.socialSharing.shareViaFacebook(this.message, this.image, this.url+cloth.$key).then(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Thanks for sharing',
-            buttons: ['ok']
-            });
-          alert.present();
-    }).catch(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Couldnt share',
-            subTitle: 'Are you sure Facebook is installed',
-            buttons: ['Dismiss']
-            });
-          alert.present();
-    })
-  }
-
-  shareViaWhatsApp(cloth){
-    this.image = cloth.image1;
-    this.socialSharing.shareViaWhatsApp(this.message, this.image, this.url+cloth.$key).then(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Thanks for sharing',
-            buttons: ['ok']
-            });
-          alert.present();
-    }).catch(() => {
-            let alert = this.alertCtrl.create({
-            title: 'Couldnt share',
-            subTitle: 'Are you sure Whatsapp is installed',
-            buttons: ['Dismiss']
-            });
-          alert.present();
+  share(cloth){
+    this.socialSharing.share('Bespoke Designs made for you', 'LadRope', cloth.image1, this.url+this.key).then(() => {
+              let alert = this.alertCtrl.create({
+              title: 'Thanks for sharing',
+              buttons: ['ok']
+              });
+            alert.present();
+      }).catch(() => {
+              let alert = this.alertCtrl.create({
+              title: 'Couldnt share',
+              subTitle: 'Try again later',
+              buttons: ['Dismiss']
+              });
+            alert.present();
     })
   }
 

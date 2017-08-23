@@ -35,9 +35,11 @@ export class MyApp {
       splashScreen.hide();
 
       deeplinks.routeWithNavController(this.navChild, {
-              '/cloth/:key': ClothPage
+              '/cloth/:key': ClothPage,
+              '**': HomePage,
             }).subscribe((match) => {
             }, (nomatch) => {
+
             });
     });
   }

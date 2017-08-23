@@ -1,4 +1,4 @@
-﻿import { ViewChild, Component, OnInit } from '@angular/core';
+﻿import { ViewChild, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { File } from '@ionic-native/file';
@@ -14,10 +14,9 @@ import { HomePage } from '../home/home'
   selector: 'page-video-review',
   templateUrl: 'video-review.html',
 })
-export class VideoReviewPage implements OnInit {
+export class VideoReviewPage {
   @ViewChild('progressbar') progressRef;
   @ViewChild('progress') progress;
-  @ViewChild('player') playerRef;
 
   video;
   submitted = false;
@@ -91,6 +90,7 @@ export class VideoReviewPage implements OnInit {
                         duration: 3000,
                     })
                     toast.present()
+                    this.removeFile()
                   }
           });
 
@@ -128,7 +128,7 @@ export class VideoReviewPage implements OnInit {
     return path;
   }
 
-  ionViewDidLeave() {
+  removeFile() {
        // Stop watch
     this.file.removeFile(this.filePath, this.video.name)
           .then((res) => {
@@ -140,17 +140,6 @@ export class VideoReviewPage implements OnInit {
     this.db.object('/users/'+this.uid)
       .update({size: this.videoLink})
     
-  }
-
-  ngOnInit(){
-     let player = this.playerRef.nativeElement;
-     this.videoPath = this.file.readAsDataURL(this.filePath, this.video.name)
-         .then((res) => {
-            player.src = res;
-            player.load();
-         }).catch((err) => {
-           console.log(err)
-         })
   }
 
   addDays = function(days) {

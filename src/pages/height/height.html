@@ -7,38 +7,33 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>height</ion-title>
+    <ion-title>Cart</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
-   <video autoplay="true" controls class='video'>
-     <source src="assets/videos/test.mp4" type="video/mp4">
-   </video>
-
-   <form [formGroup]="height" (submit)="save()" novalidate>
+    <div *ngIf='!cart'>
+      <p>Your Cart is empty</p>
+    </div>
+    <ion-list *ngFor = "let order of cart; let i = index">
+        <ion-item>
+          <ion-thumbnail item-start>
+              <img src="{{order.image1}}">
+          </ion-thumbnail>
+          <h2>{{order.name}}</h2>
+          <p>{{order.label}}</p>
+          <p>Price: <span class='danger'>NGN{{order.price}}.00</span></p>
+          <span class='red' (tap)='remove(order, i)'>Remove</span>
+        </ion-item>
+     </ion-list>
+     <span>Total: NGN{{total}}.00</span>
+    <div *ngIf='cart.length != 0'>
+      <button ion-button block (click)='pay()'>
+        Place your Order
+      </button>
+    </div>
     
-    <ion-item>
-      <ion-label stacked>Height</ion-label>
-      <ion-input formControlName="height" type="text" placeholder="Enter your height"
-       required></ion-input>
-    </ion-item>
-
-    <ion-item>
-    <ion-label>Unit</ion-label>
-      <ion-select formControlName="unit">
-       <ion-option value="inc">Inches</ion-option>
-       <ion-option value="meters">Meters</ion-option>
-       <ion-option value="cm">Centimeters (cm)</ion-option>
-       <ion-option value="ft">Feet</ion-option>
-      </ion-select>
-    </ion-item>
-
-    
-    <button ion-button block type="submit">
-     Save
-    </button>
-  </form>
 </ion-content>
+
+

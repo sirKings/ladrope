@@ -1,7 +1,16 @@
-﻿  <div class="filter" (click) = 'filter()'>
-      <ion-icon class='button-filter' name="options"></ion-icon>
+﻿  <div class="filter">
+    <div (tap) = 'goToCart()' float-right>
+        <span>{{noOfCartItems}}</span>
+        <ion-icon class='button-filter' name="cart"></ion-icon>
+    </div>
+    <div  (tap) = 'filter()'>
+        <ion-icon class='button-filter' name="options"></ion-icon>
+    </div>
+    
   </div>
- <ion-content>
+  
+
+ <ion-content class='cloths'>
   <div *ngIf='!cloths' padding>
       <p>oops, more like bad connection</p>
       <p> please wait....</p>
@@ -38,14 +47,6 @@
          <ion-slide>
           <img class='slide-image' [src]='cloth.image4'/>
         </ion-slide>
-         <!-- <ion-slide>
-          <ion-content>
-            <span class='count'>Number sold: {{cloth.numSold}}</span>
-            <div>
-                <p> {{cloth.description}}</p> 
-            </div>
-          </ion-content>
-        </ion-slide> -->
      </ion-slides>
      <div>
         <div>

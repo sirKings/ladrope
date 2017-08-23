@@ -15,7 +15,7 @@ export class OptionsPage {
   key;
   user;
   deliveryDate;
-  options;
+  options = {};
   showOptions = false;
   clothOptions;
   selectedOptions = [];
@@ -31,14 +31,12 @@ export class OptionsPage {
     this.user = navParams.get('user')
     this.transRef = this.getTransactionRef();
     this.deliveryDate = this.addDays(this.cloth.time + 2);
-    console.log(this.deliveryDate)
     this.tailorDate = this.addDays(this.cloth.time);
 
     if(this.cloth.options){
       this.showOptions = true;
       
       this.clothOptions = this.getOptions(this.cloth.options)
-      console.log(this.clothOptions)
     }
 
    
@@ -58,7 +56,6 @@ export class OptionsPage {
   select(subOption){
      
       let i = this.selectedOptions.indexOf(subOption)
-      console.log(i)
       if (i === -1) {
         
         this.selectedOptions.push(subOption)   
@@ -67,6 +64,17 @@ export class OptionsPage {
       this.selectedOptions.splice(i, 1)
       }
       console.log(this.selectedOptions)
+  }
+
+  getOptionsObj(){
+    if(this.selectedOptions.length != 0){
+      this.selectedOptions.forEach((e, i)=>{
+        this.options[i] = e; 
+      })
+    }else{
+      this.options = 'No options'
+    }
+    console.log(this.options)
   }
 
   checkOptions(subOption){
@@ -80,15 +88,15 @@ export class OptionsPage {
 
   pay(){
       this.transRef = this.getTransactionRef();
+      this.getOptionsObj()
       let options = {
         customer_email: this.user.email,
          txref: this.transRef,
          amount: this.cloth.price,
          callback: (d)=>{
-             console.log(d)
              if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
                if(d.success === true && d.tx.amount === this.cloth.price){
-                  this.createOrder(this.cloth, this.selectedOptions);
+                  this.createOrder(this.cloth);
                   // let alert = this.alertCtrl.create({
                   //         message: 'Order successful, your cloth will be made and delivered on schedule. Thanks',
                   //         buttons: [
@@ -128,16 +136,12 @@ export class OptionsPage {
       window.initRavePay(options)
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OptionsPage');
-  }
-
-  createOrder(cloth, options){
+  createOrder(cloth){
     if(this.user.size && this.user.height){
       let date1 = new Date();
       let order = {
       clothId: this.key,
-      options: options,
+      options: this.options,
       user: this.uid,
       label: cloth.label,
       orderId: this.transRef,
@@ -170,7 +174,7 @@ export class OptionsPage {
      
     let order = {
       clothId: this.key,
-      options: options,
+      options: this.options,
       user: this.uid,
       label: cloth.label,
       labelId: cloth.labelId,
@@ -206,7 +210,6 @@ export class OptionsPage {
     let str = date.toISOString();
     let  myDate = new Date(str);
     myDate.setDate(myDate.getDate() + parseInt(days));
-    console.log(myDate)
     return myDate.toString();
 
   }
@@ -220,6 +223,15 @@ export class OptionsPage {
   callTailor(cloth){
     let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=Ladrope.com&password=rB6V4KDt&type=0&dlr=1&destination='+cloth.labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
     this.http.post(baseUrl, {}, {})
+  }
+
+  addToCart(){
+    this.getOptionsObj()
+    this.cloth.options = this.options
+    let key = this.db.list('users/' +this.uid+ '/cart')
+      .push(this.cloth).key
+      this.db.object('users/' +this.uid+ '/cart/'+key).update({cartKey: key, clothId: this.key})
+    this.navCtrl.pop()
   }
 
 }
