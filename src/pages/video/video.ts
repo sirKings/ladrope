@@ -1,8 +1,7 @@
 import { ViewChild, Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
-import { VideoCapturePlus, VideoCapturePlusOptions } from '@ionic-native/video-capture-plus';
-
+import { MediaCapture, MediaFile, CaptureVideoOptions } from '@ionic-native/media-capture';
 import { VideoReviewPage } from '../video-review/video-review';
 
 
@@ -16,12 +15,7 @@ export class VideoPage {
 
   @ViewChild('pointer') pointerRef
   
-  options: VideoCapturePlusOptions = {
-      limit: 1,
-      duration: 15,
-      frontcamera: true,
-      highquality: true
-   }
+  
 
   subscription;
   user;
@@ -32,7 +26,7 @@ export class VideoPage {
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private videoCapturePlus: VideoCapturePlus) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dm: DeviceMotion, private media: MediaCapture) {
     this.user = navParams.get('user');
     this.uid = navParams.get('uid')
     
@@ -69,7 +63,11 @@ export class VideoPage {
   }
 
   startVideo(){
-      this.videoCapturePlus.captureVideo(this.options)
+    let options: CaptureVideoOptions = {
+      duration: 15,
+      limit: 1
+    }
+      this.media.captureVideo(options)
       .then(res => {
         this.videoTaken = true;
         this.video = res;

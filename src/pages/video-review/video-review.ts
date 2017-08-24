@@ -54,12 +54,12 @@ export class VideoReviewPage {
 
       this.file.readAsArrayBuffer(this.filePath, this.video.name)
         .then((sucess) => {
-          
+          console.log('file read successfully')
           let  blob = new Blob([sucess], {type: "video/mp4"});
-          console.log(blob);
+          //console.log(blob);
           // Upload file and metadata to the object 'images/mountains.jpg'
           var uploadTask = this.videoRef.child('/' + this.uid).put(blob);
-
+          console.log('upload started')
           // Listen for state changes, errors, and completion of the upload.
           uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
              (snapshot) => {
@@ -147,7 +147,6 @@ export class VideoReviewPage {
     let str = date.toISOString();
     let  myDate = new Date(str);
     myDate.setDate(myDate.getDate() + parseInt(days));
-    console.log(myDate)
     return myDate.toString();
 
   }

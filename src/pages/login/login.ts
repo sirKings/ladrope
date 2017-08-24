@@ -74,24 +74,6 @@ export class LoginPage {
     }
   }
 
-  signInWithFacebook() {
-    this.authData.signinFb()
-      .then(res => {
-      this.navCtrl.setRoot(HomePage);
-      }, error => {
-        var errorMessage: string = error.message;
-        let alert = this.alertCtrl.create({
-              message: errorMessage,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
-            });
-        alert.present();
-      });
-  }
 
   signInWithGoogle() {
     this.authData.signinGoogle()
@@ -112,24 +94,7 @@ export class LoginPage {
       });
   }
 
-  signInWithTwitter() {
-    this.authData.signinTwitter()
-      .then(res => { 
-      this.navCtrl.setRoot(HomePage);
-      }, error => {
-        var errorMessage: string = error.message;
-        let alert = this.alertCtrl.create({
-              message: errorMessage,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
-            });
-        alert.present();
-      });
-  }
+
 
   goToResetPassword(){
   this.navCtrl.push(ResetPasswordPage);

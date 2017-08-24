@@ -3,12 +3,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Facebook } from '@ionic-native/facebook';
-import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { MediaCapture } from '@ionic-native/media-capture';
 import { DeviceMotion } from '@ionic-native/device-motion';
-import { VideoCapturePlus} from '@ionic-native/video-capture-plus';
 import { File } from '@ionic-native/file';
 import { TooltipsModule } from 'ionic-tooltips';
 import { Deeplinks } from '@ionic-native/deeplinks';
@@ -66,7 +64,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    HomePage/*,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -91,7 +89,7 @@ export const firebaseConfig = {
     CompletedComponent,
     StartmeasurePage,
     SchedulePage,
-    SizePage
+    SizePage*/
   ],
   imports: [
     BrowserModule,
@@ -137,13 +135,11 @@ export const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    Facebook,
-    TwitterConnect,
     SocialSharing,
     LocalNotifications,
     DeviceMotion,
+    MediaCapture,
     File,
-    VideoCapturePlus,
     HTTP,
     InAppBrowser,
     Deeplinks

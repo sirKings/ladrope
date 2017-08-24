@@ -2,8 +2,6 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase/app';
 import { Platform } from 'ionic-angular';
-import { Facebook } from '@ionic-native/facebook';
-import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
@@ -11,7 +9,7 @@ export class AuthProvider {
   
   userDb;
 
-  constructor(public afAuth: AngularFireAuth, private fb: Facebook, private platform: Platform, private twitter: TwitterConnect, private db: AngularFireDatabase) {
+  constructor(public afAuth: AngularFireAuth, private platform: Platform, private db: AngularFireDatabase) {
       
   }
 
@@ -31,31 +29,6 @@ export class AuthProvider {
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
   }
   
-  signinFb() {
-    if (this.platform.is('cordova')) {
-      return this.fb.login(['email', 'public_profile']).then(res => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
-        return firebase.auth().signInWithCredential(facebookCredential);
-      })
-    }
-    else {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-    }
-  }
-
-  signinTwitter() {
-    if (this.platform.is('cordova')) {
-      return this.twitter.login().then(res => {
-        console.log(res);
-        const credential = firebase.auth.TwitterAuthProvider.credential(res.token, res.secret);
-        return firebase.auth().signInWithCredential(credential);
-      })
-    }
-    else {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
-    }
-  }
-
   signinGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }

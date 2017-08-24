@@ -117,26 +117,7 @@ export class SignupPage {
     }
   }
 
-  signInWithFacebook() {
-    this.authData.signinFb()
-      .then(res => {
-        this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
-        this.navCtrl.setRoot(HomePage);
-     
-      }, error => {
-        var errorMessage: string = error.message;
-        let alert = this.alertCtrl.create({
-              message: errorMessage,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
-            });
-        alert.present();
-      });
-  }
+  
 
   signInWithGoogle() {
     this.authData.signinGoogle()
@@ -159,26 +140,6 @@ export class SignupPage {
       });
   }
 
-  signInWithTwitter() {
-    this.authData.signinTwitter()
-      .then(res => {
-      this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
-      this.navCtrl.setRoot(HomePage);
-    
-      }, error => {
-        var errorMessage: string = error.message;
-        let alert = this.alertCtrl.create({
-              message: errorMessage,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
-            });
-        alert.present();
-      });
-  }
 
 
   login() {
