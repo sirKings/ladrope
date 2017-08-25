@@ -152,7 +152,7 @@ export class HomeComponent {
         }
         
        } else {
-         this.initialise({orderByChild: 'name', limitToFirst: this.limit})
+         //this.initialise({orderByChild: 'name', limitToFirst: this.limit})
        }
        
     });
@@ -266,6 +266,22 @@ export class HomeComponent {
     info(cloth){
     let info = cloth.description;
     return info + '. Production time is ' +cloth.time +' days';
+  }
+
+  get1(cloth){
+    return cloth.image1
+  }
+
+  get2(cloth){
+    return cloth.image2
+  }
+
+  get3(cloth){
+    return cloth.image3
+  }
+
+  get4(cloth){
+    return cloth.image4
   }
 
    
