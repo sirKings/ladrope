@@ -97,39 +97,12 @@ export class OptionsPage {
              if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
                if(d.success === true && d.tx.amount === this.cloth.price){
                   this.createOrder(this.cloth);
-                  // let alert = this.alertCtrl.create({
-                  //         message: 'Order successful, your cloth will be made and delivered on schedule. Thanks',
-                  //         buttons: [
-                  //           {
-                  //             text: "Ok",
-                  //             role: 'cancel'
-                  //           }
-                  //         ]
-                  //       });
-                  //     alert.present();
+                  
                }else{
-                 // let alert = this.alertCtrl.create({
-                 //         message: 'Order not successful, Please try again',
-                 //         buttons: [
-                 //           {
-                 //             text: "Ok",
-                 //             role: 'cancel'
-                 //           }
-                 //         ]
-                 //       });
-                 //     alert.present();
+                 
                }
              }else{
-             //   let alert = this.alertCtrl.create({
-             //           message: 'Payment not successful, please try again',
-             //           buttons: [
-             //             {
-             //               text: "Ok",
-             //               role: 'cancel'
-             //             }
-             //           ]
-             //         });
-             //       alert.present();
+             //   
              }
          }
        }
@@ -143,11 +116,15 @@ export class OptionsPage {
       clothId: this.key,
       options: this.options,
       user: this.uid,
+      displayName: this.user.displayName,
       label: cloth.label,
       orderId: this.transRef,
+      labelEmail: cloth.labelEmail,
       name: cloth.name,
       price: cloth.price,
       image1: cloth.image1,
+      email: this.user.email,
+      clientAddress: this.user.address,
       cost: cloth.cost,
       labelId: cloth.labelId,
       labelPhone: cloth.labelPhone,
@@ -178,8 +155,10 @@ export class OptionsPage {
       user: this.uid,
       label: cloth.label,
       labelId: cloth.labelId,
+      labelEmail: cloth.labelEmail,
       name: cloth.name,
       price: cloth.price,
+      displayName: this.user.displayName,
       cost: cloth.cost,
       labelPhone: cloth.labelPhone,
       orderId: this.transRef,

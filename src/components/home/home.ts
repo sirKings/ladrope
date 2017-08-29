@@ -269,19 +269,23 @@ export class HomeComponent {
   }
 
   get1(cloth){
-    return cloth.image1
+    let cloth1 = cloth.image1;
+    return cloth1
   }
 
   get2(cloth){
-    return cloth.image2
+    let cloth2 = cloth.image2
+    return cloth2
   }
 
   get3(cloth){
-    return cloth.image3
+    let cloth3 = cloth.image3
+    return cloth3
   }
 
   get4(cloth){
-    return cloth.image4
+    let cloth4 = cloth.image4
+    return cloth4
   }
 
    

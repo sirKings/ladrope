@@ -20,15 +20,12 @@ oldnumSold
     this.db.object('/cloths/'+ this.order.clothId)
   		.subscribe(res => {
   			this.oldRating = res.rating;
-        this.oldnumSold = res.numSold;
-  			console.log(this.oldRating)
+        this.oldnumSold = +res.numSold;
   		})
   }
 
   onModelChange($event){
-  	console.log(this.rate)
   	this.newRate = (this.oldRating + this.rate)/ 2;
-  		console.log(this.newRate);
   }
 
 
@@ -36,8 +33,7 @@ oldnumSold
 
   ionViewDidLeave() {
       this.order.status = 'completed';
-      this.db.object('/cloths/'+this.order.clothId).update({numSold: this.oldnumSold++})
-      this.db.object('cloths/'+this.order.clothId).update({rating: this.newRate});
+      this.db.object('/cloths/'+this.order.clothId).update({numSold: this.oldnumSold++, rating: this.newRate})
       this.db.object('/orders/'+ this.order.ordersKey).set(null);
       this.db.list('/completedOrders').push(this.order)
      this.db.object('/users/'+this.order.user+'/orders/'+ this.order.userOrderKey).set(null);

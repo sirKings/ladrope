@@ -35,16 +35,13 @@ export class VideoReviewPage {
 
   constructor(public navCtrl: NavController, private http: HTTP, private toastCtrl: ToastController, public db: AngularFireDatabase, public navParams: NavParams, private file: File) {
      this.video = navParams.get('video');
+     console.log(this.video)
      this.user = navParams.get('user');
      this.uid = navParams.get('uid');
      this.videoRef = firebase.storage().ref().child('/videos');
      this.filePath = this.getPath(this.video.fullPath, this.video.name);
 
     
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VideoReviewPage');
   }
 
   submitVideo(){
@@ -160,11 +157,16 @@ export class VideoReviewPage {
       let newOrder = {
       clothId: order.clothId,
       options: order.options,
+      orderId: order.orderId,
+      clientAddress: this.user.address,
+      email: this.user.email,
+      labelEmail: order.labelEmail,
       user: order.user,
       label: order.label,
       name: order.name,
       labelId: order.labelId,
       labelPhone: order.labelPhone,
+      displayName: this.user.displayName,
       cost: order.cost,
       price: order.price,
       image1: order.image1,
