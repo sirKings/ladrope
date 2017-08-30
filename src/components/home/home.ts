@@ -15,6 +15,7 @@ import { CommentsPage } from '../../pages/comments/comments';
 import { OptionsPage } from '../../pages/options/options';
 import { ClothPage } from '../../pages/cloth/cloth';
 import { HeightPage } from '../../pages/height/height';
+import { DetailsPage } from '../../pages/details/details';
 
 
 
@@ -43,7 +44,7 @@ export class HomeComponent {
   constructor(private db: AngularFireDatabase, private loadingCtrl: LoadingController, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
    
     this.loading = this.loadingCtrl.create({
-      dismissOnPageChange: true,
+      //dismissOnPageChange: true,
     });
     this.loading.present();
 
@@ -52,10 +53,15 @@ export class HomeComponent {
         this.uid = user.uid;
         db.object('/users/' + this.uid)
           .subscribe( snapshot => {
-                        this.user = snapshot;
+                          this.user = snapshot;
+                        if(this.user.$value !== null){
+                        
                         this.getCartItems(this.user.cart)
                         this.initialise({orderByChild: 'name', limitToFirst: this.limit})
                         this.startTracking();
+                      }else{
+                        this.navCtrl.parent.parent.push(DetailsPage)
+                      }
            });
         if(user.emailVerified){
         
@@ -101,7 +107,7 @@ export class HomeComponent {
       this.clothList = this.db.list('/cloths/' + this.user.gender, {
         query: obj
       }).subscribe((res)=>{
-        this.loading.dismiss()
+        this.loading.dismissAll()
         this.cloths = res;
       });
        

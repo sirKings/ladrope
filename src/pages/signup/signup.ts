@@ -91,6 +91,7 @@ export class SignupPage {
         }
 
        this.authData.createUser(res.uid, this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.gender, this.photoURL);
+       this.loading.dismissAll();
        this.navCtrl.setRoot(HomePage)
        console.log(res)
         

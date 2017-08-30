@@ -51,6 +51,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
       .then( authData => {
+        this.loading.dismissAll()
         this.navCtrl.setRoot(HomePage);
       }, error => {
         this.loading.dismiss().then( () => {

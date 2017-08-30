@@ -103,9 +103,9 @@
                 "DEEPLINK_5_HOST": " "
             },
             "cordova-plugin-media-capture": {
-                "CAMERA_USAGE_DESCRIPTION": "your usage messagCamera is used to record video which when analysed will give your measurement",
-                "MICROPHONE_USAGE_DESCRIPTION": " ",
-                "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+                "CAMERA_USAGE_DESCRIPTION": "camera records video for size analysis",
+                "MICROPHONE_USAGE_DESCRIPTION": "camera records video for size analysis",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "camera records video for size analysis"
             }
         },
         "platforms": [

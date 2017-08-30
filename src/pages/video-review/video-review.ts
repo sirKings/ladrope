@@ -39,9 +39,7 @@ export class VideoReviewPage {
      this.user = navParams.get('user');
      this.uid = navParams.get('uid');
      this.videoRef = firebase.storage().ref().child('/videos');
-     this.filePath = this.getPath(this.video.fullPath, this.video.name);
-
-    
+     this.filePath = this.getPath(this.video.localURL, this.video.name);  
   }
 
   submitVideo(){
