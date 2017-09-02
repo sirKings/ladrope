@@ -41,16 +41,16 @@
       <div class='clear'></div>
       <ion-slides pager (tap)='goToCloth(cloth, uid)'>
         <ion-slide>
-           <img class='slide-image' [src]='get1(cloth)'/>
+           <img class='slide-image' [src]='cloth.image1'/>
          </ion-slide>
          <ion-slide>
-            <img class='slide-image' [src]='get2(cloth)'/>
+            <img class='slide-image' [src]='cloth.image2'/>
          </ion-slide>
          <ion-slide>
-            <img class='slide-image' [src]='get3(cloth)'/>
+            <img class='slide-image' [src]='cloth.image3'/>
           </ion-slide>
            <ion-slide>
-            <img class='slide-image' [src]='get4(cloth)'/>
+            <img class='slide-image' [src]='cloth.image4'/>
           </ion-slide>
        </ion-slides>
        <div>

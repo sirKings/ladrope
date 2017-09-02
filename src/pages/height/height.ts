@@ -1,9 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { HTTP } from '@ionic-native/http';
-import { IonicPage, NavController, NavParams, ToastController, } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
+
+import {PaycardComponent } from '../../components/paycard/paycard';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,7 @@ uid;
 total;
 user;
 
-  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private http: HTTP, private db: AngularFireDatabase, private navParams: NavParams) {
+  constructor(private navCtrl: NavController, private modalCtrl: ModalController, private toastCtrl: ToastController, private http: HTTP, private db: AngularFireDatabase, private navParams: NavParams) {
     
   }
 
@@ -45,27 +47,47 @@ user;
     
   }
 
-  pay(){
-    let transRef = this.getTransactionRef();
-    let options = {
-      customer_email: this.user.email,
-       txref: transRef,
-       amount: this.total,
-       callback: (d)=>{
-           if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
-             if(d.success === true && d.tx.amount === this.total){
-                this.cart.forEach((cloth)=>{
-                  this.createOrder(cloth, transRef);
-                })
-                this.db.object('users/'+this.uid).update({cart: null})
-             }else{
-             }
-           }else{
-           }
-       }
-     }
-    window.initRavePay(options)
+  // pay(){
+  //   let transRef = this.getTransactionRef();
+  //   let options = {
+  //     customer_email: this.user.email,
+  //      txref: transRef,
+  //      amount: this.total,
+  //      callback: (d)=>{
+  //          if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
+  //            if(d.success === true && d.tx.amount === this.total){
+  //               this.cart.forEach((cloth)=>{
+  //                 this.createOrder(cloth, transRef);
+  //               })
+  //               this.db.object('users/'+this.uid).update({cart: null})
+  //            }else{
+  //            }
+  //          }else{
+  //          }
+  //      }
+  //    }
+  //   window.initRavePay(options)
+  // }
+
+  pay() {
+    
+      let modal = this.modalCtrl.create(PaycardComponent, {amount: this.total, user: this.user});
+      modal.onDidDismiss(data => {
+
+         if(data){
+           this.cart.forEach((cloth) =>{
+             this.createOrder(cloth, data)
+           })
+           
+         }else{
+
+         }
+         
+      });
+
+      modal.present();
   }
+
 
   createOrder(cloth, transRef){
     if(this.user.size && this.user.height){
@@ -138,6 +160,7 @@ user;
       toast.present()
      //this.navCtrl.pop()
     }
+    this.clearCart()
     this.navCtrl.pop()
   }
 
@@ -156,9 +179,8 @@ user;
     this.http.post(baseUrl, {}, {})
   }
 
-  getTransactionRef(){
-     let date = +new Date();
-     let transRef = this.uid.substr(1, 4);
-     return transRef+date;
-   }
+  clearCart(){
+    this.db.object('users/'+this.uid+'/cart/')
+      .set(null)
+  }
 }

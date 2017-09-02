@@ -36,6 +36,7 @@
         "angularfire2": "^4.0.0-rc.0",
         "build": "^0.1.4",
         "cordova-android": "^6.2.3",
+        "cordova-custom-config": "git+https://github.com/dpa99c/cordova-custom-config.git",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "^1.0.5",
@@ -45,6 +46,7 @@
         "cordova-plugin-http": "^1.2.0",
         "cordova-plugin-inappbrowser": "^1.7.1",
         "cordova-plugin-media-capture": "^1.4.3",
+        "cordova-plugin-paystack": "git+https://github.com/tolu360/cordova-plugin-paystack.git",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
         "cordova-plugin-whitelist": "^1.3.1",
@@ -106,7 +108,8 @@
                 "CAMERA_USAGE_DESCRIPTION": "camera records video for size analysis",
                 "MICROPHONE_USAGE_DESCRIPTION": "camera records video for size analysis",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": "camera records video for size analysis"
-            }
+            },
+            "cordova-plugin-paystack": {}
         },
         "platforms": [
             "android",

@@ -25,4 +25,8 @@ export class FilterComponent {
   cancel() {
       this.viewCtrl.dismiss(null)
   }
+
+  refresh(){
+    this.viewCtrl.dismiss('refresh')
+  }
 }

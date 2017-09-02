@@ -31,7 +31,7 @@ export class HomeComponent {
   url = 'https://ladrope.com/cloth/';
   image;
   user;
-  limit:BehaviorSubject<number> = new BehaviorSubject<number>(2);
+  limit:BehaviorSubject<number> = new BehaviorSubject<number>(5);
   lastKey: string;
   queryable: boolean = true;
   clothList: Subscription;
@@ -44,7 +44,7 @@ export class HomeComponent {
   constructor(private db: AngularFireDatabase, private loadingCtrl: LoadingController, private afAuth: AngularFireAuth, private modalCtrl: ModalController, private navCtrl: NavController, private socialSharing: SocialSharing, private alertCtrl: AlertController) {
    
     this.loading = this.loadingCtrl.create({
-      //dismissOnPageChange: true,
+      dismissOnPageChange: true,
     });
     this.loading.present();
 
@@ -104,8 +104,10 @@ export class HomeComponent {
   }
 
   initialise(obj){ 
+      console.log(obj)
       this.clothList = this.db.list('/cloths/' + this.user.gender, {
         query: obj
+
       }).subscribe((res)=>{
         this.loading.dismissAll()
         this.cloths = res;
@@ -142,7 +144,15 @@ export class HomeComponent {
     let modal = this.modalCtrl.create(FilterComponent);
     modal.onDidDismiss(data => {
        if(data !== null){
-        if(data.price === ''){
+        if(data === 'refresh'){
+          this.loading = this.loadingCtrl.create({
+            dismissOnPageChange: true,
+          });
+          this.loading.present();
+          this.initialise({orderByChild: 'name', limitToFirst: this.limit});
+          this.startTracking();
+        } 
+        else if(data.price === ''){
           this.loading = this.loadingCtrl.create({
             dismissOnPageChange: true,
           });
@@ -263,7 +273,7 @@ export class HomeComponent {
         console.log('Begin async operation');
 
         if (this.queryable) {
-              this.limit.next( this.limit.getValue() + 10);
+              this.limit.next( this.limit.getValue() + 5);
           }
           
           infiniteScroll.complete();
@@ -272,28 +282,6 @@ export class HomeComponent {
     info(cloth){
     let info = cloth.description;
     return info + '. Production time is ' +cloth.time +' days';
-  }
-
-  get1(cloth){
-    let cloth1 = cloth.image1;
-    return cloth1
-  }
-
-  get2(cloth){
-    let cloth2 = cloth.image2
-    return cloth2
-  }
-
-  get3(cloth){
-    let cloth3 = cloth.image3
-    return cloth3
-  }
-
-  get4(cloth){
-    let cloth4 = cloth.image4
-    return cloth4
-  }
-
-   
+  }   
   
 }

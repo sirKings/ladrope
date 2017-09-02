@@ -49,6 +49,7 @@ import { CompletedComponent } from '../components/completed/completed';
 import { StartmeasurePage } from '../pages/startmeasure/startmeasure';
 import { SizePage } from '../pages/size/size';
 import { SchedulePage } from '../pages/schedule/schedule';
+import { PaycardComponent } from '../components/paycard/paycard';
 
 export const firebaseConfig = {
 
@@ -65,6 +66,7 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage/*,
+    PaycardComponent,
     SignupPage,
     LoginPage,
     ResetPasswordPage,
@@ -128,7 +130,8 @@ export const firebaseConfig = {
     CompletedComponent,
     StartmeasurePage,
     SchedulePage,
-    SizePage
+    SizePage,
+    PaycardComponent
   ],
   providers: [
     StatusBar,

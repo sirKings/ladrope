@@ -1,7 +1,8 @@
-﻿import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { HTTP } from '@ionic-native/http';
+import { PaycardComponent } from '../../components/paycard/paycard';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,7 @@ export class OptionsPage {
   ordered = false;
   
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
@@ -87,29 +88,23 @@ export class OptionsPage {
   }
 
   pay(){
-      this.transRef = this.getTransactionRef();
-      this.getOptionsObj()
-      let options = {
-        customer_email: this.user.email,
-         txref: this.transRef,
-         amount: this.cloth.price,
-         callback: (d)=>{
-             if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
-               if(d.success === true && d.tx.amount === this.cloth.price){
-                  this.createOrder(this.cloth);
-                  
-               }else{
-                 
-               }
-             }else{
-             //   
-             }
-         }
-       }
-      window.initRavePay(options)
+
+     let modal = this.modalCtrl.create(PaycardComponent, {amount: this.cloth.price, user: this.user});
+     modal.onDidDismiss(data => {
+
+        if(data){
+            this.createOrder(this.cloth, data)
+      
+        }else{
+
+        }
+        
+     });
+
+     modal.present();
   }
 
-  createOrder(cloth){
+  createOrder(cloth, transRef){
     if(this.user.size && this.user.height){
       let date1 = new Date();
       let order = {
@@ -118,7 +113,7 @@ export class OptionsPage {
       user: this.uid,
       displayName: this.user.displayName,
       label: cloth.label,
-      orderId: this.transRef,
+      orderId: transRef,
       labelEmail: cloth.labelEmail,
       name: cloth.name,
       price: cloth.price,
@@ -161,7 +156,7 @@ export class OptionsPage {
       displayName: this.user.displayName,
       cost: cloth.cost,
       labelPhone: cloth.labelPhone,
-      orderId: this.transRef,
+      orderId: transRef,
       image1: cloth.image1,
       time: cloth.time,
       startDate: date1.toISOString(),

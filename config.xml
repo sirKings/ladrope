@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ladrope.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ladrope.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>LadRope</name>
     <description>Live your style</description>
     <author email="kingsley@ladrope.com" href="https://ladrope.com/">Ladrope Team</author>
@@ -80,14 +80,15 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
-    <!-- <platform name="ios">
-        <config-file parent="NSAppTransportSecurity" platform="ios" target="*-Info.plist">
-            <dict>
-                <key>NSAllowsArbitraryLoads</key>
-                <true />
-            </dict>
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="16" />
+        <config-file parent="application" target="AndroidManifest.xml">
+            <meta-data android:name="co.paystack.android.PublicKey" android:value="pk_test_cc549a49b32b8a93ceab29d5c0cbfbe181bdd7e4" />
         </config-file>
-    </platform> -->
+    </platform>
+    <platform name="ios">
+        <preference name="publicKey" value="pk_test_cc549a49b32b8a93ceab29d5c0cbfbe181bdd7e4" />
+    </platform>
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
@@ -101,6 +102,7 @@
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value="camera records video for size analysis" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="camera records video for size analysis" />
     </plugin>
+    <plugin name="cordova-plugin-paystack" spec="git+https://github.com/tolu360/cordova-plugin-paystack.git" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
