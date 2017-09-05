@@ -45,23 +45,36 @@ order;
   save(){
   	if(this.sizeForm.valid){
   		this.db.object('users/'+this.uid)
-  			.update({size: this.sizeForm.value})
+  			.update({size: this.sizeForm.value}).then(() =>{
+           let alert = this.alert.create({
+                    message: 'Your size has been saved and your orders submitted',
+                    buttons: [
+                      {
+                        text: "Ok",
+                        role: 'cancel'
+                      }
+                    ]
+                  });
+                alert.present();
+          if(this.user.savedOrders){
+              for(var prop in this.user.savedOrders){
+                this.submitOrder(this.user.savedOrders[prop])
+              }
+              this.db.object('users/'+this.uid).update({savedOrders: null})
+          }
+        }).catch(() =>{
           let alert = this.alert.create({
-                  message: 'Your size has been saved and your orders submitted',
-                  buttons: [
-                    {
-                      text: "Ok",
-                      role: 'cancel'
-                    }
-                  ]
-                });
-              alert.present();
-        if(this.user.savedOrder){
-            for(var prop in this.user.savedOrder){
-              this.submitOrder(this.user.savedOrder[prop])
-            }
-            this.db.object('users/'+this.uid).update({savedOrder: null})
-        }
+                   message: 'An error occured, Please try again',
+                   buttons: [
+                     {
+                       text: "Ok",
+                       role: 'cancel'
+                     }
+                   ]
+                 });
+               alert.present();
+        })
+         
         
   	}else{
   		let alert = this.alert.create({
@@ -132,7 +145,12 @@ order;
   }
 
   callTailor(cloth){
-    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+cloth.labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
+    let num = cloth.labelPhone;
+    if(num.length === 11){
+      num = num.slice(1)
+      num = '+234' + num
+    }
+    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+num+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
     this.http.post(baseUrl, {}, {})
   }
 

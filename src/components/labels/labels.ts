@@ -23,9 +23,7 @@ isOrders = false;
   constructor(private navCtrl: NavController, private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
   	const authObserver = afAuth.authState.subscribe( user => {
       if (user) {
-        console.log(user)
         this.uid = user.uid;
-        console.log(this.uid)
         authObserver.unsubscribe();
       }
     });
@@ -47,16 +45,13 @@ isOrders = false;
   	this.db.object('users/' + this.uid)
     	.subscribe( snapshot => {
                         let userDetails = snapshot;
-                        console.log(userDetails)
                         if(userDetails.orders){
                         	this.isOrders = true;
                         	this.orders =  this.getOrders(userDetails.orders)
-                        	console.log(this.orders)
                         }
                         if(userDetails.savedOrders){
                         	this.isSavedOrders = true;
                         	this.savedOrders = this.getOrders(userDetails.savedOrders)
-                          console.log(this.savedOrders)
                         }
                         if(userDetails.completedorders){
                           this.isOrders = true;

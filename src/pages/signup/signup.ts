@@ -12,6 +12,8 @@ import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { EmailValidator } from '../../validators/email';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @IonicPage()
@@ -29,7 +31,7 @@ export class SignupPage {
 
   constructor(public navCtrl: NavController, public authData: AuthProvider, 
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController, private iab: InAppBrowser) {
+    public alertCtrl: AlertController, private iab: InAppBrowser, private db: AngularFireDatabase) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
@@ -90,9 +92,8 @@ export class SignupPage {
           this.photoURL = 'assets/images/Female-Placeholder1.jpg'
         }
 
-       this.authData.createUser(res.uid, this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.gender, this.photoURL);
+       this.createUser(res.uid, this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.gender, this.photoURL);
        this.loading.dismissAll();
-       this.navCtrl.setRoot(HomePage)
        console.log(res)
         
       }, (error) => {
@@ -123,7 +124,7 @@ export class SignupPage {
   signInWithGoogle() {
     this.authData.signinGoogle()
      .then(res => {
-      this.authData.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
+      this.createUser(res.user.uid, res.user.displayName, res.user.email, res.gender, res.user.photoURL);
       this.navCtrl.setRoot(HomePage);
       
       }, error => {
@@ -151,4 +152,32 @@ export class SignupPage {
     this.iab.create('https://ladrope.com/privacy');
   }
 
+  createUser(uid, name, email, gender, photoURL) {
+     const user = this.db.object(`users/${uid}` , { preserveSnapshot: true });
+     user.subscribe(data => {
+       if(data.val() === null) {
+          let userDb = this.db.object('/users/'+ uid);
+          if(email=== null){
+              email = 'Enter email'
+          }
+
+          if(gender){
+             gender = gender;
+             }else {
+             gender = 'Edit'
+          }
+
+          userDb.set({
+             displayName: name,
+             email: email,
+             gender: gender,
+             photoURL: photoURL
+          }).then(() =>{
+            this.navCtrl.setRoot(HomePage)
+          })
+         
+       }else {
+       }
+     })
+  }
 }

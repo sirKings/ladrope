@@ -195,7 +195,12 @@ export class OptionsPage {
   }
 
   callTailor(cloth){
-    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=Ladrope.com&password=rB6V4KDt&type=0&dlr=1&destination='+cloth.labelPhone+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
+    let num = cloth.labelPhone;
+    if(num.length === 11){
+      num = num.slice(1)
+      num = '+234' + num
+    }
+    let baseUrl = 'http://smsplus4.routesms.com:8080/bulksms/bulksms?username=ladrope&password=rB6V4KDt&type=0&dlr=1&destination='+num+'&source=LadRope&message=Hello%20you%20just%20got%20an%20order%20on%20Ladrope.com.%20Endeavour%20to%20complete%20and%20deliver%20on%20schedule'
     this.http.post(baseUrl, {}, {})
   }
 
