@@ -15,6 +15,7 @@ export class LabelsComponent implements OnInit {
 
 uid;
 orders;
+user
 savedOrders;
 completedOrders;
 isSavedOrders = false;
@@ -45,6 +46,7 @@ isOrders = false;
   	this.db.object('users/' + this.uid)
     	.subscribe( snapshot => {
                         let userDetails = snapshot;
+                        this.user = userDetails;
                         if(userDetails.orders){
                         	this.isOrders = true;
                         	this.orders =  this.getOrders(userDetails.orders)
@@ -64,7 +66,8 @@ isOrders = false;
 
   goToOrder(order){
   	this.navCtrl.parent.parent.push(OrderPage, {
-  		order: order
+  		order: order,
+      user: this.user
   	})
   }
 

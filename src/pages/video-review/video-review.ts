@@ -85,8 +85,9 @@ export class VideoReviewPage {
                         duration: 3000,
                     })
                     toast.present()
-                    this.removeFile()
+                    
                   }
+                  this.removeFile()
           });
 
         }), function (error) {

@@ -11,11 +11,12 @@ import { CompletedComponent } from '../../components/completed/completed';
 })
 export class OrderPage {
 
+user;
 order;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   	this.order = navParams.get('order');
-  	console.log(this.order)
+    this.user = navParams.get('user');
   }
 
   ionViewDidLoad() {
@@ -24,7 +25,8 @@ order;
 
   completeOrder(order){
   	let completeModal = this.modalCtrl.create(CompletedComponent, {
-  		order: order
+  		order: order,
+      user: this.user
   	})
   	completeModal.present()
   }
