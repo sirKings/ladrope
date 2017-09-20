@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
@@ -21,6 +20,10 @@ postList
 
   more(post){
     this.iab.create(post.link);
+  }
+
+  chat(){
+    this.iab.create('https://m.me/ladrope')
   }
 
 }

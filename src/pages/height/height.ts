@@ -47,28 +47,6 @@ user;
     
   }
 
-  // pay(){
-  //   let transRef = this.getTransactionRef();
-  //   let options = {
-  //     customer_email: this.user.email,
-  //      txref: transRef,
-  //      amount: this.total,
-  //      callback: (d)=>{
-  //          if(d.tx.chargeResponseCode === '00' || d.tx.chargeResponseCode === '0'){
-  //            if(d.success === true && d.tx.amount === this.total){
-  //               this.cart.forEach((cloth)=>{
-  //                 this.createOrder(cloth, transRef);
-  //               })
-  //               this.db.object('users/'+this.uid).update({cart: null})
-  //            }else{
-  //            }
-  //          }else{
-  //          }
-  //      }
-  //    }
-  //   window.initRavePay(options)
-  // }
-
   pay() {
     
       let modal = this.modalCtrl.create(PaycardComponent, {amount: this.total, user: this.user});

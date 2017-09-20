@@ -57,7 +57,7 @@ export class HomeComponent {
                         if(this.user.$value !== null){
                         
                         this.getCartItems(this.user.cart)
-                        this.initialise({orderByChild: 'name', limitToFirst: this.limit})
+                        this.initialise({orderByChild: 'date', limitToFirst: this.limit})
                         this.startTracking();
                       }else{
                         this.navCtrl.parent.parent.push(DetailsPage)
@@ -104,7 +104,6 @@ export class HomeComponent {
   }
 
   initialise(obj){ 
-      console.log(obj)
       this.clothList = this.db.list('/cloths/' + this.user.gender, {
         query: obj
 
@@ -149,7 +148,7 @@ export class HomeComponent {
             dismissOnPageChange: true,
           });
           this.loading.present();
-          this.initialise({orderByChild: 'name', limitToFirst: this.limit});
+          this.initialise({orderByChild: 'date', limitToFirst: this.limit});
           this.startTracking();
         } 
         else if(data.price === ''){
@@ -240,7 +239,7 @@ export class HomeComponent {
   startTracking(){
       this.db.list('/cloths/' + this.user.gender, {
         query: {
-          orderByChild: 'name',
+          orderByChild: 'date',
           limitToLast: 1
         }
       }).subscribe((res) => {
@@ -253,7 +252,7 @@ export class HomeComponent {
 
       this.db.list('/cloths/' +this.user.gender, {
         query: {
-          orderByChild: 'name',
+          orderByChild: 'date',
           limitToFirst: this.limit
         }
       }).subscribe( (data) => {
