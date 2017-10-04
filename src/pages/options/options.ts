@@ -64,7 +64,6 @@ export class OptionsPage {
       
       this.selectedOptions.splice(i, 1)
       }
-      console.log(this.selectedOptions)
   }
 
   getOptionsObj(){
@@ -75,7 +74,6 @@ export class OptionsPage {
     }else{
       this.options = 'No options'
     }
-    console.log(this.options)
   }
 
   checkOptions(subOption){

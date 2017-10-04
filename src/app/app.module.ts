@@ -50,6 +50,7 @@ import { StartmeasurePage } from '../pages/startmeasure/startmeasure';
 import { SizePage } from '../pages/size/size';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { PaycardComponent } from '../components/paycard/paycard';
+import { TailorPage } from '../pages/tailor/tailor'
 
 export const firebaseConfig = {
 
@@ -91,7 +92,8 @@ export const firebaseConfig = {
     CompletedComponent,
     StartmeasurePage,
     SchedulePage,
-    SizePage
+    SizePage,
+    TailorPage
   ],
   imports: [
     BrowserModule,
@@ -131,7 +133,8 @@ export const firebaseConfig = {
     StartmeasurePage,
     SchedulePage,
     SizePage,
-    PaycardComponent
+    PaycardComponent,
+    TailorPage
   ],
   providers: [
     StatusBar,

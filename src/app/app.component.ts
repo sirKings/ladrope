@@ -9,6 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
 import { ClothPage } from '../pages/cloth/cloth';
+import { TailorPage } from '../pages/tailor/tailor';
 
 @Component({
   templateUrl: 'app.html'
@@ -36,6 +37,7 @@ export class MyApp {
 
       deeplinks.routeWithNavController(this.navChild, {
               '/cloth/:key': ClothPage,
+              '/tailor/:key': TailorPage,
               '**': HomePage,
             }).subscribe((match) => {
             }, (nomatch) => {

@@ -28,7 +28,7 @@ user;
     this.uid = this.navParams.get('uid');
     this.user = this.navParams.get('user');
     this.getTotalPrice(this.cart);
-    console.log(this.cart)
+    
 
   }
 
@@ -147,7 +147,7 @@ user;
     let str = date.toISOString();
     let  myDate = new Date(str);
     myDate.setDate(myDate.getDate() + parseInt(days));
-    console.log(myDate)
+    
     return myDate.toString();
 
   }

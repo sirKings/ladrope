@@ -1,0 +1,72 @@
+page-tailor {
+	.clear {
+	  clear: both
+	}
+	.right {
+	  float: right
+	}
+	.star {
+	  color: #FF9800
+	}
+
+	.desc{
+	  background-color: white;
+	  padding: 7px;
+	  margin: -20px; 
+	}
+
+	.action-button{
+	  font-size: 2rem;
+	  margin-right: 10px;
+	}
+
+	.buy-button{
+	  font-size: 3rem;
+	  float: right;
+	}
+
+	ion-fab[top][edge] {
+	top: -14px;
+	left: -10px;
+	}
+
+	ion-badge {
+	  font-size: 1.5rem;
+	}
+
+	.clothspace{
+	  min-height: 300px
+	}
+
+
+	.liked {
+	  color: rgb(0, 74, 0);
+	}
+
+	.unliked {
+	  color: black;    
+	}
+
+	.swiper-pagination-bullet-active {
+	  background-color: rgb(0, 74, 0);
+	}
+
+	.swiper-pagination-bullet {
+	  opacity: 0.5;
+	}
+
+	ul {
+	  padding: 0px;
+	  margin: 0;
+	 &.rating li {
+	  padding: 0 !important;
+	  background: none;
+	  color: #ffb400;
+	  
+	
+	      ion-icon {
+	      font-size: 1.5rem;
+	       }
+	    }
+	  }
+}

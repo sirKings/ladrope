@@ -15,6 +15,7 @@ import { CommentsPage } from '../../pages/comments/comments';
 import { OptionsPage } from '../../pages/options/options';
 import { ClothPage } from '../../pages/cloth/cloth';
 import { HeightPage } from '../../pages/height/height';
+import { TailorPage } from '../../pages/tailor/tailor';
 import { DetailsPage } from '../../pages/details/details';
 
 
@@ -282,5 +283,9 @@ export class HomeComponent {
     let info = cloth.description;
     return info + '. Production time is ' +cloth.time +' days';
   }   
+
+  goToTailor(key){
+    this.navCtrl.parent.parent.push(TailorPage, {key: key})
+  }
   
 }

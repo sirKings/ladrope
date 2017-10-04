@@ -1,0 +1,80 @@
+<!--
+  Generated template for the TailorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{tailorName}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class='cloths'>
+ 
+ <ion-item *ngFor='let cloth of cloths'>
+   <div class='clothspace'>
+     <div float-right tooltip = "You can only rate designs you have bought">
+       <ion-badge>NGN{{cloth.price}}.00</ion-badge>
+         <div>
+           ({{cloth.numSold}})
+           <rating [(ngModel)]="cloth.rating"
+             float-right
+             class='star'
+             readOnly="true" 
+             max="5" 
+             emptyStarIconName="star-outline" 
+             halfStarIconName="star-half"
+             starIconName="star"
+             >
+           </rating>
+         </div>
+       </div>
+     
+       {{cloth.name}}
+     <div class='clear'></div>
+     <ion-slides pager (tap)='goToCloth(cloth, uid)'>
+       <ion-slide>
+          <img class='slide-image' [src]='cloth.image1' #img/>
+        </ion-slide>
+        <ion-slide>
+           <img class='slide-image' [src]='cloth.image2'/>
+        </ion-slide>
+        <ion-slide>
+           <img class='slide-image' [src]='cloth.image3'/>
+         </ion-slide>
+          <ion-slide>
+           <img class='slide-image' [src]='cloth.image4'/>
+         </ion-slide>
+      </ion-slides>
+      <div>
+         <div>
+           <span (tap)='like(cloth, uid)' class='action-button' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
+             {{cloth.likes}}
+             <ion-icon *ngIf='!cloth.likers[uid]' name="heart-outline"></ion-icon>
+             <ion-icon *ngIf='cloth.likers[uid]' name="heart"></ion-icon>
+           </span>
+           <span (tap)='comment(cloth)' class='action-button'>
+              {{cloth.numComment}}
+              <ion-icon name="text"></ion-icon>
+           </span>
+           <span class='action-button' [tooltip]= 'info(cloth)'>
+             <ion-icon name="information-circle" positionV="top" ></ion-icon>
+            </span>
+           <span>
+             <span class='action-button' (tap)='share(cloth)'>
+               <ion-icon name="share" ></ion-icon>
+             </span>
+            </span>
+            
+           <span (click)='addToCart(cloth)' class='buy-button'>
+             <ion-icon name="cart" side="right"></ion-icon>
+           </span>
+         </div>
+       </div>
+     </div>
+ </ion-item>
+ </ion-content>

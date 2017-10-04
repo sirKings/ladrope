@@ -37,7 +37,9 @@
             </rating>
           </div>
         </div>
-      {{cloth.name}} from <br> {{cloth.label}}
+      <div (tap)='goToTailor(cloth.labelId)'>
+        {{cloth.name}} from <br> {{cloth.label}}
+      </div>  
       <div class='clear'></div>
       <ion-slides pager (tap)='goToCloth(cloth, uid)'>
         <ion-slide>
@@ -55,7 +57,7 @@
        </ion-slides>
        <div>
           <div>
-            <span (tap)='like(cloth, uid)' class='action-button' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
+            <span class='action-button' [ngClass]="(cloth.likers[uid]) ? 'liked' : 'unliked'">
               {{cloth.likes}}
               <ion-icon *ngIf='!cloth.likers[uid]' name="heart-outline"></ion-icon>
               <ion-icon *ngIf='cloth.likers[uid]' name="heart"></ion-icon>
