@@ -38,7 +38,8 @@ order;
   		fullback: ['', Validators.required],
   		trouserLength: ['', Validators.required],
   		wrist: ['', Validators.required],
-  		unit: ['', Validators.required]
+  		unit: ['', Validators.required],
+      author: this.user.email
   	})
   }
 
@@ -47,7 +48,7 @@ order;
   		this.db.object('users/'+this.uid)
   			.update({size: this.sizeForm.value}).then(() =>{
            let alert = this.alert.create({
-                    message: 'Your size has been saved and your orders submitted',
+                    message: 'Your size has been saved',
                     buttons: [
                       {
                         text: "Ok",
@@ -57,10 +58,22 @@ order;
                   });
                 alert.present();
           if(this.user.savedOrders){
-              for(var prop in this.user.savedOrders){
-                this.submitOrder(this.user.savedOrders[prop])
+              let savedOrders = this.user.savedOrders
+              for(var prop in savedOrders){
+                this.submitOrder(savedOrders[prop])
               }
-              this.db.object('users/'+this.uid).update({savedOrders: null})
+              if(this.user.height){
+                let alert = this.alert.create({
+                         message: 'Congratulations your orders have been submitted and proccessing started.',
+                         buttons: [
+                           {
+                             text: "Ok",
+                             role: 'cancel'
+                           }
+                         ]
+                       });
+                     alert.present();
+              }
           }
         }).catch(() =>{
           let alert = this.alert.create({
@@ -90,49 +103,63 @@ order;
   	}
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SizePage');
-  }
 
   submitOrder (order) {
 
-      let deliveryDate = this.addDays(order.time + 2);
-      let tailorDate = this.addDays(order.time)
+      if(this.user.height){
+           let deliveryDate = this.addDays(order.time + 2);
+           let tailorDate = this.addDays(order.time)
 
-      let date1 = new Date();
-      let newOrder = {
-      clothId: order.clothId,
-      options: order.options,
-      orderId: order.orderId,
-      clientAddress: this.user.address,
-      email: this.user.email,
-      labelEmail: order.labelEmail,
-      user: order.user,
-      label: order.label,
-      name: order.name,
-      labelId: order.labelId,
-      labelPhone: order.labelPhone,
-      displayName: this.user.displayName,
-      cost: order.cost,
-      price: order.price,
-      image1: order.image1,
-      startDate: date1.toISOString(),
-      date: deliveryDate,
-      tailorDate: tailorDate,
-      status: 'pending',
-      size: this.user.size
-    }
-    let ordersKey = this.db.list('/orders')
-      .push(newOrder).key;
-    let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
-      .push(newOrder).key;
-   let tailorOrderKey = this.db.list('/tailors/' + order.labelId +'/orders')
-      .push(newOrder).key;
+           let date1 = new Date();
+           let newOrder = {
+           clothId: order.clothId,
+           options: order.options,
+           orderId: order.orderId,
+           clientAddress: this.user.address,
+           email: this.user.email,
+           labelEmail: order.labelEmail,
+           user: order.user,
+           label: order.label,
+           name: order.name,
+           labelId: order.labelId,
+           labelPhone: order.labelPhone,
+           displayName: this.user.displayName,
+           cost: order.cost,
+           price: order.price,
+           image1: order.image1,
+           startDate: date1.toISOString(),
+           date: deliveryDate,
+           tailorDate: tailorDate,
+           status: 'pending',
+           size: this.sizeForm.value
+         }
+         let ordersKey = this.db.list('/orders')
+           .push(newOrder).key;
+         let userOrderKey = this.db.list('/users/'+ this.uid +'/orders')
+           .push(newOrder).key;
+        let tailorOrderKey = this.db.list('/tailors/' + order.labelId +'/orders')
+           .push(newOrder).key;
 
-     this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/users/'+this.uid+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.db.object('/tailors/' + order.labelId +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
-     this.callTailor(order)
+          this.db.object('/orders/'+ ordersKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+          this.db.object('/users/'+this.uid+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
+          this.db.object('/tailors/' + order.labelId +'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey})
+          .then(()=>{
+            this.db.object('users/'+this.uid).update({savedOrders: null})
+          });
+          this.callTailor(order)
+        }else{
+          let alert = this.alert.create({
+            message: "Congratulations! Your measurement has been saved submitted. Please provide the remaining information for your order to be submitted ",
+            buttons: [
+              {
+                text: "Ok",
+                role: 'cancel',
+              }
+            ]
+          });
+          alert.present();
+        }
+      
   }
 
   addDays = function(days) {

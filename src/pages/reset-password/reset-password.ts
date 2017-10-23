@@ -23,7 +23,16 @@ export class ResetPasswordPage {
     }
   resetPassword(){
     if (!this.resetPasswordForm.valid){
-      console.log(this.resetPasswordForm.value);
+      let alert = this.alertCtrl.create({
+              message: 'Enter valid email',
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+          alert.present();
     } else {
       this.authData.resetPassword(this.resetPasswordForm.value.email)
       .then((user) => {

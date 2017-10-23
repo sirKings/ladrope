@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { HTTP } from '@ionic-native/http';
-import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -19,7 +19,7 @@ uid;
 total;
 user;
 
-  constructor(private navCtrl: NavController, private modalCtrl: ModalController, private toastCtrl: ToastController, private http: HTTP, private db: AngularFireDatabase, private navParams: NavParams) {
+  constructor(private navCtrl: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController, private http: HTTP, private db: AngularFireDatabase, private navParams: NavParams) {
     
   }
 
@@ -103,7 +103,16 @@ user;
      this.db.object('/users/'+this.uid+'/'+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/'+cloth.labelId+'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.callTailor(cloth)
-     //this.navCtrl.pop();
+     let alert = this.alertCtrl.create({
+       message: "Congratulations! Your order has been placed and processing started",
+       buttons: [
+         {
+           text: "Ok",
+           role: 'cancel',
+         }
+       ]
+     });
+     alert.present();
     } else {
      let date1 = new Date();
      
@@ -116,7 +125,6 @@ user;
       labelEmail: cloth.labelEmail,
       name: cloth.name,
       price: cloth.price,
-      displayName: this.user.displayName,
       cost: cloth.cost,
       labelPhone: cloth.labelPhone,
       orderId: transRef,
@@ -131,12 +139,16 @@ user;
 
     
      this.db.object('/users/'+this.uid+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
-       let toast = this.toastCtrl.create({
-          message: 'Your orders have been saved, it will be submitted after you take your measurement',
-          duration: 5000,
-      })
-      toast.present()
-     //this.navCtrl.pop()
+     let alert = this.alertCtrl.create({
+       message: "Your order have been saved, however you need to provide all required information in the user tab for it to be submitted",
+       buttons: [
+         {
+           text: "Ok",
+           role: 'cancel',
+         }
+       ]
+     });
+     alert.present();
     }
     this.clearCart()
     this.navCtrl.pop()

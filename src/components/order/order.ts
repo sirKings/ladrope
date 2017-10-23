@@ -19,11 +19,11 @@ postList
 
 
   more(post){
-    this.iab.create(post.link);
+    this.iab.create(post.link, '_blank');
   }
 
   chat(){
-    this.iab.create('https://m.me/ladrope')
+    this.iab.create('https://m.me/ladrope', '_system')
   }
 
 }

@@ -53,16 +53,7 @@ export class AuthProvider {
       });
    }
 
-   updateUser(uid, displayName, email, height, address, phone){
-       this.userDb = this.db.object('/users/'+ uid);
-       this.userDb.update({
-              displayName: displayName,
-              email: email,
-              height: height,
-              address: address,
-              phone: phone,
-           })
-   }
+   
 
    updateHeight(height, uid){
    this.userDb = this.db.object('/users/'+ uid);

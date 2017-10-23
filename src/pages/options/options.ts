@@ -25,7 +25,7 @@ export class OptionsPage {
   ordered = false;
   
 
-  constructor(public navCtrl: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController, public navParams: NavParams, private http: HTTP, private db: AngularFireDatabase) {
     this.cloth = navParams.get('cloth');
     this.uid = navParams.get('uid');
     this.key = navParams.get('key');
@@ -103,6 +103,7 @@ export class OptionsPage {
   }
 
   createOrder(cloth, transRef){
+    this.getOptionsObj()
     if(this.user.size && this.user.height){
       let date1 = new Date();
       let order = {
@@ -138,7 +139,16 @@ export class OptionsPage {
      this.db.object('/users/'+this.uid+'/'+'/orders/'+userOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.db.object('/tailors/'+this.cloth.labelId+'/orders/' + tailorOrderKey).update({ordersKey: ordersKey, userOrderKey: userOrderKey, tailorOrderKey: tailorOrderKey});
      this.callTailor(cloth)
-     //this.navCtrl.pop();
+     let alert = this.alertCtrl.create({
+       message: "Congratulations! Your order has been placed and processing started",
+       buttons: [
+         {
+           text: "Ok",
+           role: 'cancel',
+         }
+       ]
+     });
+     alert.present();
     } else {
      let date1 = new Date();
      
@@ -151,7 +161,6 @@ export class OptionsPage {
       labelEmail: cloth.labelEmail,
       name: cloth.name,
       price: cloth.price,
-      displayName: this.user.displayName,
       cost: cloth.cost,
       labelPhone: cloth.labelPhone,
       orderId: transRef,
@@ -166,12 +175,16 @@ export class OptionsPage {
 
     
      this.db.object('/users/'+this.uid+'/savedOrders/'+userOrderKey).update({userOrderKey: userOrderKey});
-       let toast = this.toastCtrl.create({
-          message: 'Your orders have been saved, it will be submitted after you take your measurement',
-          duration: 5000,
-      })
-      toast.present()
-     //this.navCtrl.pop()
+       let alert = this.alertCtrl.create({
+         message: "Your order have been saved, however you need to provide all required information in the user tab for it to be submitted",
+         buttons: [
+           {
+             text: "Ok",
+             role: 'cancel',
+           }
+         ]
+       });
+       alert.present();
     }
     this.navCtrl.pop()
   }

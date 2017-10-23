@@ -149,7 +149,7 @@ export class SignupPage {
   }
 
   seeTerms(){
-    this.iab.create('https://ladrope.com/privacy');
+    this.iab.create('https://ladrope.com/privacy', '_blank');
   }
 
   createUser(uid, name, email, gender, photoURL) {
