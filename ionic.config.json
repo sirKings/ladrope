@@ -1,5 +1,8 @@
 {
   "name": "ladrope",
   "app_id": "a94b406a",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

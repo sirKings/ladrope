@@ -28,7 +28,7 @@
   		</ion-item>
 	 </ion-list>
     <ion-list *ngFor = 'let order of completedOrders'>
-        <ion-item (tap) = "goToOrder(order)">
+        <ion-item>
           <ion-thumbnail item-start>
               <img src="{{order.image1}}">
           </ion-thumbnail>
